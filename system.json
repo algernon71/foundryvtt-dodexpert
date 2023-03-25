@@ -28,7 +28,7 @@
   "secondaryTokenAttribute": "power",
   "url": "",
   "manifest": "",
-  "download": "",
+  "download": "https://github.com/algernon71/foundryvtt-dodexpert/archive/refs/heads/main.zip",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"
 }
