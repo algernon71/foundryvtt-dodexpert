@@ -1,0 +1,51 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    <select  class="magiskola"  name="system.magiskola"  data-type="String">
+      {{#select system.magiskola}}
+          {{#each magiskolor as |skola id|}}
+          <option  value="{{id}}">{{skola.name}}</option>
+          {{/each}}
+      {{/select}}
+  </select>
+      <label for="sv">Skolvärde</label>
+    <input id="sv" type="number" name="system.sv" value="{{item.system.sv}}" />
+    <br>
+    <label for="fysisk">Fysisk</label>
+    <input id="fysisk" type="checkbox" name="system.fysisk" {{checked system.fysisk}}>
+    <label for="kvick">Kvick</label>
+    <input id="kvick" type="checkbox" name="system.kvick" {{checked system.kvick}}>
+    <label for="ritual">Ritual</label>
+    <input id="ritual" type="checkbox" name="system.ritual" {{checked system.ritual}}>
+    <br>
+    <label for="rackvidd">Räckvidd</label>
+    <input id="rackvidd" type="text" name="system.rackvidd" value="{{system.rackvidd}}"">
+    <br>
+    <label for="varaktighet">Varaktighet</label>
+    <input id="varaktighet" type="text" name="system.varaktighet" value="{{system.varaktighet}}"">
+
+    <label for="skada">Skada</label>
+    <input id="skada" type="text" name="system.skada" value="{{system.skada}}"">
+
+   
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+      editable=editable}}
+    </div>
+
+    {{!-- Attributes Tab --}}
+  </section>
+</form>

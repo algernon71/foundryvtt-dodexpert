@@ -1,0 +1,54 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    <label for="cost">Kostnad</label>
+    <input id="cost" type="number" name="system.cost" value="{{item.system.cost}}" />
+    <label for="ability">Typ</label>
+    <select id="type" class="skill-selector" name="system.type" value="{{item.system.type}}">
+      {{#select system.type}}
+      <option value="A">A-färdighet</option>
+      <option value="B">B-färdighet (1-5)</option>
+      {{/select}}
+    </select>
+
+    <label for="ability">Grundegenskap</label>
+    <select id="ability" name="system.ability" data-type="String">
+      {{#select system.ability}}
+      {{#each abilityList as |ability id|}}
+      <option value="{{ability}}">{{ability}}</option>
+      {{/each}}
+      {{/select}}
+    </select>
+    <br>
+    <label for="bc">BC</label>
+    <input id="bc" type="checkbox" name="system.bc" {{checked system.bc}}>
+    <br>
+    <label for="bc">Specifik</label>
+    <input id="bc" type="checkbox" name="system.specifik" {{checked system.specifik}}>
+  {{#if system.specifik}}
+  <br>
+  <label for="bc">Specialisering</label>
+    <input id="specialisering" type="Specialisering" name="system.specialisering" value="{{system.specialisering}}"">
+  
+  {{/if}}    
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+      editable=editable}}
+    </div>
+
+    {{!-- Attributes Tab --}}
+  </section>
+</form>

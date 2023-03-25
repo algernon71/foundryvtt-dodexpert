@@ -1,0 +1,57 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    <label for="grip">Kroppsdelar</label>
+    <br>
+    <input type="checkbox" name="system.bodyparts.huvud" {{checked system.bodyparts.huvud}}>
+    <label for="bodyparts.huvud">Huvud</label>
+    <input type="checkbox" name="system.bodyparts.bkorg" {{checked system.bodyparts.bkorg}}>
+    <label for="bodyparts.bkorg">Bröstkorg</label>
+    <input type="checkbox" name="system.bodyparts.mage" {{checked system.bodyparts.mage}}>
+    <label for="bodyparts.mage">Bröstkorg</label>
+    <br>
+    <input type="checkbox" name="system.bodyparts.varm" {{checked system.bodyparts.varm}}>
+    <label for="bodyparts.varm">Vänster arm</label>
+    <input type="checkbox" name="system.bodyparts.harm" {{checked system.bodyparts.harm}}>
+    <label for="bodyparts.harm">Höger arm</label>
+    <br>
+
+    <input type="checkbox" name="system.bodyparts.hben" {{checked system.bodyparts.hben}}>
+    <label for="bodyparts.hben">Höger ben</label>
+    <input type="checkbox" name="system.bodyparts.vben" {{checked system.bodyparts.vben}}>
+    <label for="bodyparts.vben">Vänster ben</label>
+  
+    <br>
+
+    <label for="abs">ABS</label>
+    <input id="abs" type="text" name="system.abs" value="{{system.abs}}" />
+    <br>
+
+    <br>
+    <label for="weight">Vikt (BEP)</label>
+    <input id="weight" type="text" name="system.weight" value="{{system.weight}}" />
+    <br>
+    <label for="prince">Pris (sm)</label>
+    <input id="pris" type="text" name="system.price" value="{{system.price}}" />
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+      editable=editable}}
+    </div>
+
+    {{!-- Attributes Tab --}}
+  </section>
+</form>

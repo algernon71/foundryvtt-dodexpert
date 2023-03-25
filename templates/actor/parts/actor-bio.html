@@ -1,0 +1,38 @@
+<table>
+  <tr>
+    <td>
+      <label>Ras</label>
+      <input type="text" name="system.race" value="{{system.race}}"/>
+    </td>
+    <td>
+      <label>Kön</label>
+      <input type="text" name="system.bio.gender" value="{{system.bio.gender}}"/>
+    </td>
+    <td>
+      <label>Ålder</label>
+      <input type="text" name="system.bio.age" value="{{system.bio.age}}" data-dtype="Number"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <label>Yrke</label>
+      <input type="text" name="system.bio.profession" value="{{system.bio.profession}}"/>
+    </td>
+    <td>
+      <label>Socialt stånd</label>
+      <input type="text" name="system.bio.social_standing" value="{{system.bio.social_standing}}"/>
+    </td>
+    <td>
+      <label>Hemort</label>
+      <input type="text" name="system.bio.home" value="{{system.bio.home}}"/>
+      
+    </td>
+  </tr>
+</table>
+
+<label>Livsmål</label>
+<input type="text" name="system.bio.life_goals" value="{{system.bio.life_goals}}"/>
+
+<label>Utseende</label><br>
+{{editor system.bio.appearance target="system.bio.appearance" button=true owner=owner editable=editable}}
+

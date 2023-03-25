@@ -1,0 +1,43 @@
+<table class="items-list">
+  <tr class="item tems-header">
+    <th align="left" width="10%" class="item-roll"></th>
+    <th align="left" width="40%" class="item-name">Namn</th>
+    <th align="left" width="15%"></th>
+    <th align="left" width="10%" class="item-fv">FV</th>
+    <th align="left" width="15%" class="item-erf">Erf</th>
+    <th align="left" width="10%" class="item-buttons"></th>
+  </tr>
+  {{#each skillsList as |item id|}}
+  <tr class="item" data-item-id="{{item._id}}">
+    <td align="left" class="item-roll">
+      <img class="use-item icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/dice-d20.svg">
+    </td>
+    <td align="left">
+      {{item.name}}
+    </td>
+    <td align="left">
+      {{item.system.ability}}({{item.system.cost}})
+    </td>
+    <td align="left">
+      {{#if (eq item.system.type "B")}}B{{/if}}{{item.system.fv}}
+    </td>
+    <td align="left">
+      {{item.system.erf}}
+      {{#if ../isGM}}
+      <i class="fa-solid fa-circle-minus minus-experience small-icon" height="20" data-id="{{item._id}}"></i>
+      <i class="fa-solid fa-circle-plus add-experience small-icon" height="20" data-id="{{item._id}}"></i>
+      {{/if}}
+    </td>
+
+    <td align="left">
+      {{#if item.system.favorite}}
+      <img class="toggle-favorite icon" height="20" data-id="{{item._id}}"
+        src="systems/dodexpert/media/star_filled.svg">
+      {{else}}
+      <img class="toggle-favorite icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/star.svg">
+      {{/if}}
+      <a class="item-delete icon" title="Delete Item"><i class="fas fa-trash"></i></a>
+    </td>
+  </tr>
+  {{/each}}
+</table>

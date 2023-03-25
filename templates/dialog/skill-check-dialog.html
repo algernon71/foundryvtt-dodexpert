@@ -1,0 +1,13 @@
+<form>
+    Färdighet: {{ check.skill.name}}
+
+    <h1>FV: {{check.skill.system.fv}}</h1>
+    <input id="mod" class="roll-parameter" type="number" value="{{mod}}"/>
+    <h1>CL: <span id="cl">{{check.cl}}</span></h1>
+
+    <div id="result">
+
+    </div>
+    
+    <button id="roll-button" type="button" data-action="roll">Slå</button>
+  </form>

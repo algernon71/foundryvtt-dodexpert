@@ -1,0 +1,434 @@
+import { SkillCheckDialog} from "../dialogs/SkillCheckDialog.mjs"
+import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { giveSkillExperience, removeSkillExperience} from "../skills.mjs";
+import { initSkill } from "../skills.mjs";
+import { magiskolor } from "../spells.mjs";
+import { races, bodyShapes } from "../constants.mjs";
+
+/**
+ * Extend the basic ActorSheet with some very simple modifications
+ * @extends {ActorSheet}
+ */
+export class DODExpertActorSheet extends ActorSheet {
+  selectableSkills = [];
+  selectedSkill = null;
+  selectedSkillIndex = 0;
+  /** @override */
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      classes: ["dodexpert", "sheet", "actor"],
+      template: "systems/dodexpert/templates/actor/actor-sheet.html",
+      width: 600,
+      height: 600,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
+    });
+  }
+
+  /** @override */
+  get template() {
+    return `systems/dodexpert/templates/actor/actor-${this.actor.type}-sheet.html`;
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  getData() {
+    // Retrieve the data structure from the base sheet. You can inspect or log
+    // the context variable to see the structure, but some key properties for
+    // sheets are the actor object, the data object, whether or not it's
+    // editable, the items array, and the effects array.
+    const context = super.getData();
+
+    // Use a safe clone of the actor data for further operations.
+    const actorData = this.actor.toObject(false);
+
+    // Add the actor's data to context.data for easier access, as well as flags.
+    context.system = actorData.system;
+    context.flags = actorData.flags;
+
+    // Prepare character data and items.
+    if (actorData.type == 'character') {
+      this._prepareItems(context);
+      this._prepareCharacterData(context);
+    }
+
+    // Prepare NPC data and items.
+    if (actorData.type == 'npc') {
+      this._prepareItems(context);
+    }
+
+    // Add roll data for TinyMCE editors.
+    context.rollData = context.actor.getRollData();
+
+    // Prepare active effects
+    context.effects = prepareActiveEffectCategories(this.actor.effects);
+
+    context.bodyShape = bodyShapes["humanoid"];
+    context.game = game; 
+    context.isGM = game.user.isGM;
+    console.log('context:', context);
+    return context;
+  }
+
+  /**
+   * Organize and classify Items for Character sheets.
+   *
+   * @param {Object} actorData The actor to prepare.
+   *
+   * @return {undefined}
+   */
+  _prepareCharacterData(context) {
+
+    // Handle ability scores.
+    for (let [k, v] of Object.entries(context.system.abilities)) {
+      v.label = game.i18n.localize(CONFIG.DOD_EXPERT.abilities[k]) ?? k;
+    }
+    const bodyShape = bodyShapes["humanoid"];
+
+    const kpOffset = Math.floor((context.system.health.max - 5) / 3) - 1;
+    
+    if (!context.system.body) {
+      context.system.body = {};
+    }
+    for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
+      let bodyPart = context.system.body[part];
+      console.log('Building body part:' + part);
+      const partMaxHealth = v.baseKp + kpOffset;
+      if (!bodyPart) {
+        bodyPart = { 
+          name: v.name,
+          health: {
+            max: partMaxHealth,
+            value: 0
+          }
+        };
+        context.system.body[part] = bodyPart;
+      }
+      let armorList = context.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
+      armorList.forEach(armor => {
+        bodyPart.armor = armor.name;
+        bodyPart.abs = armor.system.abs;
+      });
+    }
+
+    console.log("body:", context.system.body);
+  }
+
+  /**
+   * Organize and classify Items for Character sheets.
+   *
+   * @param {Object} actorData The actor to prepare.
+   *
+   * @return {undefined}
+   */
+  _prepareItems(context) {
+    // Initialize containers.
+    const gear = [];
+    const features = [];
+    const skills = [];
+    const favoriteSkills = [];
+    const spells = [];
+    const weapons = [];
+    let carriedWeight = 0;
+
+
+
+    // Iterate through items, allocating to containers
+    for (let i of context.items) {
+      if (i.system.weight) {
+        carriedWeight += Number(i.system.weight);
+      }
+      i.img = i.img || DEFAULT_TOKEN;
+      // Append to gear.
+      if (i.type === 'item') {
+        gear.push(i);
+      }
+      // Append to features.
+      else if (i.type === 'skill') {
+        initSkill(i, context);
+        skills.push(i);
+        if (i.system.favorite) {
+          favoriteSkills.push(i);
+        }
+
+      }
+      else if (i.type === 'weapon') {
+        weapons.push(i);
+
+      }
+      // Append to features.
+      else if (i.type === 'feature') {
+        features.push(i);
+      }
+      // Append to spells.
+      else if (i.type === 'spell') {
+        spells.push(i);
+      }
+    }
+
+    // Assign and return
+    context.gear = gear;
+    context.weapons = weapons;
+    context.skills = skills;
+    context.favoriteSkills = favoriteSkills;
+    context.spells = spells;
+    context.magiskolor = magiskolor;
+    context.isGM = game.user.isGM;
+    context.carriedWeight = carriedWeight;
+    console.log('context:', context);
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  activateListeners(html) {
+    super.activateListeners(html);
+
+    // Render the item sheet for viewing/editing prior to the editable check.
+    html.find('.item-edit').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.sheet.render(true);
+    });
+
+    // -------------------------------------------------------------
+    // Everything below here is only needed if the sheet is editable
+    if (!this.isEditable) return;
+
+    // Add Inventory Item
+    html.find('.item-create').click(this._onItemCreate.bind(this));
+    html.find('.add-skill').click(this._onSkillCreate.bind(this));
+    html.find('.skill-roll').click(this._onSkillRoll.bind(this));
+    html.find('.use-item').click(this._onUseItem.bind(this));
+    html.find('.fv-input').keyup(this._onSkillUpdate.bind(this));
+    html.find('.add-experience').click(this._onSkillExperienceAdd.bind(this));
+    html.find('.minus-experience').click(this._onSkillExperienceRemove.bind(this));
+    html.find('.toggle-favorite').click(this._onSkillToggleFavorite.bind(this));
+
+    // Delete Inventory Item
+    html.find('.item-delete').click(ev => {
+      const li = $(ev.currentTarget).parents(".item");
+      const item = this.actor.items.get(li.data("itemId"));
+      item.delete();
+      li.slideUp(200, () => this.render(false));
+    });
+
+    // Active Effect management
+    html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
+
+    // Rollable abilities.
+    html.find('.rollable').click(this._onRoll.bind(this));
+
+    // Drag events for macros.
+    if (this.actor.isOwner) {
+      let handler = ev => this._onDragStart(ev);
+      html.find('li.item').each((i, li) => {
+        if (li.classList.contains("inventory-header")) return;
+        li.setAttribute("draggable", true);
+        li.addEventListener("dragstart", handler, false);
+      });
+    }
+  }
+  async _onSkillExperienceAdd(event) { 
+    
+    const a = event.currentTarget;
+    const data = a.dataset;
+    const actorData = this.actor.system;
+    const itemId = $(a).parents('.item').attr('data-item-id');
+    const item = this.actor.items.get(itemId);
+    if (item) {
+      await giveSkillExperience(item, 1);
+      this.render();
+    }
+
+  }
+
+  async _onSkillExperienceRemove(event) { 
+    
+    const a = event.currentTarget;
+    const data = a.dataset;
+    const actorData = this.actor.system;
+    const itemId = $(a).parents('.item').attr('data-item-id');
+    const item = this.actor.items.get(itemId);
+    if (item) {
+      await removeSkillExperience(item, 1);
+      this.render();
+    }
+
+  }
+  async _onSkillToggleFavorite(event) { 
+    
+    const a = event.currentTarget;
+    const data = a.dataset;
+    const actorData = this.actor.system;
+    const itemId = $(a).parents('.item').attr('data-item-id');
+    const item = this.actor.items.get(itemId);
+    if (item) {
+      const favorite = item.system.favorite;
+      let update = { 
+        "system": 
+        { 
+            "favorite" : !favorite
+        } 
+      };
+      await item.update(update, {});
+    }
+
+  }
+
+  async _onSkillUpdate(event) {
+    console.log('_onSkillUpdate', event);
+    const a = event.currentTarget;
+    const data = a.dataset;
+    const actorData = this.actor.system;
+    const itemId = $(a).parents('.item').attr('data-item-id');
+    const item = this.actor.items.get(itemId);
+
+    if (item) {
+      console.log('_onSkillUpdate, item:', item);
+      let update = { "system": { "fv" : "15"} };
+      await item.update(update, {});
+      this.render();
+    }
+  }
+
+
+
+  /**
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async _onItemCreate(event) {
+    event.preventDefault();
+    const header = event.currentTarget;
+    // Get the type of item to create.
+    const type = header.dataset.type;
+    // Grab any data associated with this control.
+    const data = duplicate(header.dataset);
+    // Initialize a default name.
+    const name = `New ${type.capitalize()}`;
+    // Prepare the item object.
+    const itemData = {
+      name: name,
+      type: type,
+      system: data
+    };
+    // Remove the type from the dataset since it's in the itemData.type prop.
+    delete itemData.system["type"];
+
+    // Finally, create the item!
+    return await Item.create(itemData, {parent: this.actor});
+  }
+
+  async _onSkillAdd(event) {
+    const data = { actor: this.actor };
+    const addSkillDialog = await renderTemplate("systems/dodexpert/templates/item/add-skill-dialog.html", data);
+    
+    new Dialog({
+      title: "Lägg till färdighet",
+      content: addSkillDialog,
+      buttons: {add: {
+        label: "Lägg till",
+        callback: () => {
+          ui.notifications.info("Button #1 Clicked!")
+        },
+        icon: `<i class="fas fa-check"></i>`
+      }}
+    }).render(true);
+  }
+  
+  /**
+   * Handle clickable rolls.
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  _onRoll(event) {
+    event.preventDefault();
+    console.log('_onRoll', event);
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+
+    console.log('_onRoll dataset:', dataset);
+    // Handle item rolls.
+    if (dataset.rollType) {
+      if (dataset.rollType == 'item') {
+        const itemId = element.closest('.item').dataset.itemId;
+        const item = this.actor.items.get(itemId);
+        if (item) return item.roll();
+      }
+    }
+
+    // Handle rolls that supply the formula directly.
+    if (dataset.roll) {
+      let label = dataset.label ? `[ability] ${dataset.label}` : '';
+      let roll = new Roll(dataset.roll, this.actor.getRollData());
+      roll.toMessage({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        flavor: label,
+        rollMode: game.settings.get('core', 'rollMode'),
+      });
+      return roll;
+    }
+  }
+
+  async _onUseItem(event) {
+
+
+    console.log('_onUseItem, event:', event);
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    const item = this.actor.items.get(dataset.id);
+    item.use(event);
+  }
+  async _onSkillRoll(event) {
+
+
+    console.log('_onSkillRoll, event:', event);
+    const element = event.currentTarget;
+    const dataset = element.dataset;
+    console.log('_onSkillRoll, dataset:', dataset);
+    const item = this.actor.items.get(dataset.id);
+    console.log('_onSkillRoll, item:', item);
+    this.skillCheckDialog = new SkillCheckDialog({skill: item} );
+    this.skillCheckDialog.render(true, { 
+      renderData: {skill: item} 
+    });
+  }
+
+  async _onSkillCreate(event) {
+    console.log('_onSkillCreate, event:', event);
+    const context = this.getData();
+    console.log('_onSkillCreate, context:', context);
+
+    event.preventDefault();
+    const header = event.currentTarget;
+    // Grab any data associated with this control.
+    const data = duplicate(header.dataset);
+    // Initialize a default name.
+    const name = `Smyga`;
+    // Prepare the item object.
+    const bcStat = context.data.system.abilities[this.selectedSkill.bc];
+    let bc = 0;
+    if (bcStat) {
+      bc = bcStat.mod;
+    }
+    const itemData = {
+      name: this.selectedSkill.name,
+      type: "skill",
+      system: {
+        skill_id : this.selectedSkillIndex,
+        fv: bc,
+        erf: 0
+
+      }
+    };
+    // Remove the type from the dataset since it's in the itemData.type prop.
+    delete itemData.system["type"];
+
+    // Finally, create the item!
+    return await Item.create(itemData, {parent: this.actor});
+  }
+
+
+}

@@ -1,0 +1,195 @@
+{
+  "Actor": {
+    "types": [
+      "character",
+      "npc",
+      "monster",
+      "location",
+      "boat"
+    ],
+    "templates": {
+      "race": "human",
+      "bodyType": "humanoid",
+      "bio": {
+        "gender": "Man",
+        "age": 20,
+        "profession": "",
+        "social_standing": "",
+        "home": "",
+        "life_goals": "",
+        "appearance": "",
+        "biography": ""
+      },
+      "money": {
+        "gold": 0,
+        "silver": 0,
+        "copper": 0
+      },
+      "body": {
+        "body": {
+
+        }
+      },
+
+      "base": {
+        "abilities": {
+          "STY": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "FYS": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "STO": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "SMI": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "INT": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "PSY": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          }
+        }
+      }
+    },
+    "character": {
+      "templates": [
+        "base",
+        "money",
+        "bio"
+      ],
+      "gerf": 0,
+      "hero": {
+        "points": 0,
+        "abilities": []
+      },
+      "attributes": {
+        "level": {
+          "value": 1
+        }
+      }
+    },
+    "npc": {
+      "templates": [
+        "base"
+      ]
+    },
+    "monster": {
+      "templates": [
+        "base"
+      ]
+    },
+    "location": {
+      "type": "house",
+      "money": {
+        "gold": 0,
+        "silver": 0,
+        "copper": 0
+      }
+    },
+    "boat": {
+      "type": "caravelle",
+      "cargo": {
+        "volume": 0
+      }
+    }
+  },
+  "Item": {
+    "types": [
+      "item",
+      "feature",
+      "spell",
+      "skill",
+      "weapon",
+      "armor",
+      "ammo"
+    ],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": [
+        "base"
+      ],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "armor": {
+      "templates": [
+        "base"
+      ],
+      "weight": 0,
+      "category": "melee",
+      "abs": "1",
+      "bodyparts": {},
+      "price": "0"
+    },
+    "weapon": {
+      "templates": [
+        "base"
+      ],
+      "weight": 0,
+      "category": "melee",
+      "grip": "1H",
+      "type": "sword",
+      "subtype": "sword",
+      "sty": "2",
+      "bv": "11",
+      "range": "",
+      "range_unit": "m",
+      "range_ability": "SMI",
+      "price": "0",
+      "damage": "d6"
+    },
+    "feature": {
+      "templates": [
+        "base"
+      ]
+    },
+    "spell": {
+      "templates": [
+        "base"
+      ],
+      "skola": "",
+      "varaktighet": "",
+      "rackvidd": "",
+      "fysisk": false,
+      "kvick": false,
+      "ritual": false,
+      "sv": 1
+    },
+    "skill": {
+      "templates": [
+        "base"
+      ],
+      "skill_id": "",
+      "item_type": "",
+      "favorite": false,
+      "specifik": false,
+      "type": "A",
+      "fv": 0,
+      "erf": 0,
+      "ability": "SMI",
+      "bc": false,
+      "cost": 2,
+      "category": "battle"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+<form class="{{cssClass}}" autocomplete="off">
+  <header class="sheet-header">
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+    </div>
+  </header>
+
+  {{!-- Sheet Tab Navigation --}}
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="description">Description</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    <label for="catgeory">Typ</label>
+
+    <select id="catgeory" class="catgeory-selector" name="system.category" value="{{system.category}}">
+      {{#select system.category}}
+      <option value="melee">Närstridsvapen</option>
+      <option value="projectile">Projektilvapen</option>
+      <option value="thrown">Kastvapen</option>
+      {{/select}}
+    </select>
+
+    {{#ifeq system.category "melee"}}
+      <select id="type" class="type-selector" name="system.type" value="{{system.type}}">
+        {{#select system.type}}
+        <option value="sword">Svärd</option>
+        <option value="spear">Spjut</option>
+        <option value="axe">Yxa</option>
+        <option value="dagger">Dolk</option>
+        {{/select}}
+      </select>
+    {{/ifeq}}
+    {{#ifeq system.category "projectile"}}
+      <select id="type" class="type-selector" name="system.type" value="{{system.type}}">
+        {{#select system.type}}
+        <option value="bow">Pilbåge</option>
+        <option value="crossbow">Armborst</option>
+        <option value="sling">Slunga</option>
+        {{/select}}
+      </select>
+    {{/ifeq}}
+    {{#ifeq system.category "thrown"}}
+      <select id="type" class="type-selector" name="system.type" value="{{system.type}}">
+        {{#select system.type}}
+        <option value="spear">Kastspjut</option>
+        <option value="dagger">Kastkniv</option>
+        <option value="axe">Kastyxa</option>
+        {{/select}}
+      </select>
+    {{/ifeq}}
+    <br>
+
+
+    
+    <label for="grip">Fattning</label>
+    <select id="grip" class="grip-selector" name="system.grip" value="{{system.grip}}">
+      {{#select system.grip}}
+      <option value="1H">1H</option>
+      <option value="1-2H">1-2H</option>
+      <option value="2H">2H</option>
+      {{/select}}
+    </select>
+
+    <label for="sty">STY-grupp</label>
+    <select id="sty" class="sty-selector" name="system.sty" value="{{system.sty}}">
+      {{#select system.sty}}
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      {{/select}}
+    </select>
+    <label for="length">Vapenlängd</label>
+    <select id="length" class="sty-selector" name="system.length" value="{{system.length}}">
+      {{#select system.length}}
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      {{/select}}
+    </select>
+    <br>
+
+    <label for="damage">Skada</label>
+    <input id="damage" type="text" name="system.damage" value="{{system.damage}}" />
+    <br>
+    <label for="bv">Brytvärde</label>
+    <input id="bv" type="text" name="system.bv" value="{{system.bv}}" />
+    {{#ifeq system.category "projectile"}}
+    <label for="range">Räckvidd</label>
+    <input id="range" type="text" name="system.range" value="{{system.range}}" />m
+    {{/ifeq}}
+    {{#ifeq system.category "thrown"}}
+    <label for="range">Räckvidd</label>
+    <select id="range_ability" class="sty-selector" name="system.range_ability" value="{{system.range_ability}}">
+      {{#select system.range_ability}}
+      <option value="SMI">SMI</option>
+      <option value="STY">STY</option>
+      {{/select}}
+    </select>
+    x1 Rutor
+    {{/ifeq}}
+
+    <br>
+    <label for="weight">Vikt (BEP)</label>
+    <input id="weight" type="text" name="system.weight" value="{{system.weight}}" />
+    <br>
+    <label for="prince">Pris (sm)</label>
+    <input id="pris" type="text" name="system.price" value="{{system.price}}" />
+
+    {{!-- Description Tab --}}
+    <div class="tab" data-group="primary" data-tab="description">
+      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+      editable=editable}}
+    </div>
+
+    {{!-- Attributes Tab --}}
+  </section>
+</form>

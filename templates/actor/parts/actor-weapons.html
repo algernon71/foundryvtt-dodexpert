@@ -1,0 +1,47 @@
+<div class="items-list">
+  <table>
+    <tr>
+       <th align="left"></th>     
+       <th align="left">Namn</th>     
+       <th align="left">CL</th>     
+       <th align="left">Skada</th>     
+       <th align="left">BV</th>     
+       <th align="left">Räckvidd</th>     
+       <th align="left">Vikt</th>     
+       <th align="right"></th>     
+    </tr>
+    {{#each weaponsList as |item id|}}
+    <tr class="item" data-item-id="{{item._id}}">
+      <td class="item-roll" >
+        <img class="attack-roll icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/dice-d20.svg">
+      </td>
+      <td align="left" class="weapon-name" >
+        <h4>{{item.name}}</h4>
+      </td>
+      <td align="left" class="weapon-skill-cl" >
+        <h4>{{item.skill.system.fv}}</h4>
+      </td>
+      <td align="left" class="weapon-damage" >
+        {{item.system.damage}}
+      </td>
+      <td align="left" class="weapon-bv" >
+        {{item.system.bv}}
+      </td>
+      <td align="left" class="weapon-range" >
+        {{item.system.range}}
+      </td>
+      <td align="left" class="weapon-weight" >
+        {{item.system.weight}}
+      </td>
+      <td align="right" class="item-buttons">
+        {{#if item.system.favorite}}
+        <img class="toggle-favorite icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/star_filled.svg">
+        {{else}}
+        <img class="toggle-favorite icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/star.svg">
+        {{/if}}
+        <a class="item-delete icon" title="Delete Item"><i class="fas fa-trash"></i></a>
+      </td>
+    </tr>
+  {{/each}}
+  </table>
+</div>

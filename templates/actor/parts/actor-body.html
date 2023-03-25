@@ -1,0 +1,26 @@
+<ol class="items-list">
+  <li class="item flexrow items-header">
+    <div class="item-name">Kroppsdel</div>
+    <div class="item-name">Rustning</div>
+    <div class="item-name">ABS</div>
+    <div class="item-name">KP</div>
+  </li>
+  {{#each system.body as |part id|}}
+    <li class="item flexrow" data-item-id="{{part._id}}">
+      <div class="item-name" >
+        <h4>{{part.name}}</h4>
+      </div>
+      <div class="item-name" >
+        <h4>{{part.armor}}</h4>
+      </div>
+      <div class="item-name" >
+        <h4>{{part.abs}}</h4>
+      </div>
+      <div class="item-name" >
+        <h4>{{part.kp}}</h4>
+      </div>
+    </li>
+  {{/each}}
+  <li>
+</li>
+</ol>

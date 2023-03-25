@@ -1,0 +1,50 @@
+<ol class="items-list">
+  <li class="item flexrow items-header">
+    <div class="item-roll"></div>
+    <div class="item-name">Namn</div>
+    <div class="item-fv">FV</div>
+    <div class="item-spacer"></div>
+    <div class="item-erf">Erf</div>
+    <div class="item-buttons"></div>
+  </li>
+  {{#each spells as |item id|}}
+    <li class="item flexrow" data-item-id="{{item._id}}">
+      <div class="item-roll" >
+        <img class="skill-roll icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/dice-d20.svg">
+      </div>
+      <div class="item-name" >
+        <h4>
+
+          {{item.name}}
+
+          {{# if item.system.kvick}}K{{/if}}
+          {{# if item.system.fysisk}}F{{/if}}
+          {{# if item.system.ritual}}R{{/if}}
+        </h4>
+      </div>
+      <div class="item-spacer"></div>
+      <div class="item-stat" >
+        {{item.system.sv}}
+      </div>
+      <div class="item-spacer"></div>
+      <div class="item-name" >
+        <h4>{{item.system.fv}}</h4>
+      </div>
+      <div class="item-stat" >
+        {{item.system.erf}}
+        <img class="give-experience small-icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/add.svg">
+        </div>
+
+      <div class="item-buttons">
+        {{#if item.system.favorite}}
+        <img class="toggle-favorite icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/star_filled.svg">
+        {{else}}
+        <img class="toggle-favorite icon" height="20" data-id="{{item._id}}" src="systems/dodexpert/media/star.svg">
+        {{/if}}
+        <a class="item-delete icon" title="Delete Item"><i class="fas fa-trash"></i></a>
+      </div>
+    </li>
+  {{/each}}
+  <li>
+</li>
+</ol>
