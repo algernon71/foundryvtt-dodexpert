@@ -1,0 +1,42 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="character-header">
+      <div class="expert-classic-sheet-topbar">
+        <div>
+          <img class="icon" src="systems/dodexpert/media/expert.png">
+  
+        </div>
+        <div>
+          <input class="expert-classic-character-name" name="name" type="text" value="{{actor.name}}">
+  
+        </div>
+      </div>
+  
+    </header>
+  
+    {{#if isGM}}
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="gm">SL</a>
+        <a class="item" data-tab="public">Info</a>
+    </nav>
+  
+    <section class="sheet-body">
+  
+      <div class="tab public" data-group="primary" data-tab="public">
+        {{> "systems/dodexpert/templates/actor/public/info.html"}}
+      </div>
+      <div class="tab gm" data-group="primary" data-tab="gm">
+        {{> "systems/dodexpert/templates/actor/npc/gm-sheet.html"}}
+      </div>
+    
+  
+    </section>
+    {{else}}
+    <div class="tab public" data-group="primary" data-tab="public">
+        {{> "systems/dodexpert/templates/actor/public/info.html"}}
+      </div>
+    {{/if}}
+  
+</form>

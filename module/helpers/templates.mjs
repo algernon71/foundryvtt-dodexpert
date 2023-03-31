@@ -15,7 +15,10 @@
     "systems/dodexpert/templates/actor/parts/actor-spells.html",
     "systems/dodexpert/templates/actor/parts/actor-skills.html",
     "systems/dodexpert/templates/actor/parts/actor-weapons.html",
-    "systems/dodexpert/templates/actor/parts/actor-effects.html",
+    "systems/dodexpert/templates/actor/character/classic/front.html",
+    "systems/dodexpert/templates/actor/character/classic/back.html",
+    "systems/dodexpert/templates/actor/npc/gm-sheet.html",
+    "systems/dodexpert/templates/actor/public/info.html",
     "systems/dodexpert/templates/item/item-skill-sheet.html",
   ]);
 };

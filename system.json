@@ -6,13 +6,13 @@
   "compatibility": {
     "minimum": 10,
     "verified": "10.287",
-    "maximum": 10
+    "maximum": 11
   },
   "authors": [{
     "name": "Kent Närling"
   }],
   "esmodules": ["module/dodexpert.mjs"],
-  "styles": ["css/dodexpert.css"],
+  "styles": ["css/dodexpert.css", "css/expert_classic_sheet.css", "css/sheets.css", "css/npc.css"],
   "scripts": [],
   "packs": [],
   "languages": [

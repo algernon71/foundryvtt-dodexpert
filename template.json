@@ -18,7 +18,8 @@
         "home": "",
         "life_goals": "",
         "appearance": "",
-        "biography": ""
+        "biography": "",
+        "notes": ""
       },
       "money": {
         "gold": 0,
@@ -59,6 +60,11 @@
             "max": 18
           },
           "PSY": {
+            "value": 11,
+            "min": 3,
+            "max": 18
+          },
+          "KAR": {
             "value": 11,
             "min": 3,
             "max": 18

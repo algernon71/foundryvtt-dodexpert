@@ -36,7 +36,7 @@ Hooks.once('init', async function() {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: "1d20 + @abilities.dex.mod",
+    formula: "1d10 + @initiative",
     decimals: 2
   };
 
@@ -72,6 +72,32 @@ Handlebars.registerHelper('concat', function() {
 Handlebars.registerHelper('ifeq', function (a, b, options) {
   if (a == b) { return options.fn(this); }
   return options.inverse(this);
+});
+
+function objectSize(o) {
+  if (o instanceof Array) {
+    return o.length;
+  }
+  return Object.keys(o).length;  
+}
+
+function calcPadCount(list, count, offset) {
+  const size = objectSize(list);
+
+  if (offset) {
+    return count - offset - size;
+  }
+
+  return count - size;
+}
+
+Handlebars.registerHelper('padlist', function (list, count, offset, options) {
+  const padCount = calcPadCount(list, count, offset)
+  let buf = '';
+  for (let i = 0 ; i < padCount ; ++i) {
+    buf += options.fn();
+  }
+  return buf;
 });
 
 Handlebars.registerHelper('toLowerCase', function(str) {

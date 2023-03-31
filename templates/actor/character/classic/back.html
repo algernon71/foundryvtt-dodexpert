@@ -1,0 +1,346 @@
+<div class="expert-classic-sheet">
+
+    <div class="expert-classic-sheet-back-top">
+
+        <div class="expert-classic-sheet-body">
+            <table class="expert-classic-table items-list">
+                <tr class="expert-classic-table-header">
+                    <th class="expert-classic-table-header-title">KROPPSDELAR</th>
+                    <th class="expert-classic-table-header-value">KP</th>
+                    <th class="expert-classic-table-header-value">Material</th>
+                    <th class="expert-classic-table-header-value">Abs</th>
+                    <th class="expert-classic-table-header-value">Vikt</th>
+                </tr>
+                {{#each system.body as |part id|}}
+                <tr class="expert-classic-table-row">
+                    <td class="expert-classic-table-row-title rightch">{{part.name}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{part.kp}}</td>
+                    <td class="expert-classic-table-row-armor leftch rightch">{{part.armor}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{part.abs}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{part.weight}}</td>
+                </tr>
+                {{/each}}
+                {{#padlist system.body 9}}
+                <tr class="expert-classic-table-row">
+                    <td class="expert-classic-table-row-title rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-armor leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                </tr>
+                {{/padlist}}
+
+            </table>
+
+        </div>
+        <div class="expert-classic-sheet-column">
+
+            <div class="kp-meter">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Kroppspoäng</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.health.value}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="expert-classic-checkboxes-list">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox">
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                                <input type="checkbox" disabled>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+            </div>
+
+            <div class="other">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-header">
+                        <th class="expert-classic-table-header-title">
+                            ÖVRIGT
+                        </th>
+                    </tr>
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                        <input class="expert-classic-text-field-input" value="Hej hopp">
+                        </td>
+                    </tr>
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                        <input class="expert-classic-text-field-input" value="">
+                        </td>
+                    </tr>
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                        <input class="expert-classic-text-field-input" value="">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="expert-classic-sheet-money">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-header">
+                        <th class="expert-classic-table-header-title">MYNT</th>
+                        <th class="expert-classic-table-header-value">Guld</th>
+                        <th class="expert-classic-table-header-value">Silver</th>
+                        <th class="expert-classic-table-header-value">Koppar</th>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Bärande</td>
+                        <td class="expert-classic-table-row-value leftch rightch">8</td>
+                        <td class="expert-classic-table-row-value leftch rightch">23</td>
+                        <td class="expert-classic-table-row-value leftch rightch">12</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">I förvar</td>
+                        <td class="expert-classic-table-row-value leftch rightch">110</td>
+                        <td class="expert-classic-table-row-value leftch rightch">250</td>
+                        <td class="expert-classic-table-row-value leftch rightch">35</td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="expert-classic-sheet-back-middle">
+        <div class="expert-classic-sheet-column wide">
+            <table class="expert-classic-table items-list">
+                <tr class="expert-classic-table-header">
+                    <th class="expert-classic-table-header-title">VAPEN</th>
+                    <th class="expert-classic-table-header-value">FV</th>
+                    <th class="expert-classic-table-header-value">Skada</th>
+                    <th class="expert-classic-table-header-value">BV</th>
+                    <th class="expert-classic-table-header-value">Vapenl</th>
+                    <th class="expert-classic-table-header-value">Räckv</th>
+                    <th class="expert-classic-table-header-value">Erf</th>
+                    <th class="expert-classic-table-header-value">Vikt</th>
+                </tr>
+                {{#each weapons as |item id|}}
+                <tr class="expert-classic-table-row item" data-item-id="{{item._id}}">
+                    <td class="expert-classic-table-row-title rightch">
+                        {{item.name}}
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    </td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{item.skill.system.fv}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.damage}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.bv}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.range}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"> {{item.system.weight}}</td>
+                </tr>
+                {{/each}}
+                {{#padlist weapons 8}}
+                <tr class="expert-classic-table-row">
+                    <td class="expert-classic-table-row-title rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                </tr>
+                {{/padlist}}
+
+
+
+
+            </table>
+
+        </div>
+        <div>
+
+
+            <div class="derived-stats">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Skadebonus</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.sb}}</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Svärdshand</td>
+                        <td class="expert-classic-table-row-value leftch rightch">H</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Förflyttning</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.movement}}</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Bärförmåga</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.weightCapacity}}</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Utnyttjade BEP</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{carriedWeight}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="expert-classic-sheet-shields">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-header">
+                        <th class="expert-classic-table-header-title">SKÖLD</th>
+                        <th class="expert-classic-table-header-value">FV</th>
+                        <th class="expert-classic-table-header-value">Abs</th>
+                        <th class="expert-classic-table-header-value">Erf</th>
+                        <th class="expert-classic-table-header-value">Vikt</th>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Medelstor sköld</td>
+                        <td class="expert-classic-table-row-value leftch rightch">10</td>
+                        <td class="expert-classic-table-row-value leftch rightch">12</td>
+                        <td class="expert-classic-table-row-value leftch rightch">1</td>
+                        <td class="expert-classic-table-row-value leftch rightch">2</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                        <td class="expert-classic-table-row-value leftch rightch"></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <div class="expert-classic-sheet-back-bottom">
+        <div class="expert-classic-equipment-list">
+            <table class="expert-classic-equipment-table item-list">
+
+                <tr class="expert-classic-equipment-row">
+                    <th>
+                        UTRUSTNING
+                    </th>
+                    <th>
+                        BEP
+                    </th>
+                </tr>
+                {{#each gear as |item id|}}
+                <tr class="expert-classic-equipment-row item" data-item-id="{{item._id}}">
+                    <td class="expert-classic-equipment-description">
+                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
+                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                        {{item.name}}
+                    </td>
+                    <td class="expert-classic-equipment-weight">{{item.weight}}
+
+                    </td>
+                </tr>
+                {{/each}}
+                {{#padlist gear 10}}
+                <tr class="expert-classic-equipment-row">
+                    <td class="expert-classic-equipment-description"></td>
+                    <td class="expert-classic-equipment-weight">
+                    </td>
+                </tr>
+                {{/padlist}}
+
+            </table>
+        </div>
+        <div class="expert-classic-equipment-list">
+            <table class="expert-classic-equipment-table">
+
+                <tr class="expert-classic-equipment-row">
+                    <th>
+                        UTRUSTNING
+                    </th>
+                    <th>
+                        BEP
+                    </th>
+                </tr>
+                <tr class="expert-classic-equipment-row">
+                    <td class="expert-classic-equipment-description"></td>
+                    <td class="expert-classic-equipment-weight"></td>
+                </tr>
+                <tr class="expert-classic-equipment-row">
+                    <td class="expert-classic-equipment-description"></td>
+                    <td class="expert-classic-equipment-weight"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="expert-classic-equipment-list">
+            <table class="expert-classic-equipment-table">
+
+
+                <tr class="expert-classic-equipment-row">
+                    <th>
+                        UTRUSTNING
+                    </th>
+                    <th>
+                        BEP
+                    </th>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+
+</div>

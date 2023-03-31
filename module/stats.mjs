@@ -15,6 +15,7 @@ export function calculateSecondaryStats(stats) {
     }
     stats.health.max = calculateHitpoints(stats.abilities.STO.value, stats.abilities.FYS.value);
 
+    stats.initiative = stats.abilities.SMI.group;
     stats.sb = calculateDamageBonus(stats.abilities.STY.value, stats.abilities.STO.value);
     stats.weightCapacity = stats.abilities.STY.value;
     stats.movement = calculateMovement(stats.abilities.STO.value, stats.abilities.FYS.value, stats.abilities.SMI.value);

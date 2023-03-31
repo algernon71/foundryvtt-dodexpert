@@ -14,7 +14,7 @@ export function getChatLogEntryContext(html, options) {
 }
 
 function rollDamage(event) {
-    console.log('rollDamage', event);
+    console.log('rollDamage', event);7
   };
   
 

@@ -1,0 +1,224 @@
+.window-app .window-content {
+    background: white;
+}
+table tr:nth-child(even) {
+    background-color:none;
+}
+
+input[type="checkbox"] {
+    width: 12px;
+    height: 12px;
+}
+input[type="text"] {
+    border: none;
+    outline: none;
+    background: none;
+}
+.expert-classic-sheet-topbar {
+    display: flex;
+    height: 100px;
+}
+
+.expert-classic-character-image {
+    padding: 5px;
+}
+.expert-classic-character-image-frame {
+}
+
+.expert-classic-character-name {
+    outline: none;
+    border: none;
+    text-align: left ;
+    height: 80px !important;
+    font-size: 64px !important;
+    font-weight: bold !important;
+    font-family: sans serif;;
+}
+.expert-classic-sheet-header {
+    display: flex;
+    align-items: stretch;
+}
+.expert-classic-sheet-back-top {
+    display: flex;
+    align-items: stretch;
+}
+.expert-classic-sheet-back-middle {
+    display: flex;
+    align-items: stretch;
+}
+.expert-classic-sheet-back-bottom {
+    display: flex;
+    align-items: stretch;
+}
+
+.expert-classic-text-cell {
+    border: 1px solid black;
+    background: white;
+}
+.expert-classic-text-field-area {
+    outline: none;
+    border: none;
+    resize: none;
+    background: white;
+    font-family: sans serif;
+}
+
+.expert-classic-text-field-label {
+    font-size: 10px;
+}
+.expert-classic-text-field-input {
+    font-size: 16px;
+    outline: none;
+    border: none;
+}
+.expert-classic-sheet-logo {
+    width: 100%;
+}
+.expert-classic-sheet-corner {
+    width: 200px;
+}
+.expert-classic-sheet-bio {
+    flex-grow: 1;
+    
+}
+.expert-classic-sheet-main {
+    display: flex;
+}
+.expert-classic-sheet-body {
+    flex-grow: 8;
+}
+.expert-classic-sheet-column {
+    flex-grow: 2;
+}
+
+.wide {
+    flex-grow: 8;
+}
+
+.psy-meter {
+    background-color: white;
+}
+.kp-meter {
+    background-color: white;
+}
+
+.expert-classic-checkboxes-list {
+    max-width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.expert-classic-table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: black;
+    border-style: solid;
+    border-width: 2px;
+    width: 100%;
+}
+
+.expert-classic-input-value {
+    outline: none;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    width: 40px;
+}
+
+tr.expert-classic-table-row {
+    height: 36px;
+    border: black;
+    border-style: solid;
+    border-width: 1px;
+    background-color: black !important;
+    
+}
+.expert-classic-table-header {
+    font-family: sans serif;;
+    font-size: 16px;
+
+}
+
+.expert-classic-table-header-title {
+    font-family: sans serif;;
+    font-size: 16px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.expert-classic-table-row-title {
+    /* fallback */
+    background: #be4637;
+    border-color: black;
+    border-width: 1px;
+    font-family: sans serif;;
+    font-size: 16px;
+    padding-left: 10px;
+    color: #000;
+
+    /* fallback */
+}
+.expert-classic-table-row-value {
+    background: #ffffff;
+    width: 40px;
+    border-color: black;
+    border-width: 1px;
+    font-family: sans serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+
+    /* fallback */
+}
+
+.expert-classic-table-row-armor {
+    background: #ffffff;
+    font-family: sans serif;;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    padding-left: 20px;
+
+    /* fallback */
+}
+
+.leftch::after {
+    right: 0;
+    border-top: 10px solid lightpink;
+    border-right: 10px solid white;
+    border-left: 10px solid lightpink;
+    border-bottom: 10px solid white;
+  }
+.rightch {
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.leftch {
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.expert-classic-equipment-list {
+    flex-grow: 1;
+}
+
+.expert-classic-equipment-table {
+    width: 100%;
+}
+.expert-classic-equipment-row {
+    height: 24px;
+    background-color: white;
+    border: none;
+    font-size: 14px;
+}
+.expert-classic-equipment-description {
+    border-bottom: 1px solid black;
+    text-align: left;
+    background-color: white;
+}
+
+.expert-classic-equipment-weight {
+    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: white;
+    
+}

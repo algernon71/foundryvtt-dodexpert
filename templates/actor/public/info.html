@@ -1,0 +1,23 @@
+<div class="sheet-column">
+
+    <div class="sheet-row">
+        <div class="info-image-frame">
+            <div class="info-image">
+                <img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" />
+            </div>
+        </div>
+        <div class="sheet-column">
+            <h2>Beskrivning</h2>
+            <div class="info-description">
+                {{system.bio.appearance}}
+            </div>
+
+        </div>
+    </div>
+    <div class="sheet-row">
+        <div class="sheet-column grow">
+            <h2>Noteringar</h2>
+            {{editor system.notes target="system.notes" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+</div>

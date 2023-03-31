@@ -1,6 +1,6 @@
-import { SkillCheckDialog} from "../dialogs/SkillCheckDialog.mjs"
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
-import { giveSkillExperience, removeSkillExperience} from "../skills.mjs";
+import { SkillCheckDialog } from "../dialogs/SkillCheckDialog.mjs"
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
+import { giveSkillExperience, removeSkillExperience } from "../skills.mjs";
 import { initSkill } from "../skills.mjs";
 import { magiskolor } from "../spells.mjs";
 import { races, bodyShapes } from "../constants.mjs";
@@ -17,16 +17,16 @@ export class DODExpertActorSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["dodexpert", "sheet", "actor"],
-      template: "systems/dodexpert/templates/actor/actor-sheet.html",
-      width: 600,
-      height: 600,
+      template: "systems/dodexpert/templates/actor/expert-character-sheet.html",
+      width: 800,
+      height: 1000,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "features" }]
     });
   }
 
   /** @override */
   get template() {
-    return `systems/dodexpert/templates/actor/actor-${this.actor.type}-sheet.html`;
+    return `systems/dodexpert/templates/actor/${this.actor.type}-sheet.html`;
   }
 
   /* -------------------------------------------- */
@@ -47,15 +47,14 @@ export class DODExpertActorSheet extends ActorSheet {
     context.flags = actorData.flags;
 
     // Prepare character data and items.
-    if (actorData.type == 'character') {
-      this._prepareItems(context);
-      this._prepareCharacterData(context);
+    switch (actorData.type) {
+      case 'character':
+      case 'npc':
+        this._prepareItems(context);
+        this._prepareCharacterData(context);
+        break;
     }
 
-    // Prepare NPC data and items.
-    if (actorData.type == 'npc') {
-      this._prepareItems(context);
-    }
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
@@ -64,7 +63,7 @@ export class DODExpertActorSheet extends ActorSheet {
     context.effects = prepareActiveEffectCategories(this.actor.effects);
 
     context.bodyShape = bodyShapes["humanoid"];
-    context.game = game; 
+    context.game = game;
     context.isGM = game.user.isGM;
     console.log('context:', context);
     return context;
@@ -86,7 +85,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const bodyShape = bodyShapes["humanoid"];
 
     const kpOffset = Math.floor((context.system.health.max - 5) / 3) - 1;
-    
+
     if (!context.system.body) {
       context.system.body = {};
     }
@@ -95,7 +94,7 @@ export class DODExpertActorSheet extends ActorSheet {
       console.log('Building body part:' + part);
       const partMaxHealth = v.baseKp + kpOffset;
       if (!bodyPart) {
-        bodyPart = { 
+        bodyPart = {
           name: v.name,
           health: {
             max: partMaxHealth,
@@ -140,29 +139,23 @@ export class DODExpertActorSheet extends ActorSheet {
       }
       i.img = i.img || DEFAULT_TOKEN;
       // Append to gear.
-      if (i.type === 'item') {
-        gear.push(i);
-      }
-      // Append to features.
-      else if (i.type === 'skill') {
-        initSkill(i, context);
-        skills.push(i);
-        if (i.system.favorite) {
-          favoriteSkills.push(i);
-        }
-
-      }
-      else if (i.type === 'weapon') {
-        weapons.push(i);
-
-      }
-      // Append to features.
-      else if (i.type === 'feature') {
-        features.push(i);
-      }
-      // Append to spells.
-      else if (i.type === 'spell') {
-        spells.push(i);
+      switch (i.type) {
+        case 'item':
+          gear.push(i);
+          break;
+        case 'skill':
+          initSkill(i, context);
+          skills.push(i);
+          if (i.system.favorite) {
+            favoriteSkills.push(i);
+          }
+          break;
+        case 'weapon':
+          weapons.push(i);
+          break;
+        case 'spell':
+          spells.push(i);
+          break;
       }
     }
 
@@ -229,8 +222,8 @@ export class DODExpertActorSheet extends ActorSheet {
       });
     }
   }
-  async _onSkillExperienceAdd(event) { 
-    
+  async _onSkillExperienceAdd(event) {
+
     const a = event.currentTarget;
     const data = a.dataset;
     const actorData = this.actor.system;
@@ -243,8 +236,8 @@ export class DODExpertActorSheet extends ActorSheet {
 
   }
 
-  async _onSkillExperienceRemove(event) { 
-    
+  async _onSkillExperienceRemove(event) {
+
     const a = event.currentTarget;
     const data = a.dataset;
     const actorData = this.actor.system;
@@ -256,8 +249,8 @@ export class DODExpertActorSheet extends ActorSheet {
     }
 
   }
-  async _onSkillToggleFavorite(event) { 
-    
+  async _onSkillToggleFavorite(event) {
+
     const a = event.currentTarget;
     const data = a.dataset;
     const actorData = this.actor.system;
@@ -265,11 +258,11 @@ export class DODExpertActorSheet extends ActorSheet {
     const item = this.actor.items.get(itemId);
     if (item) {
       const favorite = item.system.favorite;
-      let update = { 
-        "system": 
-        { 
-            "favorite" : !favorite
-        } 
+      let update = {
+        "system":
+        {
+          "favorite": !favorite
+        }
       };
       await item.update(update, {});
     }
@@ -286,7 +279,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     if (item) {
       console.log('_onSkillUpdate, item:', item);
-      let update = { "system": { "fv" : "15"} };
+      let update = { "system": { "fv": "15" } };
       await item.update(update, {});
       this.render();
     }
@@ -318,26 +311,28 @@ export class DODExpertActorSheet extends ActorSheet {
     delete itemData.system["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
   async _onSkillAdd(event) {
     const data = { actor: this.actor };
     const addSkillDialog = await renderTemplate("systems/dodexpert/templates/item/add-skill-dialog.html", data);
-    
+
     new Dialog({
       title: "Lägg till färdighet",
       content: addSkillDialog,
-      buttons: {add: {
-        label: "Lägg till",
-        callback: () => {
-          ui.notifications.info("Button #1 Clicked!")
-        },
-        icon: `<i class="fas fa-check"></i>`
-      }}
+      buttons: {
+        add: {
+          label: "Lägg till",
+          callback: () => {
+            ui.notifications.info("Button #1 Clicked!")
+          },
+          icon: `<i class="fas fa-check"></i>`
+        }
+      }
     }).render(true);
   }
-  
+
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -390,9 +385,9 @@ export class DODExpertActorSheet extends ActorSheet {
     console.log('_onSkillRoll, dataset:', dataset);
     const item = this.actor.items.get(dataset.id);
     console.log('_onSkillRoll, item:', item);
-    this.skillCheckDialog = new SkillCheckDialog({skill: item} );
-    this.skillCheckDialog.render(true, { 
-      renderData: {skill: item} 
+    this.skillCheckDialog = new SkillCheckDialog({ skill: item });
+    this.skillCheckDialog.render(true, {
+      renderData: { skill: item }
     });
   }
 
@@ -417,7 +412,7 @@ export class DODExpertActorSheet extends ActorSheet {
       name: this.selectedSkill.name,
       type: "skill",
       system: {
-        skill_id : this.selectedSkillIndex,
+        skill_id: this.selectedSkillIndex,
         fv: bc,
         erf: 0
 
@@ -427,7 +422,7 @@ export class DODExpertActorSheet extends ActorSheet {
     delete itemData.system["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
 

@@ -1,0 +1,31 @@
+.character-header {
+    max-height: 100px;
+}
+.sheet-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.sheet-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.gaps {
+    gap: 10px;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.info-image {
+    padding: 10px;
+}
+.info-image-frame {
+}
+
+.info-description {
+    padding: 10px;
+    width: 400px;
+}

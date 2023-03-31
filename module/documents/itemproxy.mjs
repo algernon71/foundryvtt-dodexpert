@@ -33,7 +33,7 @@ export const DODExpertItemProxy = new Proxy(function () {}, {
         return function (data, options) {
           if (data.constructor === Array) {
             //Array of data, this happens when creating Actors imported from a compendium
-            return data.map(i => NumeneraActor.create(i, options));
+            return data.map(i => itemMappings[i.type].create(i, options));
           }
 
           if (!itemMappings.hasOwnProperty(data.type))
