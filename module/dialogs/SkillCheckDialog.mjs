@@ -2,20 +2,20 @@
 export class SkillCheckDialog extends FormApplication {
 
 
-  constructor(skillCheckData) { // myObject is the object your app modifies, such as an Actor or Item
-    super(skillCheckData, { title: 'Slå för ' + skillCheckData.skill.name });
-    this.skillCheckData = skillCheckData;
-    if (!this.skillCheckData.mod) {
-      this.skillCheckData.mod = '+0';
+  constructor(data) { // myObject is the object your app modifies, such as an Actor or Item
+    super(data, { title: 'Slå för ' + data.skill.name });
+    this.data = data;
+    if (!this.data.mod) {
+      this.data.mod = '+0';
     }
 
-    this.mod = this.skillCheckData.mod;
+    this.mod = this.data.mod;
     this.calculate();
   }
 
   calculate() {
 
-    this.skillCheckData.cl = this.skillCheckData.skill.system.fv + Number(this.skillCheckData.mod);
+    this.data.cl = this.data.skill.system.fv + Number(this.data.mod);
 
   }
   /**
@@ -69,16 +69,16 @@ export class SkillCheckDialog extends FormApplication {
 
   _onUpdateSettings(event) {
     this.mod = this.modElement.val();
-    this.skillCheckData.mod = Number(this.mod);
+    this.data.mod = Number(this.mod);
     this.calculate();
 
-    this.clElement.html(this.skillCheckData.cl);
+    this.clElement.html(this.data.cl);
   }
 
   async roll() {
     let r = new Roll("d20");
 
-    const skill = this.skillCheckData.skill;
+    const skill = this.data.skill;
     // this.rollButton.prop("disabled", true);
     // The parsed terms of the roll formula
     console.log(r.terms);    // [Die, OperatorTerm, NumericTerm, OperatorTerm, NumericTerm]
@@ -90,8 +90,8 @@ export class SkillCheckDialog extends FormApplication {
     let rolls = '';
     const rollResult = r.total;
     const fv = skill.system.fv;
-    const mod = this.skillCheckData.mod;
-    const cl = this.skillCheckData.cl;
+    const mod = this.data.mod;
+    const cl = this.data.cl;
     const isGM = game.user.isGM;
     const isObserver = skill.testUserPermission(game.user, "OBSERVER") ;
     var result = "MISSLYCKAT";
@@ -155,7 +155,7 @@ export class SkillCheckDialog extends FormApplication {
       content: content,
       rolls: [r]
     };
-    ChatMessage.create(chatData, { item: this.skillCheckData.skill, rollResult: rollResult, result: result });
+    ChatMessage.create(chatData, { item: this.data.skill, rollResult: rollResult, result: result });
 
   }
   /**
@@ -164,8 +164,8 @@ export class SkillCheckDialog extends FormApplication {
   getData(options) {
     const context = super.getData();
     const renderData = options.renderData;
-    context.skill = this.skillCheckData.skill;
-    context.check = this.skillCheckData;
+    context.skill = this.data.skill;
+    context.check = this.data;
     context.mod = this.mod;
     return context;
   }

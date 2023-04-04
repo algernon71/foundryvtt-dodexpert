@@ -39,68 +39,13 @@
                 <table class="expert-classic-table">
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">Kroppspoäng</td>
-                        <td class="expert-classic-table-row-value leftch rightch">{{system.health.value}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.health.value}} / {{system.health.max}}</td>
                     </tr>
                     <tr>
                         <td colspan="2">
                             <div class="expert-classic-checkboxes-list">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
+                                {{#crossboxes "health" system.health.max system.health.value 40}}
+                                {{/crossboxes}}
                             </div>
                         </td>
                     </tr>

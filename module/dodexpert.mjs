@@ -91,17 +91,42 @@ function calcPadCount(list, count, offset) {
   return count - size;
 }
 
-Handlebars.registerHelper('padlist', function (list, count, offset, options) {
-  const padCount = calcPadCount(list, count, offset)
+function pageFill(list, count, offset, options) {
+  const padCount = calcPadCount(list, count, 0);
   let buf = '';
   for (let i = 0 ; i < padCount ; ++i) {
     buf += options.fn();
   }
   return buf;
+}
+Handlebars.registerHelper('pagefill', function (list, count, offset, options) {
+  return pageFill(list, count, offset, options);
+});
+
+Handlebars.registerHelper('padlist', function (list, count, options) {
+  return pageFill(list, count, 0, options);
 });
 
 Handlebars.registerHelper('toLowerCase', function(str) {
   return str.toLowerCase();
+});
+
+Handlebars.registerHelper('crossboxes', function (stat, max, current, total, options) {
+  let buf = '';
+  for (let i = 0 ; i < total ; ++i) {
+    if (i < max) {
+      if (i < (max - current)) {
+        buf += '<input type="checkbox" checked class="increase-' + stat+ '">';
+      } else {
+        buf += '<input type="checkbox" class="deduct-' + stat+ '">';
+
+      }
+    } else {
+      buf += '<input type="checkbox" disabled>';
+
+    }
+  }
+  return buf;
 });
 
 /* -------------------------------------------- */

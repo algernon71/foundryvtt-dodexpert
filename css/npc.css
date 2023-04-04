@@ -1,13 +1,66 @@
 
+.npc-input-value {
+    height: 20px !important;
+}
 .npc-abilities {
 }
 
 .npc-skills {
 }
+.npc-body {
+    flex-grow: 1;
+}
 
 .npc-image {
+    max-width: 30%;
 }
 
 .npc-abilities {
-    width: 200px;
+}
+
+.npc-ability {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.npc-ability-name {
+    font-size: 18px;
+    font-weight: bold;
+    min-width: 80px;
+}
+
+.npc-ability-value {
+    width: 80px;
+
+    text-align: right;
+}
+
+.npc-body-parts {
+    background-color: white;
+
+}
+
+.npc-body-part {
+    border: none;
+    font-size: 12px;
+}
+
+.npc-body-part-name {
+    width: 80px;
+}
+
+.npc-body-part-abs {
+    width: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.npc-body-part-kp {
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.npc-body-part-actions {
+    width: 20px;
 }

@@ -1,4 +1,11 @@
 import { SkillCheckDialog } from "../dialogs/SkillCheckDialog.mjs"
+import { AddSkillDialog } from "../dialogs/AddSkillDialog.mjs"
+import { AddMagicSchoolDialog } from "../dialogs/AddMagicSchoolDialog.mjs"
+import { AddSpellDialog } from "../dialogs/AddSpellDialog.mjs"
+import { AttackDialog } from "../dialogs/AttackDialog.mjs"
+import { CastSpellDialog } from "../dialogs/CastSpellDialog.mjs"
+
+
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 import { giveSkillExperience, removeSkillExperience } from "../skills.mjs";
 import { initSkill } from "../skills.mjs";
@@ -98,7 +105,7 @@ export class DODExpertActorSheet extends ActorSheet {
           name: v.name,
           health: {
             max: partMaxHealth,
-            value: 0
+            value: partMaxHealth
           }
         };
         context.system.body[part] = bodyPart;
@@ -127,6 +134,8 @@ export class DODExpertActorSheet extends ActorSheet {
     const skills = [];
     const favoriteSkills = [];
     const spells = [];
+    const languages = [];
+    const magicSchools = [];
     const weapons = [];
     let carriedWeight = 0;
 
@@ -165,7 +174,8 @@ export class DODExpertActorSheet extends ActorSheet {
     context.skills = skills;
     context.favoriteSkills = favoriteSkills;
     context.spells = spells;
-    context.magiskolor = magiskolor;
+    context.languages = languages;
+    context.magicSchools = magicSchools;
     context.isGM = game.user.isGM;
     context.carriedWeight = carriedWeight;
     console.log('context:', context);
@@ -188,9 +198,17 @@ export class DODExpertActorSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
+    html.find('.increase-health').click(this._onIncreaseHealth.bind(this));
+    html.find('.deduct-health').click(this._onDeductHealth.bind(this));
+    html.find('.increase-power').click(this._onIncreasePower.bind(this));
+    html.find('.deduct-power').click(this._onDeductPower.bind(this));
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
-    html.find('.add-skill').click(this._onSkillCreate.bind(this));
+    html.find('.add-skill').click(this._onAddSkill.bind(this));
+    html.find('.add-magic-school').click(this._onAddMagicSchool.bind(this));
+    html.find('.add-spell').click(this._onAddSpell.bind(this));
+    html.find('.attack').click(this._onAttack.bind(this));
+    html.find('.cast').click(this._onCastSpell.bind(this));
     html.find('.skill-roll').click(this._onSkillRoll.bind(this));
     html.find('.use-item').click(this._onUseItem.bind(this));
     html.find('.fv-input').keyup(this._onSkillUpdate.bind(this));
@@ -269,6 +287,52 @@ export class DODExpertActorSheet extends ActorSheet {
 
   }
 
+  async _onDeductHealth(event) {
+    const health = this.actor.system.health.value;
+    let update = {
+      "system": {
+        "health":
+          { "value": health - 1 }
+      }
+    };
+    await this.actor.update(update, {});
+
+  }
+  async _onIncreaseHealth(event) {
+    const health = this.actor.system.health.value;
+    let update = {
+      "system": {
+        "health":
+          { "value": health + 1 }
+      }
+    };
+    await this.actor.update(update, {});
+
+  }
+  async _onDeductPower(event) {
+    console.info('_onDeductPower');
+    const power = this.actor.system.power.value;
+    let update = {
+      "system": {
+        "power":
+          { "value": power - 1 }
+      }
+    };
+    await this.actor.update(update, {});
+
+  }
+  async _onIncreasePower(event) {
+    console.info('_onIncreasePower');
+    const power = this.actor.system.power.value;
+    let update = {
+      "system": {
+        "power":
+          { "value": power + 1 }
+      }
+    };
+    await this.actor.update(update, {});
+
+  }
   async _onSkillUpdate(event) {
     console.log('_onSkillUpdate', event);
     const a = event.currentTarget;
@@ -375,6 +439,36 @@ export class DODExpertActorSheet extends ActorSheet {
     const dataset = element.dataset;
     const item = this.actor.items.get(dataset.id);
     item.use(event);
+  }
+  async _onAddSkill(event) {
+    this.dialog = new AddSkillDialog({ actor: this.actor });
+    this.dialog.render(true, {
+      renderData: {}
+    });
+  }
+  async _onAddMagicSchool(event) {
+    this.dialog = new AddMagicSchoolDialog({ actor: this.actor });
+    this.dialog.render(true, {
+      renderData: {}
+    });
+  }
+  async _onAddSpell(event) {
+    this.addSpellDialog = new AddSpellDialog({ actor: this.actor });
+    this.addSpellDialog.render(true, {
+      renderData: {}
+    });
+  }
+  async _onAttack(event) {
+    this.dialog = new AttackDialog({ actor: this.actor });
+    this.dialog.render(true, {
+      renderData: {}
+    });
+  }
+  async _onCastSpell(event) {
+    this.dialog = new CastSpellDialog({ actor: this.actor });
+    this.dialog.render(true, {
+      renderData: {}
+    });
   }
   async _onSkillRoll(event) {
 

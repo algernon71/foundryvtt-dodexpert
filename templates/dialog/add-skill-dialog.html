@@ -1,0 +1,16 @@
+<form>
+
+    <h1>Färdighet</h1>
+    
+    <input id="search" class="skill-search" type="text" value="{{search}}"/>
+    
+    <table>
+    {{#each skills as |skill key|}}
+    <tr>
+      <td>{{skill.name}}</td>
+    </tr>
+    {{/each}}
+
+  </table>
+    <button id="roll-button" type="button" data-action="roll">Lägg till</button>
+  </form>

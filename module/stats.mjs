@@ -13,8 +13,15 @@ export function calculateSecondaryStats(stats) {
         value: maxHitpoints    
       };
     }
-    stats.health.max = calculateHitpoints(stats.abilities.STO.value, stats.abilities.FYS.value);
+    if (!stats.power ) {
+      stats.power = {
+        max: stats.abilities.PSY.value,
+        value: stats.abilities.PSY.value
+      }
 
+    };
+    stats.health.max = calculateHitpoints(stats.abilities.STO.value, stats.abilities.FYS.value);
+    stats.power.max = stats.abilities.PSY.value;
     stats.initiative = stats.abilities.SMI.group;
     stats.sb = calculateDamageBonus(stats.abilities.STY.value, stats.abilities.STO.value);
     stats.weightCapacity = stats.abilities.STY.value;

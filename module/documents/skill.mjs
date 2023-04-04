@@ -1,4 +1,5 @@
 import { SkillCheckDialog} from "../dialogs/SkillCheckDialog.mjs"
+import { AddSkillDialog} from "../dialogs/AddSkillDialog.mjs"
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -47,9 +48,12 @@ export class DODExpertSkill extends Item {
   _onCreate(data, options, userId) {
     const actor = this.actor;
     console.info('Create ', this.name);
-    const ability = actor.data.system.abilities[this.system.ability];
-    if (this.system.bc && this.system.fv < ability.group) {
-        this.system.fv = ability.group;
+    if (actor) {
+      const ability = actor.data.system.abilities[this.system.ability];
+      if (this.system.bc && this.system.fv < ability.group) {
+          this.system.fv = ability.group;
+      }
+  
     }
   }
 

@@ -4,50 +4,49 @@
 
         <div class="sheet-row gaps">
             <div class="npc-image">
-                <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" 
-                    width="100%" />
+                <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" width="100%" />
             </div>
             <div class="npc-abilities slim">
+
                 <table>
-                    <tr class="expert-classic-npc-ability-row">
-                        <td class="expert-classic-npc-ability-title">STY</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.STY.value"
-                                value="{{system.abilities.STY.value}}" data-dtype="Number" /></td>
-                        <td class="expert-classic-npc-ability-title">SMI</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.SMI.value"
-                                value="{{system.abilities.SMI.value}}" data-dtype="Number" /></td>
-                        <td class="expert-classic-npc-ability-title">KAR</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.KAR.value"
-                                value="{{system.abilities.KAR.value}}" data-dtype="Number" /></td>
+                    <tr class="npc-ability">
+                        <td class="npc-ability-name">KP</td>
+                        <td class="npc-ability-value">{{system.health.value}} / {{system.health.max}}</td>
                     </tr>
-                    <tr class="expert-classic-npc-ability-row">
-                        <td class="expert-classic-npc-ability-title">STO</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.STO.value"
-                                value="{{system.abilities.STO.value}}" data-dtype="Number" /></td>
-                        <td class="expert-classic-npc-ability-title">INT</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.INT.value"
-                                value="{{system.abilities.INT.value}}" data-dtype="Number" /></td>
-                        <td class="expert-classic-npc-ability-title">KP</td>
-                        <td>{{system.health.value}}</td>
+
+                    {{#each system.abilities as |ability key|}}
+                    <tr class="npc-ability">
+                        <td class="npc-ability-name">{{key}}</td>
+                        <td class="npc-ability-value"><input type="text" class="npc-input-value"
+                                name="system.abilities.{{key}}.value" value="{{ability.value}}" data-dtype="Number" />
+                        </td>
                     </tr>
-                    <tr class="expert-classic-npc-ability-row">
-                        <td class="expert-classic-npc-ability-title">FYS</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.FYS.value"
-                                value="{{system.abilities.FYS.value}}" data-dtype="Number" /></td>
-                        <td class="expert-classic-npc-ability-title">PSY</td>
-                        <td><input type="text" class="expert-classic-input-value" name="system.abilities.PSY.value"
-                                value="{{system.abilities.PSY.value}}" data-dtype="Number" /></td>
+                    {{/each}}
+
+                    <tr class="npc-ability">
+                        <td class="npc-ability-name">SB</td>
+                        <td class="npc-ability-value">{{system.sb}}</td>
                     </tr>
                 </table>
-
             </div>
-            <div class="npc-skills slim">
-                {{> "systems/dodexpert/templates/actor/parts/actor-skills.html" skillsList=skills}}
+
+            <div class="npc-body">
+                <table class="items-list npc-body-parts">
+                    {{#each system.body as |part id|}}
+                    <tr data-item-id="{{part._id}}" class="npc-body-part">
+                        <td class="npc-body-part-name">{{part.name}}</td>
+                        <td class="npc-body-part-armor">{{part.armor}}</td>
+                        <td class="npc-body-part-abs">{{part.abs}}</td>
+                        <td class="npc-body-part-kp">{{part.health.value}} </td>
+                        <td class="npc-body-part-actions"><i class="fa-solid fa-square-ellipsis"></i></td>
+                    </tr>
+                    {{/each}}
+                </table>
             </div>
         </div>
         <div class="sheet-row">
-            <div class="npc-body grow">
-                {{> "systems/dodexpert/templates/actor/parts/actor-body.html"}}
+            <div class="npc-skills slim">
+                {{> "systems/dodexpert/templates/actor/parts/actor-skills.html" skillsList=skills}}
             </div>
             <div class="npc-weapons grow">
                 {{> "systems/dodexpert/templates/actor/parts/actor-weapons.html" weaponsList=weapons}}

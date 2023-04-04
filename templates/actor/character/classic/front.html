@@ -119,101 +119,23 @@
                             ERF
                         </th>
                     </tr>
+                    {{#each skills as |skill id|}}
+
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Finna dolda ting</td>
-                        <td class="expert-classic-table-row-value leftch rightch">12</td>
-                        <td class="expert-classic-table-row-value leftch">2</td>
+                        <td class="expert-classic-table-row-title rightch">{{skill.name}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{skill.system.fv}}</td>
+                        <td class="expert-classic-table-row-value leftch">{{skill.system.erf}}</td>
                     </tr>
+                    {{/each}}
+                    {{#padlist skills 16}}
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Upptäcka fara</td>
-                        <td class="expert-classic-table-row-value leftch rightch">5</td>
-                        <td class="expert-classic-table-row-value leftch">2</td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Smyga</td>
-                        <td class="expert-classic-table-row-value leftch rightch">17</td>
-                        <td class="expert-classic-table-row-value leftch">2</td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-title rightch add-skill"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch"></td>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
+                    {{/padlist}}
+
+
                 </table>
             </div>
 
@@ -265,81 +187,14 @@
                             ERF
                         </th>
                     </tr>
+                    {{#pagefill skills 16 16}}
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-title rightch add-skill"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch"></td>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
+                    {{/pagefill}}
+
                 </table>
             </div>
             <div class="languages">
@@ -358,6 +213,7 @@
                             Erf
                         </th>
                     </tr>
+
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">Jori</td>
                         <td class="expert-classic-table-row-value leftch rightch">B4</td>
@@ -396,68 +252,13 @@
                 <table class="expert-classic-table">
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">PSY</td>
-                        <td class="expert-classic-table-row-value leftch rightch">{{system.abilities.PSY.value}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.power.value}}/{{system.power.max}}</td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="expert-classic-checkboxes-list">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox">
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
-                                <input type="checkbox" disabled>
+                            <div class="expert-classic-checkboxes-list" >
+                                {{#crossboxes "power" system.power.max system.power.value 40}}
+                                {{/crossboxes}}
                             </div>
                         </td>
                     </tr>
@@ -480,31 +281,20 @@
                             ERF
                         </th>
                     </tr>
+                    {{#each magicSchools as |magicSchool id|}}
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Elementarmagi</td>
-                        <td class="expert-classic-table-row-value leftch rightch">12</td>
-                        <td class="expert-classic-table-row-value leftch">4</td>
+                        <td class="expert-classic-table-row-title rightch">{{magicSchool.system.name}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{magicSchool.system.fv}}</td>
+                        <td class="expert-classic-table-row-value leftch">{{magicSchool.system.erf}}</td>
                     </tr>
+                    {{/each}}
+                    {{#padlist magicSchools 5}}
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Nekromanti</td>
-                        <td class="expert-classic-table-row-value leftch rightch">4</td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-title rightch add-magic-school"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch"></td>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
+                    {{/padlist}}
                 </table>
             </div>
             <div class="spells">
@@ -520,102 +310,22 @@
                             ERF
                         </th>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Blixt (F,K)</td>
-                        <td class="expert-classic-table-row-value leftch rightch">14</td>
-                        <td class="expert-classic-table-row-value leftch">1</td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Skräck (K)</td>
-                        <td class="expert-classic-table-row-value leftch rightch">7</td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Ljusväg</td>
-                        <td class="expert-classic-table-row-value leftch rightch">4</td>
-                        <td class="expert-classic-table-row-value leftch">1</td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch"></td>
-                    </tr>
+                    {{#each spells as |spell id|}}
 
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
+                        <td class="expert-classic-table-row-title rightch">{{spell.system.name}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{spell.system.fv}}</td>
+                        <td class="expert-classic-table-row-value leftch">{{spell.system.erf}}</td>
+                    </tr>
+                    {{/each}}
+                    {{#padlist spells 16}}
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch add-spell"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch"></td>
                     </tr>
+                    {{/padlist}}
+
                 </table>
             </div>
         </div>
