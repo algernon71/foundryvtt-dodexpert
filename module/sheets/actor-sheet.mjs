@@ -216,6 +216,29 @@ export class DODExpertActorSheet extends ActorSheet {
     html.find('.minus-experience').click(this._onSkillExperienceRemove.bind(this));
     html.find('.toggle-favorite').click(this._onSkillToggleFavorite.bind(this));
 
+    new ContextMenu(html, '.skill', [
+      {
+        name: game.i18n.localize('edit'),
+        icon: '<i class="fas fa-edit"></i>',
+        callback: element => {
+          const skillId = element.data("skill");
+          const items = this.actor.items;
+          const skill = this.actor.items.get(skillId);
+          skill.sheet.render(true);
+        },
+
+      },
+      {
+        name: game.i18n.localize('delete'),
+        icon: '<i class="fas fa-trash"></i>',
+        callback: element => {
+          const skillId = element.data("skill");
+          const skill = this.actor.items.get(skillId);
+          skill.delete();
+        },
+
+      }
+    ]);
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -441,10 +464,23 @@ export class DODExpertActorSheet extends ActorSheet {
     item.use(event);
   }
   async _onAddSkill(event) {
+    const itemData = {
+      name: 'Färdighet',
+      type: 'skill',
+      system: {}
+    };
+    // Remove the type from the dataset since it's in the itemData.type prop.
+    delete itemData.system["type"];
+
+    // Finally, create the item!
+   const skill = await Item.create(itemData, { parent: this.actor });
+    /*
     this.dialog = new AddSkillDialog({ actor: this.actor });
     this.dialog.render(true, {
       renderData: {}
     });
+    */
+    skill.sheet.render(true);
   }
   async _onAddMagicSchool(event) {
     this.dialog = new AddMagicSchoolDialog({ actor: this.actor });

@@ -122,7 +122,13 @@
                     {{#each skills as |skill id|}}
 
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">{{skill.name}}</td>
+                        <td class="expert-classic-table-row-title rightch hover-show skill" data-skill="{{skill._id}}">
+                            <img class="use-item icon hover-show-item" height="20" data-id="{{skill._id}}" src="systems/dodexpert/media/dice-d20.svg">
+                            {{skill.name}}
+                            <div class="hover-show-item">
+                                {{skill.system.ability}} ({{skill.system.cost}})
+                            </div>
+                        </td>
                         <td class="expert-classic-table-row-value leftch rightch">{{skill.system.fv}}</td>
                         <td class="expert-classic-table-row-value leftch">{{skill.system.erf}}</td>
                     </tr>
