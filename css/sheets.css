@@ -29,3 +29,8 @@
     padding: 10px;
     width: 400px;
 }
+
+.info-character-name {
+    font-size: 48px;
+    text-align: center;
+}

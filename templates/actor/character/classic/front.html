@@ -1,77 +1,98 @@
 <div class="expert-classic-sheet">
 
     <div class="expert-classic-sheet-header">
-        <div class="expert-classic-character-image-frame">
-            <div class="expert-classic-character-image">
-                <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+        <table>
+            <tr>
+                <td>
+                    <div class="expert-classic-character-image-frame">
+                        <div class="expert-classic-logo">
+                            <img class="icon" src="systems/dodexpert/media/expert.png">
+                        </div>
+                        <div class="expert-classic-character-image">
+                            <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
 
-            </div>
-        </div>
-        <div class="expert-classic-sheet-bio">
+                        </div>
+                    </div>
 
-            <table class="expert-classic-table">
-                <tr class="expert-classic-table-bio-row">
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">SPELARE</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.player"
-                            value="{{system.bio.player}}">
-                    </td>
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">SPELLEDARE</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.gm" value="{{system.bio.gm}}">
-                    </td>
-                </tr>
-            </table>
-            <table class="expert-classic-table">
-                <tr class="expert-classic-table-bio-row">
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">RAS</label><br>
-                        <input class="expert-classic-text-field-input" value="Människa">
-                    </td>
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">KÖN</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.gender"
-                            value="{{system.bio.gender}}">
-                    </td>
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">ÅLDER</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.age" value="{{system.bio.age}}">
-                    </td>
-                </tr>
-                <tr class="expert-classic-table-bio-row">
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">YRKE</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.profession"
-                            value="{{system.bio.profession}}">
-                    </td>
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">SOCIALT STÅND</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.social_standing"
-                            value="{{system.bio.social_standing}}">
-                    </td>
-                    <td class="expert-classic-text-cell">
-                        <label class="expert-classic-text-field-label">HEMORT</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.home"
-                            value="{{system.bio.home}}">
-                    </td>
-                </tr>
-                <tr class="expert-classic-table-bio-row">
-                    <td class="expert-classic-text-cell" colspan="3">
-                        <label class="expert-classic-text-field-label">UTSEENDE</label><br>
-                        <textarea rows="3" class="expert-classic-text-field-area"
-                            name="system.bio.appearance">{{system.bio.appearance}}</textarea>
-                    </td>
-                </tr>
-                <tr class="expert-classic-table-bio-row">
-                    <td class="expert-classic-text-cell" colspan="3">
-                        <label class="expert-classic-text-field-label">LIVSMÅL</label><br>
-                        <input class="expert-classic-text-field-input" name="system.bio.life_goals"
-                            value="{{system.bio.life_goals}}">
-                    </td>
-                </tr>
-            </table>
-        </div>
+                </td>
+                <td>
+                    <div class="expert-classic-sheet-bio">
 
+                        <table class="expert-classic-table">
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">SPELARE</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.player"
+                                        value="{{system.bio.player}}">
+                                </td>
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">SPELLEDARE</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.gm"
+                                        value="{{system.bio.gm}}">
+                                </td>
+                            </tr>
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell" colspan="2">
+                                    <label class="expert-classic-text-field-label">NAMN</label><br>
+                                    <input class="expert-classic-text-field-input" name="name" value="{{actor.name}}">
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="expert-classic-table">
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">RAS</label><br>
+                                    <input class="expert-classic-text-field-input" value="Människa">
+                                </td>
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">KÖN</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.gender"
+                                        value="{{system.bio.gender}}">
+                                </td>
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">ÅLDER</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.age"
+                                        value="{{system.bio.age}}">
+                                </td>
+                            </tr>
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">YRKE</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.profession"
+                                        value="{{system.bio.profession}}">
+                                </td>
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">SOCIALT STÅND</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.social_standing"
+                                        value="{{system.bio.social_standing}}">
+                                </td>
+                                <td class="expert-classic-text-cell">
+                                    <label class="expert-classic-text-field-label">HEMORT</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.home"
+                                        value="{{system.bio.home}}">
+                                </td>
+                            </tr>
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell" colspan="3">
+                                    <label class="expert-classic-text-field-label">UTSEENDE</label><br>
+                                    <textarea rows="3" class="expert-classic-text-field-area"
+                                        name="system.bio.appearance">{{system.bio.appearance}}</textarea>
+                                </td>
+                            </tr>
+                            <tr class="expert-classic-table-bio-row">
+                                <td class="expert-classic-text-cell" colspan="3">
+                                    <label class="expert-classic-text-field-label">LIVSMÅL</label><br>
+                                    <input class="expert-classic-text-field-input" name="system.bio.life_goals"
+                                        value="{{system.bio.life_goals}}">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+
+                </td>
+            </tr>
+        </table>
     </div>
     <div class="expert-classic-sheet-main">
 
@@ -123,7 +144,8 @@
 
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch hover-show skill" data-skill="{{skill._id}}">
-                            <img class="use-item icon hover-show-item" height="20" data-id="{{skill._id}}" src="systems/dodexpert/media/dice-d20.svg">
+                            <img class="use-item icon hover-show-item" height="20" data-id="{{skill._id}}"
+                                src="systems/dodexpert/media/dice-d20.svg">
                             {{skill.name}}
                             <div class="hover-show-item">
                                 {{skill.system.ability}} ({{skill.system.cost}})
@@ -258,11 +280,12 @@
                 <table class="expert-classic-table">
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">PSY</td>
-                        <td class="expert-classic-table-row-value leftch rightch">{{system.power.value}}/{{system.power.max}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            {{system.power.value}}/{{system.power.max}}</td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="expert-classic-checkboxes-list" >
+                            <div class="expert-classic-checkboxes-list">
                                 {{#crossboxes "power" system.power.max system.power.value 40}}
                                 {{/crossboxes}}
                             </div>

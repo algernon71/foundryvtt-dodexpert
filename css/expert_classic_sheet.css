@@ -35,7 +35,9 @@ input[type="text"] {
     padding: 5px;
 }
 
-.expert-classic-character-image-frame {}
+.expert-classic-character-image-frame {
+    max
+}
 
 .expert-classic-character-name {
     outline: none;
@@ -100,8 +102,7 @@ input[type="text"] {
 }
 
 .expert-classic-sheet-bio {
-    flex-grow: 1;
-
+    height: 100%;
 }
 
 .expert-classic-sheet-main {
