@@ -2,7 +2,7 @@
   "id": "dodexpert",
   "title": "Drakar och Demoner Expert",
   "description": "Drakar och Demoner Expert system for FoundryVTT!",
-  "version": "1.20.1.0",
+  "version": "1.21",
   "compatibility": {
     "minimum": 10,
     "verified": "10.287",
@@ -27,7 +27,7 @@
   "primaryTokenAttribute": "health",
   "secondaryTokenAttribute": "power",
   "url": "https://github.com/algernon71/foundryvtt-dodexpert",
-  "manifest": "https://github.com/algernon71/foundryvtt-dodexpert/blob/main/system.json",
+  "manifest": "https://raw.githubusercontent.com/algernon71/foundryvtt-dodexpert/main/system.json",
   "download": "https://github.com/algernon71/foundryvtt-dodexpert/archive/refs/heads/main.zip",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"
