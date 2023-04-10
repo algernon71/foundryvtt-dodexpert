@@ -1,6 +1,6 @@
 # IDE
 .vscode/
-.gitattributes
+.gitattributesgi
 
 # Node Modules
 node_modules/

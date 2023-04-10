@@ -2,7 +2,7 @@
   "id": "dodexpert",
   "title": "Drakar och Demoner Expert",
   "description": "Drakar och Demoner Expert system for FoundryVTT",
-  "version": "1.24",
+  "version": "1.25",
   "compatibility": {
     "minimum": 10,
     "verified": "10.287",
