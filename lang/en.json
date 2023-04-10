@@ -1,26 +1,46 @@
 {
-  "DOD_EXPERT.GRUNDEGENSKAP_STR": "Styrka",
-  "DOD_EXPERT.GRUNDEGENSKAP_FYS": "Fysik",
-  "DOD_EXPERT.GRUNDEGENSKAP_SMI": "Smidighet",
-  "DOD_EXPERT.GRUNDEGENSKAP_STO": "Storlek",
-  "DOD_EXPERT.GRUNDEGENSKAP_INT": "Intelligens",
-  "DOD_EXPERT.GRUNDEGENSKAP_PSY": "Psyke",
-  "DOD_EXPERT.GRUNDEGENSKAP_KAR": "Karisma",
+  "dodexpert": {
+    "abilities": {
+      "STY": {
+        "label": "Styrka",
+        "abbreviation": "STR"
+      },
+      "FYS": {
+        "label": "Fysik",
+        "abbreviation": "FYS"
+      },
+      "STO": {
+        "label": "Storlek",
+        "abbreviation": "STO"
+      },
+      "SMI": {
+        "label": "Smidighet",
+        "abbreviation": "SMI"
+      },
+      "INT": {
+        "label": "Intelligens",
+        "abbreviation": "INT"
+      },
+      "PSY": {
+        "label": "Psykisk Kraft",
+        "abbreviation": "PSY"
+      },
+      "KAR": {
+        "label": "Karisma",
+        "abbreviation": "PSY"
+      }
+    },
+    "menus": {
+      "add": "Lägg till",
+      "edit": "Ändra...",
+      "delete": "Ta bort"
+    },
 
-  "DOD_EXPERT.GRUNDEGENSKAP_STRAbbr": "STR",
-  "DOD_EXPERT.GRUNDEGENSKAP_FYSAbbr": "FYS",
-  "DOD_EXPERT.GRUNDEGENSKAP_STOAbbr": "STO",
-  "DOD_EXPERT.GRUNDEGENSKAP_SMIAbbr": "SMI",
-  "DOD_EXPERT.GRUNDEGENSKAP_INTAbbr": "INT",
-  "DOD_EXPERT.GRUNDEGENSKAP_PSYAbbr": "PSY",
-  "DOD_EXPERT.GRUNDEGENSKAP_KARAbbr": "KAR",
+    "labels": {
+      "skills": "FÄRDIGHETER",
+      "magicschools": "MAGISKOLOR"
+    } 
+  
+  }
 
-  "DOD_EXPERT.EffectCreate": "Create Effect",
-  "DOD_EXPERT.EffectToggle": "Toggle Effect",
-  "DOD_EXPERT.EffectEdit": "Edit Effect",
-  "DOD_EXPERT.EffectDelete": "Delete Effect",
-
-  "DOD_EXPERT.Add": "Add",
-  "edit": "Ändra...",
-  "delete": "Ta bort"
 }

@@ -12,6 +12,24 @@ import { initSkill } from "../skills.mjs";
 import { magiskolor } from "../spells.mjs";
 import { races, bodyShapes } from "../constants.mjs";
 
+const sheetStyles = [
+  {
+    "id": "classic",
+    "name": "Expert classic",
+    "tabs": [
+      {
+        "id": "front",
+        "label": "Framsida",
+        "path": "systems/dodexpert/templates/actor/character/classic/front.html"
+      },
+      {
+        "id": "back",
+        "label": "Baksida",
+        "path": "systems/dodexpert/templates/actor/character/classic/back.html"
+      }
+    ]
+  }
+];
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
@@ -72,6 +90,9 @@ export class DODExpertActorSheet extends ActorSheet {
     context.bodyShape = bodyShapes["humanoid"];
     context.game = game;
     context.isGM = game.user.isGM;
+    context.sheetStyles = sheetStyles;
+    context.sheet = sheetStyles[0];
+    context.tabs = [];
     console.log('context:', context);
     return context;
   }
@@ -87,7 +108,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.system.abilities)) {
-      v.label = game.i18n.localize(CONFIG.DOD_EXPERT.abilities[k]) ?? k;
+      v.label = game.i18n.localize('dodexpert.abilities.' +  k + '.label') ?? k;
     }
     const bodyShape = bodyShapes["humanoid"];
 
@@ -218,7 +239,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     new ContextMenu(html, '.skill', [
       {
-        name: game.i18n.localize('edit'),
+        name: game.i18n.localize('dodexpert.menus.edit'),
         icon: '<i class="fas fa-edit"></i>',
         callback: element => {
           const skillId = element.data("skill");
@@ -229,7 +250,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
       },
       {
-        name: game.i18n.localize('delete'),
+        name: game.i18n.localize('dodexpert.menus.delete'),
         icon: '<i class="fas fa-trash"></i>',
         callback: element => {
           const skillId = element.data("skill");

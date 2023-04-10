@@ -81,26 +81,49 @@ function objectSize(o) {
   return Object.keys(o).length;  
 }
 
-function calcPadCount(list, count, offset) {
-  const size = objectSize(list);
-
-  if (offset) {
-    return count - offset - size;
+function remainingElements(size, offset) {
+  if (!offset) {
+    return size;
   }
 
-  return count - size;
+  if (offset <= size) {
+    return size - offset;
+  }
+
+  return 0;
+
+}
+function calcPadCount(size, count, offset) {
+  const remainingCount = remainingElements(size, offset);
+  if (remainingCount <= count) {
+    return count - remainingCount;
+  }
+
+  return 0;
+
 }
 
 function pageFill(list, count, offset, options) {
-  const padCount = calcPadCount(list, count, 0);
+  const size = objectSize(list);
+  
+  const padCount = calcPadCount(size, count, offset);
   let buf = '';
   for (let i = 0 ; i < padCount ; ++i) {
-    buf += options.fn();
+    buf += options.fn(this);
   }
   return buf;
 }
+
+
 Handlebars.registerHelper('pagefill', function (list, count, offset, options) {
   return pageFill(list, count, offset, options);
+});
+
+Handlebars.registerHelper('includeListItem', function (i, offset, max, options) {
+  if (i >= offset && i < max) {
+    return options.fn(this);
+  }
+  return '';
 });
 
 Handlebars.registerHelper('padlist', function (list, count, options) {

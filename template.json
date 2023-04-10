@@ -32,7 +32,7 @@
         }
       },
 
-      "base": {
+      "stats": {
         "abilities": {
           "STY": {
             "value": 11,
@@ -74,7 +74,7 @@
     },
     "character": {
       "templates": [
-        "base",
+        "stats",
         "money",
         "bio"
       ],
@@ -91,12 +91,14 @@
     },
     "npc": {
       "templates": [
-        "base"
+        "stats",
+        "body"
       ]
     },
     "monster": {
       "templates": [
-        "base"
+        "stats",
+        "body"
       ]
     },
     "location": {
