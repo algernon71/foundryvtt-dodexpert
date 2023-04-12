@@ -20,10 +20,21 @@ input[type="checkbox"] {
     height: 12px;
 }
 
+
+
 input[type="text"] {
     border: none;
     outline: none;
     background: none;
+}
+
+.editor {
+    flex-grow: 1;
+}
+.expert-classic-bio-section {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
 .expert-classic-sheet-topbar {

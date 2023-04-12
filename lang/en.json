@@ -33,13 +33,23 @@
     "menus": {
       "add": "Lägg till",
       "edit": "Ändra...",
-      "delete": "Ta bort"
+      "delete": "Ta bort",
+      "add-xp": "Öka erfarenhet",
+      "remove-xp": "Minska erfarenhet"
     },
 
     "labels": {
       "skills": "FÄRDIGHETER",
       "magicschools": "MAGISKOLOR"
-    } 
+
+    } ,
+    "skills" : {
+      "add" : {
+        "title" : "Lägg till färdighet",
+        "placeholder" : "Sök efter färdighet",
+        "button": "Lägg till"
+      }
+    }
   
   }
 

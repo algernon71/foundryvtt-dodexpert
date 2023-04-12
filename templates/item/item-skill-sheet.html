@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+      <h1 class="charname"></h1>
     </div>
   </header>
 
@@ -12,9 +12,19 @@
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+    <div class="autocomplete" style="width:300px;">
+      <input id="skill-input" type="text" placeholder="Färdighet" autofocus />
+    </div>
 
     <label for="cost">Kostnad</label>
     <input id="cost" type="number" name="system.cost" value="{{item.system.cost}}" />
+    <select id="catgeory" class="catgeory-selector" name="system.category" value="{{system.category}}">
+      {{#select system.category}}
+      <option value="skill">Färdighet</option>
+      <option value="magicschool">Magiskola</option>
+      <option value="spell">Besvärjelse</option>
+      {{/select}}
+    </select>
     <label for="ability">Typ</label>
     <select id="type" class="skill-selector" name="system.type" value="{{item.system.type}}">
       {{#select system.type}}

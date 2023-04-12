@@ -120,7 +120,8 @@ Handlebars.registerHelper('pagefill', function (list, count, offset, options) {
 });
 
 Handlebars.registerHelper('includeListItem', function (i, offset, max, options) {
-  if (i >= offset && i < max) {
+  
+  if (i >= offset && i < (offset + max)) {
     return options.fn(this);
   }
   return '';

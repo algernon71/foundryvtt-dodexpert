@@ -127,7 +127,7 @@
                 </table>
 
             </div>
-            {{> "systems/dodexpert/templates/actor/character/classic/skillsList.html" name="dodexpert.labels.skills" skillsList=skills skillType="skill" skillsListStart=0 skillsListSize=16}}
+            {{> "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html" list=skills skillsListStart=0 skillsListSize=16}}
 
         </div>
         <div class="expert-classic-sheet-column">
@@ -165,7 +165,7 @@
 
             </div>
             <div class="skills">
-                {{> "systems/dodexpert/templates/actor/character/classic/skillsList.html" name="dodexpert.labels.skills" skillsList=skills skillType="skill" skillsListStart=16 skillsListSize=12}}
+                {{> "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html" list=skills skillsListStart=16 skillsListSize=12}}
 
             </div>
             <div class="languages">
@@ -241,10 +241,10 @@
 
 
             <div class="magic-schools">
-                {{> "systems/dodexpert/templates/actor/character/classic/skillsList.html" name="dodexpert.labels.magicschools" skillsList=magicSchools skillType="skill" skillsListStart=0 skillsListSize=5}}
+                {{> "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html" list=magicSchools skillsListStart=0 skillsListSize=5}}
             </div>
             <div class="spells">
-                {{> "systems/dodexpert/templates/actor/character/classic/skillsList.html" name="dodexpert.labels.spells" skillsList=spells skillType="spell" skillsListStart=0 skillsListSize=5}}
+                {{> "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html" list=spells skillsListStart=0 skillsListSize=16}}
             </div>
         </div>
     </div>

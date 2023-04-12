@@ -31,7 +31,6 @@ export function calculateSecondaryStats(stats) {
 
 export function calculateMovement(sto, fys, smi) {
   const sum = sto + fys + smi;
-  console.log('calculateMovement, sum:' + sum);
   if (sum <= 11) {
     return 7;
   }

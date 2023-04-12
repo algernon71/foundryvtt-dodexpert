@@ -1,19 +1,26 @@
 const allSkills = [
-  { "subtype": "UPT", "name": "Finna dolda ting", "bc": true, "ge": "INT", "cost": "2", "type": "A"},
-  { "subtype": "UPT", "name": "Upptäcka fara", "bc": true, "ge": "PSY", "cost": "4", "type": "A"},
-  { "subtype": "UPT", "name": "Lyssna", "bc": true, "ge": "INT", "cost": "2", "type": "A"},
-  { "subtype": "TJU", "name": "Smyga", "bc": true, "ge": "SMI", "cost": "2", "type": "A"},
-  { "subtype": "TJU", "name": "Klättra", "bc": true, "ge": "SMI", "cost": "1", "type": "A"},
-  { "subtype": "TJU", "name": "Hoppa", "bc": true, "ge": "SMI", "cost": "1", "type": "A"},
+  { "subtype": "UPT", "name": "Finna dolda ting", "bc": true, "ability": "INT", "cost": "2", "type": "A" },
+  { "subtype": "UPT", "name": "Upptäcka fara", "bc": true, "ability": "PSY", "cost": "4", "type": "A" },
+  { "subtype": "UPT", "name": "Lyssna", "bc": true, "ability": "INT", "cost": "2", "type": "A" },
+  { "subtype": "TJU", "name": "Smyga", "bc": true, "ability": "SMI", "cost": "2", "type": "A" },
+  { "subtype": "TJU", "name": "Klättra", "bc": true, "ability": "SMI", "cost": "1", "type": "A" },
+  { "subtype": "TJU", "name": "Hoppa", "bc": true, "ability": "SMI", "cost": "1", "type": "A" },
 ];
+
+
 export class AddSkillDialog extends FormApplication {
 
 
   constructor(data) { // myObject is the object your app modifies, such as an Actor or Item
-    super(data, { title: 'Välj färdighet'});
+    super(data, {
+      title: data.title
+    });
     this.data = data;
     this.search = '';
-
+    this.matchedSkills = allSkills;
+    this.selectedSkill = null;
+    this.selectedSkillIndex = -1;
+    this.selectedSkillElement = null;
   }
 
   /**
@@ -24,7 +31,8 @@ export class AddSkillDialog extends FormApplication {
 
     const overrides = {
       closeOnSubmit: false,
-      height: '200px',
+      height: 400,
+      width: 400,
       id: 'skill-check-dialog',
       submitOnChange: true,
       template: "systems/dodexpert/templates/dialog/add-skill-dialog.html",
@@ -54,16 +62,105 @@ export class AddSkillDialog extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
 
-    html.on('click', "[data-action]", this._handleButtonClick.bind(this));
-    html.find('#search').keyup(this._onUpdateSearch.bind(this));
-    this.inputElement = html.find('#search');
+    const t = this;
+    this.inputElement = document.querySelector('#skill-search-input'); // html.find('#skill-search-input');
+    document.querySelector('#add-skill-button').addEventListener("click", this.addSkill.bind(this));
+    this.inputElement.addEventListener("input", this._onUpdateSearch.bind(this));
+    this.inputElement.addEventListener("keydown", function (e) {
+      if (e.keyCode == 40) {
+        t.selectNextSkill();
+      } else if (e.keyCode == 38) { //up
+        t.selectPreviousSkill();
+      } else if (e.keyCode == 13) {
+        t.addSkill();
+      }
+    });
+    this.matchListElement = document.querySelector('#skill-match-list');
+    this.selectedSkillInfoElement = document.querySelector('#add-selected-skill');
+    const allItems = Items.instance;
+    this.updateMatchList('');
   }
 
   _onUpdateSearch(event) {
     console.info('_onUpdateSearch', event);
 
-    this.search = this.inputElement.val();
-    // this.render();
+    this.updateMatchList(this.inputElement.value);
+  }
+
+  
+  async filterMatches(searchString) {
+    const resultsList = [];
+    const matches = [];
+
+    const skillsPack = game.packs.get('dodexpert.skills');
+  const index = await skillsPack.getIndex({fields: ["system.category", "system.cost", "system.ability", "system.type"]});
+    index.forEach((item, key) => {
+      if (this.matchItem(item, searchString)) {
+        matches.push(item);
+      }
+    });
+/*
+    await Promise.allSettled(matches).then(results => results.forEach(result => resultsList.push(result.value)));
+
+    return resultsList;
+    */
+    return matches;
+    // return allSkills.filter(skill => skill.name.includes(searchString));
+  }
+
+  matchItem(item, searchString) {
+    if (item.type != this.data.type) {
+      return false;
+    }
+    let category = item.system.category;
+    if (this.data.subtype && category !== this.data.subtype) {
+      return false;
+    }
+    if (!item.name.includes(searchString))
+    {
+      return false;
+    }
+    
+    for (const existingItem of this.data.actor.items.values()) {
+      if (existingItem.name === item.name) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  async updateMatchList(searchString) {
+    this.clearSelect();
+    this.matchedSkills = await this.filterMatches(searchString);
+    this.matchListElement.innerHTML = "";
+    let innerElement = "";
+    const t = this;
+    this.matchEntryElements = [];
+    this.matchedSkills.forEach((skill, index) => {
+      const matchEntry = document.createElement('DIV');
+      matchEntry.innerHTML = t.buildMatchEntryHTML(skill, index, false);
+      matchEntry.addEventListener("click", function (e) {
+        t.selectSkill(index);
+      });
+      this.matchListElement.appendChild(matchEntry);
+      this.matchEntryElements.push(matchEntry);
+
+    });
+    if (this.matchEntryElements.length > 0) {
+      this.selectNextSkill();
+    }
+  }
+
+  buildMatchEntryHTML(skill, index, selected) {
+    return `
+    <div class="skill-match-entry" id="skill-match-entry-${index}">
+      <div class="skill-match-name">${skill.name}</div>
+      <div class="skill-match-ability">${skill.system.ability}</div>
+      <div class="skill-match-cost">${skill.system.cost}</div>
+      <div class="skill-match-type">${skill.system.type}-färdighet</div>
+    </div>
+    `;
   }
 
 
@@ -72,8 +169,78 @@ export class AddSkillDialog extends FormApplication {
     this.calculate();
   }
 
-  filterSkills(str) { 
+  filterSkills(str) {
     return allSkills.filter(skill => skill.name.indexOf(str) >= 0);
+  }
+
+
+
+  selectPreviousSkill() {
+    if (this.selectedSkillIndex < 0) {
+      return;
+    }
+
+    this.selectSkill(this.selectedSkillIndex - 1);
+  }
+  selectNextSkill() {
+    if (this.selectedSkillIndex >= this.matchedSkills.length) {
+      return;
+    }
+
+    this.selectSkill(this.selectedSkillIndex + 1);
+  }
+
+  clearSelect() {
+    if (this.selectedSkill) {
+      const element = document.querySelector('#skill-match-entry-' + this.selectedSkillIndex);
+      element.classList.remove("selected-skill-entry");
+    }
+    this.selectedSkill = null;
+    this.selectedSkillIndex = -1;
+    this.selectedSkillElement = null;
+    this.selectedSkillInfoElement.style.display = 'none';
+
+  }
+  selectSkill(index) {
+    if (this.selectedSkill) {
+      const element = document.querySelector('#skill-match-entry-' + this.selectedSkillIndex);
+      element.classList.remove("selected-skill-entry");
+    }
+    const skill = this.matchedSkills[index];
+    const skillsPack = game.packs.get('dodexpert.skills');
+
+    this.selectedSkill = skill;
+    this.selectedSkillIndex = index;
+    const element = document.querySelector('#skill-match-entry-' + index);
+//    element.innerHTML = this.buildMatchEntryHTML(skill, index, true);
+    element.classList.add("selected-skill-entry");
+
+    let innerHtml = `
+    <div class="selected-skill-name">${skill.name}</div>
+    <div class="selected-skill-cost">Kostnad: ${skill.system.cost}</div>
+    <div class="selected-skill-ability">Grundegenskap: ${skill.system.ability}</div>
+    <div class="selected-skill-type">Typ: ${skill.system.type}-färdighet</div>`;
+    if (skill.bc) {
+      innerHtml += `<div class="selected-skill-type">BC: ${skill.system.ability}</div>`;
+    } else {
+      innerHtml += `<div class="selected-skill-type">BC: 0</div>`;
+    }
+    this.selectedSkillInfoElement.innerHTML = innerHtml;
+
+    this.selectedSkillInfoElement.style.display = 'block';
+  }
+
+  async addSkill(event) {
+    const skillsPack = game.packs.get('dodexpert.skills');
+    const skill = await skillsPack.getDocument(this.selectedSkill._id);
+    const itemData = game.items.fromCompendium(skill);
+    // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.data.actor });
+    this.data.actor.createEmbeddedDocuments("Item", [itemData]);
+    // await Item.create(skill, { parent: this.data.actor });
+
+    this.inputElement.value = "";
+    this.updateMatchList(this.inputElement.value);
+    // this.close();
   }
   /**
    * @override

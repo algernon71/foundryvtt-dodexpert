@@ -1,16 +1,14 @@
-<form>
+<div class="skill-add-container">
+  <input id="skill-search-input" class="autocomplete-input" type="text"
+    placeholder="{{localize 'dodexpert.skills.add.placeholder'}}" autofocus />
+  <div class="autocomplete-list skill-match-list" id="skill-match-list">
 
-    <h1>Färdighet</h1>
-    
-    <input id="search" class="skill-search" type="text" value="{{search}}"/>
-    
-    <table>
-    {{#each skills as |skill key|}}
-    <tr>
-      <td>{{skill.name}}</td>
-    </tr>
-    {{/each}}
+  </div>
+  <div class="add-selected-skill" id="add-selected-skill">
+  </div>
 
-  </table>
-    <button id="roll-button" type="button" data-action="roll">Lägg till</button>
-  </form>
+  <div class="skill-add-buttons">
+    <button id="add-skill-button" type="button">{{localize 'dodexpert.skills.add.button'}}</button>
+
+  </div>
+</div>

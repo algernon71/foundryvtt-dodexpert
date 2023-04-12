@@ -70,6 +70,18 @@ export class DODExpertActorSheet extends ActorSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     context.system = actorData.system;
     context.flags = actorData.flags;
+    const permissionLevel = context.document.getUserLevel(game.user);
+    switch (permissionLevel) {
+      case 0:
+      case 1:
+        context.showSheets = game.user.isGM;
+
+        break;
+      case 2:
+      case 3:
+        context.showSheets = true;
+        break;
+    }
 
     // Prepare character data and items.
     switch (actorData.type) {
@@ -108,7 +120,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     // Handle ability scores.
     for (let [k, v] of Object.entries(context.system.abilities)) {
-      v.label = game.i18n.localize('dodexpert.abilities.' +  k + '.label') ?? k;
+      v.label = game.i18n.localize('dodexpert.abilities.' + k + '.label') ?? k;
     }
     const bodyShape = bodyShapes["humanoid"];
 
@@ -119,7 +131,7 @@ export class DODExpertActorSheet extends ActorSheet {
     }
     for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
       let bodyPart = context.system.body[part];
-      console.log('Building body part:' + part);
+      // console.log('Building body part:' + part);
       const partMaxHealth = v.baseKp + kpOffset;
       if (!bodyPart) {
         bodyPart = {
@@ -152,11 +164,27 @@ export class DODExpertActorSheet extends ActorSheet {
     // Initialize containers.
     const gear = [];
     const features = [];
-    const skills = [];
+    const skills = {
+      listTitle: 'FÄRDIGHETER',
+      addTitle: 'Lägg till färdighet',
+      type: 'skill',
+      list: []
+    };
+    const spells = {
+      listTitle: 'BESVÄRJELSE',
+      addTitle: 'Lägg till färdighet',
+      type: 'spell',
+      list: []
+    };
+    const magicSchools = {
+      listTitle: 'MAGISKOLOR',
+      addTitle: 'Lägg till magiskola',
+      type: 'skill',
+      subtype: 'magicschool',
+      list: []
+    };
     const favoriteSkills = [];
-    const spells = [];
     const languages = [];
-    const magicSchools = [];
     const weapons = [];
     let carriedWeight = 0;
 
@@ -174,8 +202,27 @@ export class DODExpertActorSheet extends ActorSheet {
           gear.push(i);
           break;
         case 'skill':
+
           initSkill(i, context);
-          skills.push(i);
+          if (!i.system.subtype) {
+            i.system.subtype = 'skill';
+          }
+          const subtype = i.system.subtype;
+
+          switch (subtype) {
+            case 'skill':
+              skills.list.push(i);
+              break;
+            case 'spell':
+              spells.list.push(i);
+              break;
+            case 'magicschool':
+              magicSchools.list.push(i);
+              break;
+            case 'language':
+              languages.push(i);
+              break;
+          }
           if (i.system.favorite) {
             favoriteSkills.push(i);
           }
@@ -184,12 +231,11 @@ export class DODExpertActorSheet extends ActorSheet {
           weapons.push(i);
           break;
         case 'spell':
-          spells.push(i);
+          spells.list.push(i);
           break;
       }
     }
 
-    // Assign and return
     context.gear = gear;
     context.weapons = weapons;
     context.skills = skills;
@@ -224,10 +270,7 @@ export class DODExpertActorSheet extends ActorSheet {
     html.find('.increase-power').click(this._onIncreasePower.bind(this));
     html.find('.deduct-power').click(this._onDeductPower.bind(this));
     // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
     html.find('.add-skill').click(this._onAddSkill.bind(this));
-    html.find('.add-magic-school').click(this._onAddMagicSchool.bind(this));
-    html.find('.add-spell').click(this._onAddSpell.bind(this));
     html.find('.attack').click(this._onAttack.bind(this));
     html.find('.cast').click(this._onCastSpell.bind(this));
     html.find('.skill-roll').click(this._onSkillRoll.bind(this));
@@ -260,6 +303,17 @@ export class DODExpertActorSheet extends ActorSheet {
 
       }
     ]);
+    new ContextMenu(html, '.skill-erf', [
+      {
+        name: game.i18n.localize('dodexpert.menus.add-xp'),
+        icon: '<i class="fas fa-plus"></i>',
+        callback: element => {
+          const skillId = element.data("skill");
+          this.addSkillExperience(skillId);
+        }
+
+      }
+    ]);
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -284,12 +338,21 @@ export class DODExpertActorSheet extends ActorSheet {
       });
     }
   }
+  async addSkillExperience(skillId) {
+
+    const item = this.actor.items.get(skillId);
+    if (item) {
+      await giveSkillExperience(item, 1);
+      this.render();
+    }
+
+  }
   async _onSkillExperienceAdd(event) {
 
     const a = event.currentTarget;
     const data = a.dataset;
     const actorData = this.actor.system;
-    const itemId = $(a).parents('.item').attr('data-item-id');
+    const itemId = data.skill;
     const item = this.actor.items.get(itemId);
     if (item) {
       await giveSkillExperience(item, 1);
@@ -303,7 +366,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const a = event.currentTarget;
     const data = a.dataset;
     const actorData = this.actor.system;
-    const itemId = $(a).parents('.item').attr('data-item-id');
+    const itemId = data.skill;
     const item = this.actor.items.get(itemId);
     if (item) {
       await removeSkillExperience(item, 1);
@@ -394,53 +457,6 @@ export class DODExpertActorSheet extends ActorSheet {
   }
 
 
-
-  /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      system: data
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.system["type"];
-
-    // Finally, create the item!
-    return await Item.create(itemData, { parent: this.actor });
-  }
-
-  async _onSkillAdd(event) {
-    const data = { actor: this.actor };
-    const addSkillDialog = await renderTemplate("systems/dodexpert/templates/item/add-skill-dialog.html", data);
-
-    new Dialog({
-      title: "Lägg till färdighet",
-      content: addSkillDialog,
-      buttons: {
-        add: {
-          label: "Lägg till",
-          callback: () => {
-            ui.notifications.info("Button #1 Clicked!")
-          },
-          icon: `<i class="fas fa-check"></i>`
-        }
-      }
-    }).render(true);
-  }
-
   /**
    * Handle clickable rolls.
    * @param {Event} event   The originating click event
@@ -485,33 +501,20 @@ export class DODExpertActorSheet extends ActorSheet {
     item.use(event);
   }
   async _onAddSkill(event) {
-    const itemData = {
-      name: 'Färdighet',
-      type: 'skill',
-      system: {}
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.system["type"];
+    const header = event.currentTarget;
+    const type = header.dataset.type;
+    const subType = header.dataset.subtype;
+    const title = header.dataset.title;
 
-    // Finally, create the item!
-   const skill = await Item.create(itemData, { parent: this.actor });
-    /*
-    this.dialog = new AddSkillDialog({ actor: this.actor });
+    this.dialog = new AddSkillDialog(
+      {
+        title: title,
+        actor: this.actor,
+        type: type,
+        subtype: subType
+      }
+    );
     this.dialog.render(true, {
-      renderData: {}
-    });
-    */
-    skill.sheet.render(true);
-  }
-  async _onAddMagicSchool(event) {
-    this.dialog = new AddMagicSchoolDialog({ actor: this.actor });
-    this.dialog.render(true, {
-      renderData: {}
-    });
-  }
-  async _onAddSpell(event) {
-    this.addSpellDialog = new AddSpellDialog({ actor: this.actor });
-    this.addSpellDialog.render(true, {
       renderData: {}
     });
   }

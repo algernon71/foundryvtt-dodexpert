@@ -19,6 +19,7 @@
         "life_goals": "",
         "appearance": "",
         "biography": "",
+        "background": "",
         "notes": ""
       },
       "money": {
@@ -189,6 +190,7 @@
       ],
       "skill_id": "",
       "item_type": "",
+      "subtype:": "skill",
       "favorite": false,
       "specifik": false,
       "type": "A",
