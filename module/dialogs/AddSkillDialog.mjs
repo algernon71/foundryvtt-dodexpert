@@ -25,8 +25,8 @@ export class AddSkillDialog extends FormApplication {
 
     const overrides = {
       closeOnSubmit: false,
-      height: 400,
-      width: 400,
+      height: 600,
+      width: 600,
       id: 'skill-check-dialog',
       submitOnChange: true,
       template: "systems/dodexpert/templates/dialog/add-skill-dialog.html",
@@ -110,10 +110,19 @@ export class AddSkillDialog extends FormApplication {
       return false;
     }
     let category = item.system.category;
-    if (this.data.subtype && category !== this.data.subtype) {
-      return false;
+    const subtype = item.system.category;
+    if (subtype) {
+
+      if (this.data.includeSubtypes && !this.data.includeSubtypes.find(st => subtype == st)) {
+        return false;
+
+      }
+      if (this.data.excludeSubtypes && this.data.excludeSubtypes.find(st => subtype == st)) {
+        return false;
+
+      }
     }
-    if (!item.name.includes(searchString)) {
+    if (!item.name.toLowerCase().includes(searchString.toLowerCase())) {
       return false;
     }
 
@@ -121,7 +130,7 @@ export class AddSkillDialog extends FormApplication {
       if (existingItem.name === item.name) {
         return false;
       }
-
+      
     }
     for (const existingItem of this.data.actor.items.values()) {
       if (existingItem.name === item.name) {
@@ -161,6 +170,8 @@ export class AddSkillDialog extends FormApplication {
       <div class="skill-match-ability">${skill.system.ability}</div>
       <div class="skill-match-cost">${skill.system.cost}</div>
       <div class="skill-match-type">${skill.system.type}-färdighet</div>
+      <div class="skill-match-type">${skill.type}</div>
+      <div class="skill-match-type">${skill.system.category}</div>
     </div>
     `;
   }
@@ -236,7 +247,7 @@ export class AddSkillDialog extends FormApplication {
     this.addedSkills.push(itemData);
     // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.data.actor });
     // await this.data.actor.createEmbeddedDocuments("Item", [itemData]);
-    await Item.create(skill, { parent: this.data.actor });
+    await Item.create(itemData, { parent: this.data.actor });
 
     this.inputElement.value = "";
     this.updateMatchList('');

@@ -166,21 +166,22 @@ export class DODExpertActorSheet extends ActorSheet {
     const features = [];
     const skills = {
       listTitle: 'FÄRDIGHETER',
-      addTitle: 'Lägg till färdighet',
+      addTitle: 'Lägg till',
       type: 'skill',
+      excludeSubtypes: ['MAG'],
       list: []
     };
     const spells = {
-      listTitle: 'BESVÄRJELSE',
-      addTitle: 'Lägg till färdighet',
+      listTitle: 'BESVÄRJELSER',
+      addTitle: 'Lägg till',
       type: 'spell',
       list: []
     };
     const magicSchools = {
       listTitle: 'MAGISKOLOR',
-      addTitle: 'Lägg till magiskola',
+      addTitle: 'Lägg till',
       type: 'skill',
-      subtype: 'magicschool',
+      includeSubtypes: ['MAG'],
       list: []
     };
     const favoriteSkills = [];
