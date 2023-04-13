@@ -7,7 +7,7 @@ const itemMappings = {
   item: DODExpertItem,
   weapon: DODExpertItem,
   armor: DODExpertItem,
-  spell: DODExpertItem,
+  spell: DODExpertSkill,
   default: DODExpertItem
 };
 

@@ -1,13 +1,7 @@
-const allSkills = [
-  { "subtype": "UPT", "name": "Finna dolda ting", "bc": true, "ability": "INT", "cost": "2", "type": "A" },
-  { "subtype": "UPT", "name": "Upptäcka fara", "bc": true, "ability": "PSY", "cost": "4", "type": "A" },
-  { "subtype": "UPT", "name": "Lyssna", "bc": true, "ability": "INT", "cost": "2", "type": "A" },
-  { "subtype": "TJU", "name": "Smyga", "bc": true, "ability": "SMI", "cost": "2", "type": "A" },
-  { "subtype": "TJU", "name": "Klättra", "bc": true, "ability": "SMI", "cost": "1", "type": "A" },
-  { "subtype": "TJU", "name": "Hoppa", "bc": true, "ability": "SMI", "cost": "1", "type": "A" },
-];
 
-
+function compareNumbers(a, b) {
+  return a - b;
+}
 export class AddSkillDialog extends FormApplication {
 
 
@@ -17,10 +11,10 @@ export class AddSkillDialog extends FormApplication {
     });
     this.data = data;
     this.search = '';
-    this.matchedSkills = allSkills;
     this.selectedSkill = null;
     this.selectedSkillIndex = -1;
     this.selectedSkillElement = null;
+    this.addedSkills = [];
   }
 
   /**
@@ -87,25 +81,28 @@ export class AddSkillDialog extends FormApplication {
     this.updateMatchList(this.inputElement.value);
   }
 
-  
+
+  sortOrder(item) {
+    if (item.system.sortorder ) {
+      return Number(item.system.sortorder);
+    }
+
+    return 10;
+  }
   async filterMatches(searchString) {
     const resultsList = [];
     const matches = [];
 
     const skillsPack = game.packs.get('dodexpert.skills');
-  const index = await skillsPack.getIndex({fields: ["system.category", "system.cost", "system.ability", "system.type"]});
+    const index = await skillsPack.getIndex({ fields: ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"] });
     index.forEach((item, key) => {
       if (this.matchItem(item, searchString)) {
         matches.push(item);
       }
     });
-/*
-    await Promise.allSettled(matches).then(results => results.forEach(result => resultsList.push(result.value)));
-
-    return resultsList;
-    */
+    matches.sort((a, b) => compareNumbers(this.sortOrder(a) , this.sortOrder(b)));
     return matches;
-    // return allSkills.filter(skill => skill.name.includes(searchString));
+
   }
 
   matchItem(item, searchString) {
@@ -116,11 +113,16 @@ export class AddSkillDialog extends FormApplication {
     if (this.data.subtype && category !== this.data.subtype) {
       return false;
     }
-    if (!item.name.includes(searchString))
-    {
+    if (!item.name.includes(searchString)) {
       return false;
     }
-    
+
+    for (const existingItem of this.addedSkills) {
+      if (existingItem.name === item.name) {
+        return false;
+      }
+
+    }
     for (const existingItem of this.data.actor.items.values()) {
       if (existingItem.name === item.name) {
         return false;
@@ -169,9 +171,6 @@ export class AddSkillDialog extends FormApplication {
     this.calculate();
   }
 
-  filterSkills(str) {
-    return allSkills.filter(skill => skill.name.indexOf(str) >= 0);
-  }
 
 
 
@@ -212,7 +211,7 @@ export class AddSkillDialog extends FormApplication {
     this.selectedSkill = skill;
     this.selectedSkillIndex = index;
     const element = document.querySelector('#skill-match-entry-' + index);
-//    element.innerHTML = this.buildMatchEntryHTML(skill, index, true);
+    //    element.innerHTML = this.buildMatchEntryHTML(skill, index, true);
     element.classList.add("selected-skill-entry");
 
     let innerHtml = `
@@ -234,12 +233,13 @@ export class AddSkillDialog extends FormApplication {
     const skillsPack = game.packs.get('dodexpert.skills');
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
     const itemData = game.items.fromCompendium(skill);
+    this.addedSkills.push(itemData);
     // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.data.actor });
-    this.data.actor.createEmbeddedDocuments("Item", [itemData]);
-    // await Item.create(skill, { parent: this.data.actor });
+    // await this.data.actor.createEmbeddedDocuments("Item", [itemData]);
+    await Item.create(skill, { parent: this.data.actor });
 
     this.inputElement.value = "";
-    this.updateMatchList(this.inputElement.value);
+    this.updateMatchList('');
     // this.close();
   }
   /**
@@ -250,8 +250,6 @@ export class AddSkillDialog extends FormApplication {
     const renderData = options.renderData;
 
     context.actor = this.data.actor;
-    context.skills = this.filterSkills(this.search);
-    context.search = this.search;
 
     return context;
   }

@@ -284,6 +284,7 @@ export class DODExpertActorSheet extends ActorSheet {
       {
         name: game.i18n.localize('dodexpert.menus.edit'),
         icon: '<i class="fas fa-edit"></i>',
+        condition: element => game.user.isGM,
         callback: element => {
           const skillId = element.data("skill");
           const items = this.actor.items;
