@@ -38,6 +38,7 @@ export class DODExpertActorSheet extends ActorSheet {
   selectableSkills = [];
   selectedSkill = null;
   selectedSkillIndex = 0;
+  listTypes = {};
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -166,6 +167,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const features = [];
     const skills = {
       listTitle: 'FÄRDIGHETER',
+      pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
       excludeSubtypes: ['MAG'],
@@ -173,12 +175,14 @@ export class DODExpertActorSheet extends ActorSheet {
     };
     const spells = {
       listTitle: 'BESVÄRJELSER',
+      pack: 'dodexpert.spells',
       addTitle: 'Lägg till',
       type: 'spell',
       list: []
     };
     const magicSchools = {
       listTitle: 'MAGISKOLOR',
+      pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
       includeSubtypes: ['MAG'],
@@ -236,6 +240,9 @@ export class DODExpertActorSheet extends ActorSheet {
           break;
       }
     }
+    this.listTypes.skills = skills;
+    this.listTypes.magicschools = magicSchools;
+    this.listTypes.spells = spells;
 
     context.gear = gear;
     context.weapons = weapons;
@@ -504,18 +511,10 @@ export class DODExpertActorSheet extends ActorSheet {
   }
   async _onAddSkill(event) {
     const header = event.currentTarget;
-    const type = header.dataset.type;
-    const subType = header.dataset.subtype;
-    const title = header.dataset.title;
+    const listTypeName = header.dataset.listtype;
 
-    this.dialog = new AddSkillDialog(
-      {
-        title: title,
-        actor: this.actor,
-        type: type,
-        subtype: subType
-      }
-    );
+    const listType = this.listTypes[listTypeName];
+    this.dialog = new AddSkillDialog(this.actor, listType);
     this.dialog.render(true, {
       renderData: {}
     });
@@ -545,40 +544,6 @@ export class DODExpertActorSheet extends ActorSheet {
     this.skillCheckDialog.render(true, {
       renderData: { skill: item }
     });
-  }
-
-  async _onSkillCreate(event) {
-    console.log('_onSkillCreate, event:', event);
-    const context = this.getData();
-    console.log('_onSkillCreate, context:', context);
-
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `Smyga`;
-    // Prepare the item object.
-    const bcStat = context.data.system.abilities[this.selectedSkill.bc];
-    let bc = 0;
-    if (bcStat) {
-      bc = bcStat.mod;
-    }
-    const itemData = {
-      name: this.selectedSkill.name,
-      type: "skill",
-      system: {
-        skill_id: this.selectedSkillIndex,
-        fv: bc,
-        erf: 0
-
-      }
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.system["type"];
-
-    // Finally, create the item!
-    return await Item.create(itemData, { parent: this.actor });
   }
 
 

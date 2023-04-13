@@ -5,10 +5,11 @@ function compareNumbers(a, b) {
 export class AddSkillDialog extends FormApplication {
 
 
-  constructor(data) { // myObject is the object your app modifies, such as an Actor or Item
-    super(data, {
+  constructor(actor, data) { // myObject is the object your app modifies, such as an Actor or Item
+    super(actor, data, {
       title: data.title
     });
+    this.actor = actor;
     this.data = data;
     this.search = '';
     this.selectedSkill = null;
@@ -93,7 +94,7 @@ export class AddSkillDialog extends FormApplication {
     const resultsList = [];
     const matches = [];
 
-    const skillsPack = game.packs.get('dodexpert.skills');
+    const skillsPack = game.packs.get(this.data.pack);
     const index = await skillsPack.getIndex({ fields: ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"] });
     index.forEach((item, key) => {
       if (this.matchItem(item, searchString)) {
@@ -132,7 +133,7 @@ export class AddSkillDialog extends FormApplication {
       }
       
     }
-    for (const existingItem of this.data.actor.items.values()) {
+    for (const existingItem of this.actor.items.values()) {
       if (existingItem.name === item.name) {
         return false;
       }
@@ -217,7 +218,7 @@ export class AddSkillDialog extends FormApplication {
       element.classList.remove("selected-skill-entry");
     }
     const skill = this.matchedSkills[index];
-    const skillsPack = game.packs.get('dodexpert.skills');
+    const skillsPack = game.packs.get(this.data.pack);
 
     this.selectedSkill = skill;
     this.selectedSkillIndex = index;
@@ -241,13 +242,13 @@ export class AddSkillDialog extends FormApplication {
   }
 
   async addSkill(event) {
-    const skillsPack = game.packs.get('dodexpert.skills');
+    const skillsPack = game.packs.get(this.data.pack);
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
     const itemData = game.items.fromCompendium(skill);
     this.addedSkills.push(itemData);
-    // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.data.actor });
-    // await this.data.actor.createEmbeddedDocuments("Item", [itemData]);
-    await Item.create(itemData, { parent: this.data.actor });
+    // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.actor });
+    // await this.actor.createEmbeddedDocuments("Item", [itemData]);
+    await Item.create(itemData, { parent: this.actor });
 
     this.inputElement.value = "";
     this.updateMatchList('');
@@ -260,7 +261,7 @@ export class AddSkillDialog extends FormApplication {
     const context = super.getData();
     const renderData = options.renderData;
 
-    context.actor = this.data.actor;
+    context.actor = this.actor;
 
     return context;
   }
