@@ -169,7 +169,7 @@ export class DODExpertActorSheet extends ActorSheet {
       pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
-      excludeSubtypes: ['MAG'],
+      excludeSubtypes: ["MAG"],
       list: []
     };
     const spells = {
@@ -184,7 +184,7 @@ export class DODExpertActorSheet extends ActorSheet {
       pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
-      includeSubtypes: ['MAG'],
+      includeSubtypes: ["MAG"],
       list: []
     };
     const favoriteSkills = [];
@@ -196,51 +196,28 @@ export class DODExpertActorSheet extends ActorSheet {
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
+      i.img = i.img || DEFAULT_TOKEN;
+
+      this.addToList(skills, i);
+      this.addToList(spells, i);
+      this.addToList(magicSchools, i);
+      // Append to gear.
+    }
+    for (let i of context.items) {
       if (i.system.weight) {
         carriedWeight += Number(i.system.weight);
       }
-      i.img = i.img || DEFAULT_TOKEN;
-      // Append to gear.
       switch (i.type) {
-        case 'item':
+        case "item":
           gear.push(i);
           break;
-        case 'skill':
-
-          initSkill(i, context);
-          if (!i.system.subtype) {
-            i.system.subtype = 'skill';
-          }
-          const subtype = i.system.subtype;
-
-          switch (subtype) {
-            case 'skill':
-              skills.list.push(i);
-              break;
-            case 'spell':
-              spells.list.push(i);
-              break;
-            case 'magicschool':
-              magicSchools.list.push(i);
-              break;
-            case 'language':
-              languages.push(i);
-              break;
-          }
-          if (i.system.favorite) {
-            favoriteSkills.push(i);
-          }
-          break;
-        case 'weapon':
+        case "weapon":
           weapons.push(i);
-          break;
-        case 'spell':
-          spells.list.push(i);
           break;
       }
     }
-    this.listTypes.skills = skills;
-    this.listTypes.magicschools = magicSchools;
+      this.listTypes.skills = skills;
+    this.listTypes.magicSchools = magicSchools;
     this.listTypes.spells = spells;
 
     context.gear = gear;
@@ -255,6 +232,30 @@ export class DODExpertActorSheet extends ActorSheet {
     console.log('context:', context);
   }
 
+  addToList(list, item) {
+    if (this.inList(list, item)) {
+      list.list.push(item);
+    }
+  }
+
+  inList(list, item) {
+    if (item.type != list.type) {
+      return false;
+    }
+
+    if (list.includeSubtypes) {
+      if (!list.includeSubtypes.find(subtype => subtype == item.system.category)) {
+        return false;
+      }
+    }
+    if (list.excludeSubtypes) {
+      if (list.excludeSubtypes.find(subtype => subtype == item.system.category)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
   /* -------------------------------------------- */
 
   /** @override */

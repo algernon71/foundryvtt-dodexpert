@@ -107,6 +107,12 @@
   font-weight: bold;
 }
 
+.selected-skill-attribute {
+  font-weight: bold; 
+}
+.selected-skill-description {
+  margin: 10px;
+}
 
 
 .autocomplete-items {

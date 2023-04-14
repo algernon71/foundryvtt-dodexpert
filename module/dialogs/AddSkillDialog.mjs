@@ -16,6 +16,8 @@ export class AddSkillDialog extends FormApplication {
     this.selectedSkillIndex = -1;
     this.selectedSkillElement = null;
     this.addedSkills = [];
+    this.getActorMagicSchools();
+    console.info("shools:", this.data.magicSchools);
   }
 
   /**
@@ -84,7 +86,7 @@ export class AddSkillDialog extends FormApplication {
 
 
   sortOrder(item) {
-    if (item.system.sortorder ) {
+    if (item.system.sortorder) {
       return Number(item.system.sortorder);
     }
 
@@ -94,16 +96,38 @@ export class AddSkillDialog extends FormApplication {
     const resultsList = [];
     const matches = [];
 
+
     const skillsPack = game.packs.get(this.data.pack);
-    const index = await skillsPack.getIndex({ fields: ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"] });
+    const index = await skillsPack.getIndex({ fields: this.getFields() });
     index.forEach((item, key) => {
       if (this.matchItem(item, searchString)) {
         matches.push(item);
       }
     });
-    matches.sort((a, b) => compareNumbers(this.sortOrder(a) , this.sortOrder(b)));
+    matches.sort((a, b) => compareNumbers(this.sortOrder(a), this.sortOrder(b)));
     return matches;
 
+  }
+
+  getActorMagicSchools() {
+    this.data.magicSchools = {};
+    this.actor.items.forEach(item => {
+      if (item.type == "skill" && item.system.category == "MAG") {
+        console.info('school:', item);
+        this.data.magicSchools[item.system.schoolId] = item;
+      }
+    });
+  }
+  getFields() {
+    switch (this.data.type) {
+      case "skill":
+        return ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"];
+      case "spell":
+        return ["system.school", "system.level", "system.quick", "system.ritual", "system.physical", "system.sortorder"];
+
+      default:
+        return [];
+    }
   }
 
   matchItem(item, searchString) {
@@ -131,10 +155,20 @@ export class AddSkillDialog extends FormApplication {
       if (existingItem.name === item.name) {
         return false;
       }
-      
+
     }
     for (const existingItem of this.actor.items.values()) {
       if (existingItem.name === item.name) {
+        return false;
+      }
+    }
+
+    if (item.type == "spell") {
+      const schoolSkill = this.data.magicSchools[item.system.school];
+      if (!schoolSkill) {
+        return false;
+      }
+      if (item.system.level > schoolSkill.system.fv) {
         return false;
       }
     }
@@ -165,6 +199,14 @@ export class AddSkillDialog extends FormApplication {
   }
 
   buildMatchEntryHTML(skill, index, selected) {
+    switch (skill.type) {
+      case "spell":
+        return this.buildSpellMatchEntryHTML(skill, index, selected);
+
+      case "skill":
+        default:
+        return this.buildSkillMatchEntryHTML(skill, index, selected);
+    }
     return `
     <div class="skill-match-entry" id="skill-match-entry-${index}">
       <div class="skill-match-name">${skill.name}</div>
@@ -173,6 +215,28 @@ export class AddSkillDialog extends FormApplication {
       <div class="skill-match-type">${skill.system.type}-färdighet</div>
       <div class="skill-match-type">${skill.type}</div>
       <div class="skill-match-type">${skill.system.category}</div>
+    </div>
+    `;
+  }
+  buildSkillMatchEntryHTML(skill, index, selected) {
+    return `
+    <div class="skill-match-entry" id="skill-match-entry-${index}">
+      <div class="skill-match-name">${skill.name}</div>
+      <div class="skill-match-ability">${skill.system.ability}</div>
+      <div class="skill-match-cost">${skill.system.cost}</div>
+      <div class="skill-match-type">${skill.system.type}-färdighet</div>
+      <div class="skill-match-type">${skill.type}</div>
+      <div class="skill-match-type">${skill.system.category}</div>
+    </div>
+    `;
+  }
+  buildSpellMatchEntryHTML(skill, index, selected) {
+
+    return `
+    <div class="skill-match-entry" id="skill-match-entry-${index}">
+      <div class="skill-match-name">${skill.name}</div>
+      <div class="skill-match-ability">${skill.system.school}</div>
+      <div class="skill-match-cost">${skill.system.level}</div>
     </div>
     `;
   }
@@ -212,7 +276,7 @@ export class AddSkillDialog extends FormApplication {
     this.selectedSkillInfoElement.style.display = 'none';
 
   }
-  selectSkill(index) {
+  async selectSkill(index) {
     if (this.selectedSkill) {
       const element = document.querySelector('#skill-match-entry-' + this.selectedSkillIndex);
       element.classList.remove("selected-skill-entry");
@@ -225,7 +289,17 @@ export class AddSkillDialog extends FormApplication {
     const element = document.querySelector('#skill-match-entry-' + index);
     //    element.innerHTML = this.buildMatchEntryHTML(skill, index, true);
     element.classList.add("selected-skill-entry");
+    const skillObject = await skillsPack.getDocument(this.selectedSkill._id);
 
+    this.selectedSkillInfoElement.innerHTML = this.renderSkillDescription(skillObject);
+
+    this.selectedSkillInfoElement.style.display = 'block';
+  }
+
+  renderSkillDescription(skill) {
+    if (skill.type == "spell") {
+      return this.renderSpellDescription(skill);
+    }
     let innerHtml = `
     <div class="selected-skill-name">${skill.name}</div>
     <div class="selected-skill-cost">Kostnad: ${skill.system.cost}</div>
@@ -236,15 +310,40 @@ export class AddSkillDialog extends FormApplication {
     } else {
       innerHtml += `<div class="selected-skill-type">BC: 0</div>`;
     }
-    this.selectedSkillInfoElement.innerHTML = innerHtml;
+    return innerHtml;
+  }
 
-    this.selectedSkillInfoElement.style.display = 'block';
+  renderSpellDescription(skill) {
+    let letters = [];
+    if (skill.system.quick) {
+      letters.push("K");
+    }
+    if (skill.system.physical) {
+      letters.push("F");
+    }
+    if (skill.system.ritual) {
+      letters.push("R");
+    }
+    let name = skill.name;
+    if (letters.length > 0) {
+      name += "(" + letters.join(",") + ")";
+    }
+    let innerHtml = `
+    <div class="selected-skill-name">${skill.name}</div>
+    <div class="selected-skill-attribute">Skolvärde: ${skill.system.level} (Kostnad: ${skill.system.cost})</div>
+    <div class="selected-skill-attribute">Skola: ${skill.system.school}</div>
+    <div class="selected-skill-attribute">Räckvidd: ${skill.system.range}</div>
+    <div class="selected-skill-attribute">Varaktighet: ${skill.system.duration}</div>
+    <div class="selected-skill-description"> ${skill.system.description}</div>`;
+    return innerHtml;
   }
 
   async addSkill(event) {
+    console.info('addSkill:', event);
     const skillsPack = game.packs.get(this.data.pack);
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
     const itemData = game.items.fromCompendium(skill);
+    console.info('itemData:', itemData);
     this.addedSkills.push(itemData);
     // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.actor });
     // await this.actor.createEmbeddedDocuments("Item", [itemData]);
