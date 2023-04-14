@@ -9,7 +9,6 @@ import { CastSpellDialog } from "../dialogs/CastSpellDialog.mjs"
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 import { giveSkillExperience, removeSkillExperience } from "../skills.mjs";
 import { initSkill } from "../skills.mjs";
-import { magiskolor } from "../spells.mjs";
 import { races, bodyShapes } from "../constants.mjs";
 
 const sheetStyles = [

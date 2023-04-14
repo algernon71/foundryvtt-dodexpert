@@ -130,6 +130,7 @@
     "templates": {
       "base": {
         "description": "",
+        "internalId": "",
         "sortorder": 10
       }
     },

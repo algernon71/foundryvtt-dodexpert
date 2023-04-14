@@ -25,6 +25,15 @@
           </select>
         </td>
       </tr>
+      {{#ifeq system.category "MAG"}}
+      <tr>
+
+        <td>ID</td>
+        <td> <input id="schoolId" type="text" name="system.schoolId" value="{{item.system.schoolId}}" />
+        </td>
+      </tr>
+      <tr>
+        {{/ifeq}}
 
       <tr>
 
@@ -39,7 +48,6 @@
         </td>
       </tr>
 
-      <tr>
 
         <td>Kostnad</td>
         <td> <input id="cost" type="number" name="system.cost" value="{{item.system.cost}}" />

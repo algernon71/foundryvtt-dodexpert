@@ -1,9 +1,5 @@
 
 
-export const magiskolor = { 
-    "E" : { "name": "Elementarmagi"},
-    "H" : { "name": "Harmonism"}
-};
 
 export function initSkill(skill, context) {
     const ability = context.system.abilities[skill.system.ability];

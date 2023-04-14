@@ -13,31 +13,31 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
-    <select  class="magiskola"  name="system.magiskola"  data-type="String">
-      {{#select system.magiskola}}
-          {{#each magiskolor as |skola id|}}
-          <option  value="{{id}}">{{skola.name}}</option>
+    <select  class="magiskola"  name="system.category"  data-type="String">
+      {{#select system.category}}
+          {{#each magicschools as |school id|}}
+          <option  value="{{school.id}}">{{school.name}}</option>
           {{/each}}
       {{/select}}
   </select>
       <label for="sv">Skolvärde</label>
-    <input id="sv" type="number" name="system.sv" value="{{item.system.sv}}" />
+    <input id="sv" type="number" name="system.level" value="{{item.system.level}}" />
     <br>
     <label for="fysisk">Fysisk</label>
-    <input id="fysisk" type="checkbox" name="system.fysisk" {{checked system.fysisk}}>
+    <input id="fysisk" type="checkbox" name="system.physical" {{checked system.physical}}>
     <label for="kvick">Kvick</label>
-    <input id="kvick" type="checkbox" name="system.kvick" {{checked system.kvick}}>
+    <input id="kvick" type="checkbox" name="system.quick" {{checked system.quick}}>
     <label for="ritual">Ritual</label>
     <input id="ritual" type="checkbox" name="system.ritual" {{checked system.ritual}}>
     <br>
     <label for="rackvidd">Räckvidd</label>
-    <input id="rackvidd" type="text" name="system.rackvidd" value="{{system.rackvidd}}"">
+    <input id="rackvidd" type="text" name="system.range" value="{{system.range}}"">
     <br>
     <label for="varaktighet">Varaktighet</label>
-    <input id="varaktighet" type="text" name="system.varaktighet" value="{{system.varaktighet}}"">
+    <input id="varaktighet" type="text" name="system.duration" value="{{system.duration}}"">
 
     <label for="skada">Skada</label>
-    <input id="skada" type="text" name="system.skada" value="{{system.skada}}"">
+    <input id="skada" type="text" name="system.damage" value="{{system.damage}}"">
 
    
     {{!-- Description Tab --}}
