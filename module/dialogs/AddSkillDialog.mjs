@@ -119,10 +119,10 @@ export class AddSkillDialog extends FormApplication {
     });
   }
   getFields() {
-    switch (this.data.type) {
-      case "skill":
+    switch (this.data.deftype) {
+      case "skilldef":
         return ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"];
-      case "spell":
+      case "spelldef":
         return ["system.school", "system.level", "system.quick", "system.ritual", "system.physical", "system.sortorder"];
 
       default:
@@ -131,7 +131,7 @@ export class AddSkillDialog extends FormApplication {
   }
 
   matchItem(item, searchString) {
-    if (item.type != this.data.type) {
+    if (item.type != this.data.deftype) {
       return false;
     }
     const subtype = item.system.category;
@@ -212,7 +212,6 @@ export class AddSkillDialog extends FormApplication {
       <div class="skill-match-ability">${skill.system.ability}</div>
       <div class="skill-match-cost">${skill.system.cost}</div>
       <div class="skill-match-type">${skill.system.type}-färdighet</div>
-      <div class="skill-match-type">${skill.type}</div>
       <div class="skill-match-type">${skill.system.category}</div>
     </div>
     `;
@@ -220,11 +219,11 @@ export class AddSkillDialog extends FormApplication {
   buildSkillMatchEntryHTML(skill, index, selected) {
     return `
     <div class="skill-match-entry" id="skill-match-entry-${index}">
+    
       <div class="skill-match-name">${skill.name}</div>
       <div class="skill-match-ability">${skill.system.ability}</div>
       <div class="skill-match-cost">${skill.system.cost}</div>
       <div class="skill-match-type">${skill.system.type}-färdighet</div>
-      <div class="skill-match-type">${skill.type}</div>
       <div class="skill-match-type">${skill.system.category}</div>
     </div>
     `;
@@ -339,9 +338,9 @@ export class AddSkillDialog extends FormApplication {
   }
 
   async addSkill(event) {
-    console.info('addSkill:', event);
     const skillsPack = game.packs.get(this.data.pack);
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
+    console.info('addSkill:', skill);
 //    const itemData = game.items.fromCompendium(skill);
     const itemData = {
       name: skill.name,

@@ -4,11 +4,13 @@ import { DODExpertItem } from "./item.mjs";
 //Provide a type string to class object mapping to keep our code clean
 const itemMappings = {
   skill: DODExpertSkill,
+  skilldef: DODExpertSkill,
   item: DODExpertItem,
   weapon: DODExpertItem,
   shield: DODExpertItem,
   armor: DODExpertItem,
   spell: DODExpertSkill,
+  spelldef: DODExpertSkill,
   default: DODExpertItem
 };
 

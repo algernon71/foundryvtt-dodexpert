@@ -29,12 +29,17 @@ export class DODExpertSkill extends Item {
       const skillsPack = game.packs.get(skillPack);
       this.skillDef = await skillsPack.getDocument(skillId);
 
-      this.name = this.skillDef.name;
-      this.derived = {
-        cost: this.skillDef.system.cost,
-        ability: this.skillDef.system.ability
-      };
-      console.info('Skill initialized!', this);
+      if (this.skillDef) {
+        this.name = this.skillDef.name;
+        this.derived = {
+          cost: this.skillDef.system.cost,
+          ability: this.skillDef.system.ability
+        };
+        console.info('Skill initialized!', this);
+  
+      } else {
+        console.info('Failed to initialize skill, with def id:' + skillId, this);
+      }
     }
   }
 

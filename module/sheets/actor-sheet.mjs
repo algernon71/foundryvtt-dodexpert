@@ -169,6 +169,7 @@ export class DODExpertActorSheet extends ActorSheet {
       pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
+      deftype: 'skilldef',
       excludeSubtypes: ["MAG"],
       list: []
     };
@@ -177,6 +178,7 @@ export class DODExpertActorSheet extends ActorSheet {
       pack: 'dodexpert.spells',
       addTitle: 'Lägg till',
       type: 'spell',
+      deftype: 'spelldef',
       list: []
     };
     const magicSchools = {
@@ -184,6 +186,7 @@ export class DODExpertActorSheet extends ActorSheet {
       pack: 'dodexpert.skills',
       addTitle: 'Lägg till',
       type: 'skill',
+      deftype: 'skilldef',
       includeSubtypes: ["MAG"],
       list: []
     };
