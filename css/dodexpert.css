@@ -61,6 +61,8 @@
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 5px;
+  max-height: 50%;
+  overflow: scroll;
 }
 .skill-match-list {
   border: solid black 1px;

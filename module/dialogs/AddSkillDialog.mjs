@@ -28,7 +28,7 @@ export class AddSkillDialog extends FormApplication {
 
     const overrides = {
       closeOnSubmit: false,
-      height: 600,
+      height: 800,
       width: 600,
       id: 'skill-check-dialog',
       submitOnChange: true,
@@ -134,7 +134,6 @@ export class AddSkillDialog extends FormApplication {
     if (item.type != this.data.type) {
       return false;
     }
-    let category = item.system.category;
     const subtype = item.system.category;
     if (subtype) {
 
@@ -310,6 +309,7 @@ export class AddSkillDialog extends FormApplication {
     } else {
       innerHtml += `<div class="selected-skill-type">BC: 0</div>`;
     }
+    innerHtml += `<div class="selected-skill-description"> ${skill.system.description}</div>`;
     return innerHtml;
   }
 

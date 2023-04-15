@@ -33,8 +33,30 @@
         </td>
       </tr>
       <tr>
-        {{/ifeq}}
+        {{else}}
+        <tr>
 
+          <td>Kategori:</td>
+          <td> <select id="type" class="skill-selector" name="system.type" value="{{item.system.type}}">
+              {{#select system.type}}
+              <option value="A">A-färdighet</option>
+              <option value="B">B-färdighet (1-5)</option>
+              {{/select}}
+            </select>
+          </td>
+        </tr>
+  
+        <tr>
+  
+          <td>Specialiserad</td>
+          <td> <input id="bc" type="checkbox" name="system.specialized" {{checked system.specialized}}></td>
+        </tr>
+        <tr>
+  
+          <td>Baschans:</td>
+          <td> <input id="bc" type="checkbox" name="system.bc" {{checked system.bc}}></td>
+        </tr>
+  
       <tr>
 
         <td>Grundegenskap</td>
@@ -47,35 +69,26 @@
           </select>
         </td>
       </tr>
+      {{/ifeq}}
 
-
-        <td>Kostnad</td>
+      {{#if system.specialized}}
+      <tr>
+        <td>Kostnad (generell)</td>
         <td> <input id="cost" type="number" name="system.cost" value="{{item.system.cost}}" />
         </td>
       </tr>
       <tr>
 
-        <td>Kategori:</td>
-        <td> <select id="type" class="skill-selector" name="system.type" value="{{item.system.type}}">
-            {{#select system.type}}
-            <option value="A">A-färdighet</option>
-            <option value="B">B-färdighet (1-5)</option>
-            {{/select}}
-          </select>
+        <td>Kostnad (specialiserad)</td>
+        <td> <input id="cost" type="number" name="system.costSpecialized" value="{{item.system.costSpecialized}}" />
+      </tr>
+      {{else}}
+      <tr>
+        <td>Kostnad</td>
+        <td> <input id="cost" type="number" name="system.cost" value="{{item.system.cost}}" />
         </td>
       </tr>
-
-      <tr>
-
-        <td>Baschans:</td>
-        <td> <input id="bc" type="checkbox" name="system.bc" {{checked system.bc}}></td>
-      </tr>
-
-      <tr>
-
-        <td>Specialisering</td>
-        <td> <input id="bc" type="checkbox" name="system.specific" {{checked system.specific}}></td>
-      </tr>
+      {{/if}}
 
       <tr>
 
@@ -85,7 +98,7 @@
       </tr>
       <tr>
 
-      {{!-- Attributes Tab --}}
+        {{!-- Attributes Tab --}}
     </table>
     {{editor system.description target="system.description" rollData=rollData button=true owner=owner
     editable=editable}}
