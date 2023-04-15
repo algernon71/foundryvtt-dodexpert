@@ -19,6 +19,7 @@
     "systems/dodexpert/templates/actor/character/classic/back.html",
     "systems/dodexpert/templates/actor/character/classic/bio.html",
     "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html",
+    "systems/dodexpert/templates/actor/character/classic/parts/gearList.html",
     "systems/dodexpert/templates/actor/npc/gm-sheet.html",
     "systems/dodexpert/templates/actor/public/info.html",
     "systems/dodexpert/templates/item/item-skill-sheet.html",

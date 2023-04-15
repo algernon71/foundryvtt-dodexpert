@@ -127,7 +127,10 @@
       "feature",
       "spell",
       "skill",
+      "skilldef",
+      "spelldef",
       "weapon",
+      "shield",
       "armor",
       "ammo"
     ],
@@ -160,11 +163,10 @@
       "templates": [
         "base"
       ],
-      "skill_name": "",
+      "skill_id": "",
       "weight": 0,
       "category": "melee",
       "grip": "1H",
-      "type": "sword",
       "subtype": "sword",
       "sty": "2",
       "bv": "11",
@@ -174,12 +176,23 @@
       "price": "0",
       "damage": "d6"
     },
+    "shield": {
+      "templates": [
+        "base"
+      ],
+      "skill_id": "",
+      "weight": 0,
+      "strength": "2",
+      "abs": "8",
+      "price": "0",
+      "damage": "d6"
+    },
     "feature": {
       "templates": [
         "base"
       ]
     },
-    "spell": {
+    "spelldef": {
       "templates": [
         "base"
       ],
@@ -187,7 +200,24 @@
       "magicschool": "",
       "level": 1
     },
+    "spell": {
+      "templates": [
+        "base"
+      ],
+      "def_id": "",
+      "def_pack": "",
+      "subtype:": "spell",
+      "magicschool": "",
+      "level": 1
+    },
     "skill": {
+      "def_id": "",
+      "def_pack": "",
+      "favorite": false,
+      "fv": 0,
+      "erf": 0
+    },
+    "skilldef": {
       "templates": [
         "base"
       ],

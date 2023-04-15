@@ -342,12 +342,20 @@ export class AddSkillDialog extends FormApplication {
     console.info('addSkill:', event);
     const skillsPack = game.packs.get(this.data.pack);
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
-    const itemData = game.items.fromCompendium(skill);
+//    const itemData = game.items.fromCompendium(skill);
+    const itemData = {
+      name: skill.name,
+      type: "skill",
+      system : {
+        def_id: skill._id,
+        def_pack: this.data.pack
+      }
+    };
     console.info('itemData:', itemData);
     this.addedSkills.push(itemData);
     // await game.items.importFromCompendium(skillsPack, this.selectSkill._id, {}, { parent: this.actor });
     // await this.actor.createEmbeddedDocuments("Item", [itemData]);
-    await Item.create(itemData, { parent: this.actor });
+    const newSkill = await Item.create(itemData, { parent: this.actor });
 
     this.inputElement.value = "";
     this.updateMatchList('');

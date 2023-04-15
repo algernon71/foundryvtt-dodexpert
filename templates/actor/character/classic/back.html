@@ -80,48 +80,27 @@
                                         value="{{system.other.row3}}">
                         </td>
                     </tr>
-                </table>
-            </div>
-            <div class="expert-classic-sheet-money">
-                <table class="expert-classic-table">
-                    <tr class="expert-classic-table-header">
-                        <th class="expert-classic-table-header-title">MYNT</th>
-                        <th class="expert-classic-table-header-value">Guld</th>
-                        <th class="expert-classic-table-header-value">Silver</th>
-                        <th class="expert-classic-table-header-value">Koppar</th>
-                    </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Bärande</td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.purse.gold" type="number" value="{{system.money.purse.gold}}">
-
-                        </td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.purse.silver" type="number" value="{{system.money.purse.silver}}">
-
-                        </td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.purse.copper" type="number" value="{{system.money.purse.copper}}">
-
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                            <input class="expert-classic-text-field-input" name="system.other.row4"
+                                        value="{{system.other.row4}}">
                         </td>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">I förvar</td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.stash.gold" type="number" value="{{system.money.stash.gold}}">
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                            <input class="expert-classic-text-field-input" name="system.other.row5"
+                                        value="{{system.other.row5}}">
                         </td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.stash.silver" type="number" value="{{system.money.stash.silver}}">
-                        </td>
-                        <td class="expert-classic-table-row-value leftch rightch">
-                            <input class="expert-classic-text-field-input" name="system.money.stash.copper" type="number" value="{{system.money.stash.copper}}">
-
+                    </tr>
+                    <tr class="expert-classic-table-bio-row"">
+                        <td class=" expert-classic-text-cell">
+                            <input class="expert-classic-text-field-input" name="system.other.row6"
+                                        value="{{system.other.row6}}">
                         </td>
                     </tr>
                 </table>
-
             </div>
-
+ 
         </div>
     </div>
 
@@ -211,27 +190,24 @@
                         <th class="expert-classic-table-header-value">Erf</th>
                         <th class="expert-classic-table-header-value">Vikt</th>
                     </tr>
+                    {{#each shields as |shield id|}}
                     <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch">Medelstor sköld</td>
-                        <td class="expert-classic-table-row-value leftch rightch">10</td>
-                        <td class="expert-classic-table-row-value leftch rightch">12</td>
-                        <td class="expert-classic-table-row-value leftch rightch">1</td>
-                        <td class="expert-classic-table-row-value leftch rightch">2</td>
+                        <td class="expert-classic-table-row-title rightch">{{shield.name}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">?</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{shield.system.abs}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">?</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{shield.system.weight}}</td>
                     </tr>
-                    <tr class="expert-classic-table-row">
+                    {{/each}}
+                    {{#padlist shields 3}}
+                        <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                         <td class="expert-classic-table-row-value leftch rightch"></td>
                     </tr>
-                    <tr class="expert-classic-table-row">
-                        <td class="expert-classic-table-row-title rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                        <td class="expert-classic-table-row-value leftch rightch"></td>
-                    </tr>
+                    {{/padlist}}
                 </table>
 
             </div>
@@ -239,71 +215,95 @@
     </div>
     <div class="expert-classic-sheet-back-bottom">
         <div class="expert-classic-equipment-list">
-            <table class="expert-classic-equipment-table item-list">
+            {{> "systems/dodexpert/templates/actor/character/classic/parts/gearList.html" gearList=gear start=0 length=10}}
+
+        </div>
+        <div class="expert-classic-equipment-list">
+            {{> "systems/dodexpert/templates/actor/character/classic/parts/gearList.html" gearList=gear start=10 length=10}}
+
+        </div>
+        <div class="expert-classic-equipment-list">
+            <div class="expert-classic-sheet-money">
+                <table class="expert-classic-table">
+                    <tr class="expert-classic-table-header">
+                        <th class="expert-classic-table-header-title">MYNT</th>
+                        <th class="expert-classic-table-header-value">Guld</th>
+                        <th class="expert-classic-table-header-value">Silver</th>
+                        <th class="expert-classic-table-header-value">Koppar</th>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Bärande</td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.purse.gold" type="number" value="{{system.money.purse.gold}}">
+
+                        </td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.purse.silver" type="number" value="{{system.money.purse.silver}}">
+
+                        </td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.purse.copper" type="number" value="{{system.money.purse.copper}}">
+
+                        </td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">I förvar</td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.stash.gold" type="number" value="{{system.money.stash.gold}}">
+                        </td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.stash.silver" type="number" value="{{system.money.stash.silver}}">
+                        </td>
+                        <td class="expert-classic-table-row-value leftch rightch">
+                            <input class="expert-classic-number-field-input" name="system.money.stash.copper" type="number" value="{{system.money.stash.copper}}">
+
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <table class="expert-classic-equipment-table">
+
 
                 <tr class="expert-classic-equipment-row">
-                    <th>
+                    <th class="expert-classic-equipment-description-header">
                         UTRUSTNING
                     </th>
                     <th>
+                    </th>
+                    <th class="expert-classic-equipment-weight-header">
                         BEP
+                    </th>
+                    <th>
                     </th>
                 </tr>
                 {{#each gear as |item id|}}
+                {{#includeListItem id 20 7}}
                 <tr class="expert-classic-equipment-row item" data-item-id="{{item._id}}">
-                    <td class="expert-classic-equipment-description">
-                        <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                        <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
+                    <td class="expert-classic-equipment-description item-edit">
                         {{item.name}}
                     </td>
+                    <td class="expert-classic-equipment-spacing">
+                    </td>
                     <td class="expert-classic-equipment-weight">{{item.weight}}
-
+                    </td>
+                    <td class="expert-classic-equipment-spacing">
                     </td>
                 </tr>
+                {{/includeListItem}}
                 {{/each}}
-                {{#padlist gear 10}}
+                {{#pagefill gear 5 20}}
                 <tr class="expert-classic-equipment-row">
                     <td class="expert-classic-equipment-description"></td>
+                    <td class="expert-classic-equipment-spacing">
+                    </td>
                     <td class="expert-classic-equipment-weight">
                     </td>
+                    <td class="expert-classic-equipment-spacing">
+                    </td>
                 </tr>
-                {{/padlist}}
+                {{/pagefill}}
 
-            </table>
-        </div>
-        <div class="expert-classic-equipment-list">
-            <table class="expert-classic-equipment-table">
-
-                <tr class="expert-classic-equipment-row">
-                    <th>
-                        UTRUSTNING
-                    </th>
-                    <th>
-                        BEP
-                    </th>
-                </tr>
-                <tr class="expert-classic-equipment-row">
-                    <td class="expert-classic-equipment-description"></td>
-                    <td class="expert-classic-equipment-weight"></td>
-                </tr>
-                <tr class="expert-classic-equipment-row">
-                    <td class="expert-classic-equipment-description"></td>
-                    <td class="expert-classic-equipment-weight"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="expert-classic-equipment-list">
-            <table class="expert-classic-equipment-table">
-
-
-                <tr class="expert-classic-equipment-row">
-                    <th>
-                        UTRUSTNING
-                    </th>
-                    <th>
-                        BEP
-                    </th>
-                </tr>
             </table>
             
         </div>

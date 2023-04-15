@@ -104,7 +104,14 @@ input[type="text"] {
     border: none !important;
     background-color: transparent !important;
 }
-
+.expert-classic-number-field-input {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    outline: none;
+    border: none !important;
+    background-color: transparent !important;
+}
 .expert-classic-sheet-logo {
     width: 100%;
 }
@@ -254,16 +261,26 @@ tr.expert-classic-table-row {
 }
 
 .expert-classic-equipment-row {
-    height: 24px;
+    height: 26px;
     background-color: white;
     border: none;
     font-size: 14px;
 }
-
+.expert-classic-equipment-description-header {
+    text-align: left;
+}
+.expert-classic-equipment-weight-header {
+    text-align: center;
+}
 .expert-classic-equipment-description {
     border-bottom: 1px solid black;
     text-align: left;
     background-color: white;
+}
+
+.expert-classic-equipment-description:hover {
+    background-color: lightgray;
+    font-weight: bold;
 }
 
 .expert-classic-equipment-weight {
@@ -271,4 +288,16 @@ tr.expert-classic-table-row {
     text-align: center;
     background-color: white;
 
+}
+
+.expert-classic-equipment-spacing {
+    width: 4px;
+    background-color: white;
+}
+
+.expert-classic-edit-item-description {
+    height: 100%;
+}
+.expert-classic-edit-item-description > .editor {
+    height: 100%;
 }

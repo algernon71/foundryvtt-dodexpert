@@ -190,6 +190,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const favoriteSkills = [];
     const languages = [];
     const weapons = [];
+    const shields = [];
     let carriedWeight = 0;
 
 
@@ -214,7 +215,10 @@ export class DODExpertActorSheet extends ActorSheet {
         case "weapon":
           weapons.push(i);
           break;
-      }
+        case "shield":
+          shields.push(i);
+          break;
+        }
     }
       this.listTypes.skills = skills;
     this.listTypes.magicSchools = magicSchools;
@@ -222,6 +226,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     context.gear = gear;
     context.weapons = weapons;
+    context.shields = shields;
     context.skills = skills;
     context.favoriteSkills = favoriteSkills;
     context.spells = spells;
@@ -268,13 +273,14 @@ export class DODExpertActorSheet extends ActorSheet {
       const item = this.actor.items.get(li.data("itemId"));
       item.sheet.render(true);
     });
-
+ 
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
     html.find('.increase-health').click(this._onIncreaseHealth.bind(this));
     html.find('.deduct-health').click(this._onDeductHealth.bind(this));
+    html.find('.add-item').click(this._onAddItem.bind(this));
     html.find('.increase-power').click(this._onIncreasePower.bind(this));
     html.find('.deduct-power').click(this._onDeductPower.bind(this));
     // Add Inventory Item
@@ -519,6 +525,13 @@ export class DODExpertActorSheet extends ActorSheet {
       renderData: {}
     });
   }
+
+  async _onAddItem(event) {
+    const itemData = { type: "item", name: "?"};
+    const item = await Item.create(itemData, { parent: this.actor });
+    item.sheet.render(true);
+  }
+
   async _onAttack(event) {
     this.dialog = new AttackDialog({ actor: this.actor });
     this.dialog.render(true, {

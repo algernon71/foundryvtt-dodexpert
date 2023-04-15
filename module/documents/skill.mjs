@@ -22,6 +22,22 @@ export class DODExpertSkill extends Item {
     super.prepareData();
   }
 
+  async prepareDerivedData() {
+    const skillId = this.system.def_id;
+    const skillPack = this.system.def_pack;
+    if (skillId) {
+      const skillsPack = game.packs.get(skillPack);
+      this.skillDef = await skillsPack.getDocument(skillId);
+
+      this.name = this.skillDef.name;
+      this.derived = {
+        cost: this.skillDef.system.cost,
+        ability: this.skillDef.system.ability
+      };
+      console.info('Skill initialized!', this);
+    }
+  }
+
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private

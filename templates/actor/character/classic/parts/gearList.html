@@ -1,0 +1,53 @@
+<table class="expert-classic-equipment-table">
+
+    <tr class="expert-classic-equipment-row">
+        <th class="expert-classic-equipment-description-header">
+            UTRUSTNING {{start}} {{length}}
+        </th>
+        <th>
+        </th>
+        <th class="expert-classic-equipment-weight-header">
+            BEP
+        </th>
+        <th>
+        </th>
+    </tr>
+    {{#each gearList as |item id|}}
+    {{#includeListItem id ../start ../length}}
+    <tr class="expert-classic-equipment-row item" data-item-id="{{item._id}}">
+        <td class="expert-classic-equipment-description item-edit">
+            <div class="tooltip">
+                {{item.name}}
+                <div class="tooltiptext">
+                    {{#if item.system.description}}
+                    {{else}}
+                    (ingen beskrivning)
+                    {{/if}}
+                    {{{item.system.description}}}
+                </div>
+            </div>
+        </td>
+        <td class="expert-classic-equipment-spacing">
+        </td>
+        <td class="expert-classic-equipment-weight">
+
+            {{item.system.weight}}
+        </td>
+        <td class="expert-classic-equipment-spacing">
+        </td>
+    </tr>
+    {{/includeListItem}}
+    {{/each}}
+    {{#pagefill gearList length start}}
+    <tr class="expert-classic-equipment-row">
+        <td class="expert-classic-equipment-description add-item"></td>
+        <td class="expert-classic-equipment-spacing">
+        </td>
+        <td class="expert-classic-equipment-weight">
+        </td>
+        <td class="expert-classic-equipment-spacing">
+        </td>
+    </tr>
+    {{/pagefill}}
+
+</table>
