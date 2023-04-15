@@ -23,16 +23,20 @@
         "notes": ""
       },
       "money": {
-        "gold": 0,
-        "silver": 0,
-        "copper": 0
-      },
-      "body": {
-        "body": {
-
+        "purse": {
+          "gold": 0,
+          "silver": 0,
+          "copper": 0
+        },
+        "stash": {
+          "gold": 0,
+          "silver": 0,
+          "copper": 0
         }
       },
-
+      "body": {
+        "body": {}
+      },
       "stats": {
         "abilities": {
           "STY": {
