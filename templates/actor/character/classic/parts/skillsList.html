@@ -23,7 +23,12 @@
                     {{skill.system.ability}} ({{skill.system.cost}})
                 </div>
             </td>
-            <td class="expert-classic-table-row-value leftch rightch skill-fv" data-skill="{{skill._id}}">{{skill.system.fv}}</td>
+            <td class="expert-classic-table-row-value leftch rightch skill-fv" data-skill="{{skill._id}}" data-item-id="{{skill._id}}">
+                
+                <input type="text"
+                                class="expert-classic-input-value inline-edit" name="skill.system.fv" 
+                                value="{{skill.system.fv}}" data-dtype="Number" data-field="system.fv" />
+            </td>
             <td class="expert-classic-table-row-value leftch skill-erf hover-show item" data-skill="{{skill._id}}">
                 {{skill.system.erf}}
                 <i class="fas fa-plus hover-show-item add-experience" data-skill="{{skill._id}}"></i>
