@@ -296,6 +296,7 @@ export class DODExpertActorSheet extends ActorSheet {
     html.find('.add-experience').click(this._onSkillExperienceAdd.bind(this));
     html.find('.minus-experience').click(this._onSkillExperienceRemove.bind(this));
     html.find('.toggle-favorite').click(this._onSkillToggleFavorite.bind(this));
+    html.find(".inline-edit").change(this._onItemInlineEdit.bind(this));
 
     new ContextMenu(html, '.skill', [
       {
@@ -355,6 +356,16 @@ export class DODExpertActorSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+  }
+  async _onItemInlineEdit(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    const itemElement = element.closest(".item");
+    const itemId = itemElement.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const field = element.dataset.field;
+    return item.update({ [field]: element.value });
+
   }
   async addSkillExperience(skillId) {
 
