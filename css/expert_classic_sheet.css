@@ -46,8 +46,11 @@ input[type="text"] {
     padding: 5px;
 }
 
+.info-description {
+    min-height: 200px;
+}
 .expert-classic-character-image-frame {
-    max
+    
 }
 
 .expert-classic-character-name {
