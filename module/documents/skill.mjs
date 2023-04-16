@@ -31,6 +31,7 @@ export class DODExpertSkill extends Item {
 
       if (this.skillDef) {
         this.name = this.skillDef.name;
+        this.system.description = this.skillDef.system.description;
         this.system.cost =  this.skillDef.system.cost;
         this.system.ability =  this.skillDef.system.ability;
         this.system.category =  this.skillDef.system.category;
