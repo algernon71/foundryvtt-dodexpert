@@ -1,5 +1,15 @@
 <form>
-    Färdighet: {{ check.skill.name}}
+  <div class="skill-check-panel">
+    <h1>Slå för: {{ check.skill.name}}</h1>
+     
+
+
+    <div class="select-difficulty">
+      {{#each difficulties as |difficulty id|}}
+      <div class="difficulty">{{difficulty.name}}</div>
+      {{/each}}
+    </div>
+
 
     <h1>FV: {{check.skill.system.fv}}</h1>
     <input id="mod" class="roll-parameter" type="number" value="{{mod}}"/>
@@ -10,4 +20,8 @@
     </div>
     
     <button id="roll-button" type="button" data-action="roll">Slå</button>
+    <div class="skill-description">
+      {{{check.skill.system.description}}}
+    </div>
+  </div>
   </form>

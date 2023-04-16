@@ -167,6 +167,28 @@ export class SkillCheckDialog extends FormApplication {
     context.skill = this.data.skill;
     context.check = this.data;
     context.mod = this.mod;
+    context.difficulties = [
+      {
+        "name": "Mycket lätt",
+        "mod": 10
+      },
+      {
+        "name": "lätt",
+        "mod": 5
+      },
+      {
+        "name": "Normalt",
+        "mod": 10
+      },
+      {
+        "name": "Svårt",
+        "mod": -5
+      },
+      {
+        "name": "Mycket svårt",
+        "mod": -10
+      }
+    ];
     return context;
   }
 

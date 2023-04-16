@@ -15,9 +15,7 @@
         {{#each list.list as |skill id|}}
         {{#includeListItem id ../skillsListStart ../skillsListSize}}
         <tr class="expert-classic-table-row item" data-item-id="{{skill._id}}">
-            <td class="expert-classic-table-row-title rightch hover-show skill" data-skill="{{skill._id}}">
-                <img class="use-item icon hover-show-item" height="12" data-id="{{skill._id}}"
-                    src="systems/dodexpert/media/dice-d20.svg">
+            <td class="expert-classic-table-row-title rightch skill use-item" data-skill="{{skill._id}}" data-item-id="{{skill._id}}">
                 {{skill.name}}
                 <div class="hover-show-item">
                     {{skill.system.ability}} ({{skill.system.cost}})

@@ -10,11 +10,30 @@
   cursor: pointer;
 }
 
+.skill-check-panel {
+  width: 600px;
+}
+.select-difficulty {
+  display: flex;
+  flex-direction: row;
+}
+.difficulty {
+  border: solid 2px black;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 10px;
+  text-align: center;
+  width: 80px;
+  background-color: lightcoral;
+}
+
+.difficulty:hover {
+  background-color: darkgreen;
+
+}
 
 .tooltip {
   position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {

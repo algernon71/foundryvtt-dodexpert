@@ -527,7 +527,7 @@ export class DODExpertActorSheet extends ActorSheet {
     console.log('_onUseItem, event:', event);
     const element = event.currentTarget;
     const dataset = element.dataset;
-    const item = this.actor.items.get(dataset.id);
+    const item = this.actor.items.get(dataset.itemId);
     item.use(event);
   }
   async _onAddSkill(event) {
