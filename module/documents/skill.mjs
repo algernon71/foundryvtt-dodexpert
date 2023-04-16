@@ -70,7 +70,7 @@ export class DODExpertSkill extends Item {
     const actor = this.actor;
     console.info('Create ', this.name);
     if (actor) {
-      const ability = actor.data.system.abilities[this.system.ability];
+      const ability = actor.system.abilities[this.system.ability];
       if (this.system.bc && this.system.fv < ability.group) {
           this.system.fv = ability.group;
       }

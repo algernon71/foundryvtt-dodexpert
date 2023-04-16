@@ -188,6 +188,10 @@ export class AddSkillDialog extends FormApplication {
       matchEntry.addEventListener("click", function (e) {
         t.selectSkill(index);
       });
+      matchEntry.addEventListener("dblclick", function (e) {
+        t.selectSkill(index);
+        t.addSkill(e);
+      });
       this.matchListElement.appendChild(matchEntry);
       this.matchEntryElements.push(matchEntry);
 
@@ -344,10 +348,15 @@ export class AddSkillDialog extends FormApplication {
 //    const itemData = game.items.fromCompendium(skill);
     const itemData = {
       name: skill.name,
-      type: "skill",
+      type: this.data.type,
       system : {
         def_id: skill._id,
-        def_pack: this.data.pack
+        def_pack: this.data.pack,
+        category: skill.system.category,
+        cost: skill.system.ability,
+        cost: skill.system.cost,
+        fv: 0,
+        erf: 0
       }
     };
     console.info('itemData:', itemData);

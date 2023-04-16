@@ -202,6 +202,7 @@ export class DODExpertActorSheet extends ActorSheet {
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
 
+      console.info('Processing item:', i);
       this.addToList(skills, i);
       this.addToList(spells, i);
       this.addToList(magicSchools, i);
