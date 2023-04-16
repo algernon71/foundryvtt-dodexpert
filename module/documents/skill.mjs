@@ -31,10 +31,10 @@ export class DODExpertSkill extends Item {
 
       if (this.skillDef) {
         this.name = this.skillDef.name;
-        this.derived = {
-          cost: this.skillDef.system.cost,
-          ability: this.skillDef.system.ability
-        };
+        this.system.cost =  this.skillDef.system.cost;
+        this.system.ability =  this.skillDef.system.ability;
+        this.system.category =  this.skillDef.system.category;
+        this.system.schoolId =  this.skillDef.system.schoolId;
         console.info('Skill initialized!', this);
   
       } else {

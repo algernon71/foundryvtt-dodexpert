@@ -162,7 +162,7 @@ export class AddSkillDialog extends FormApplication {
       }
     }
 
-    if (item.type == "spell") {
+    if (item.type == "spelldef") {
       const schoolSkill = this.data.magicSchools[item.system.school];
       if (!schoolSkill) {
         return false;
@@ -199,10 +199,10 @@ export class AddSkillDialog extends FormApplication {
 
   buildMatchEntryHTML(skill, index, selected) {
     switch (skill.type) {
-      case "spell":
+      case "spelldef":
         return this.buildSpellMatchEntryHTML(skill, index, selected);
 
-      case "skill":
+      case "skilldef":
         default:
         return this.buildSkillMatchEntryHTML(skill, index, selected);
     }
