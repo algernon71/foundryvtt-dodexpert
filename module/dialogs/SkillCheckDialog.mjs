@@ -13,11 +13,6 @@ export class SkillCheckDialog extends FormApplication {
     this.calculate();
   }
 
-  calculate() {
-
-    this.data.cl = this.data.skill.system.fv + Number(this.data.mod);
-
-  }
   /**
    * @override
    */
@@ -60,7 +55,9 @@ export class SkillCheckDialog extends FormApplication {
     super.activateListeners(html);
 
     html.on('click', "[data-action]", this._handleButtonClick.bind(this));
+    html.find('.difficulty').click(this._onSelectDifficulty.bind(this));
     html.find('.roll-parameter').keyup(this._onUpdateSettings.bind(this));
+    html.find("#mod").change(this._onModInputChange.bind(this));
     this.modElement = html.find('#mod');
     this.clElement = html.find('#cl');
     this.resultElement = html.find('#result');
@@ -70,9 +67,7 @@ export class SkillCheckDialog extends FormApplication {
   _onUpdateSettings(event) {
     this.mod = this.modElement.val();
     this.data.mod = Number(this.mod);
-    this.calculate();
-
-    this.clElement.html(this.data.cl);
+    this.refresh();
   }
 
   async roll() {
@@ -164,34 +159,79 @@ export class SkillCheckDialog extends FormApplication {
   getData(options) {
     const context = super.getData();
     const renderData = options.renderData;
+    context.skillname = this.data.skill.skillDef.name;
+    context.fv = this.data.skill.system.fv;
     context.skill = this.data.skill;
     context.check = this.data;
     context.mod = this.mod;
+
     context.difficulties = [
       {
         "name": "Mycket lätt",
-        "mod": 10
+        "mod": "+10"
       },
       {
         "name": "lätt",
-        "mod": 5
+        "mod": "+5"
       },
       {
         "name": "Normalt",
-        "mod": 10
+        "mod": "+0"
       },
       {
         "name": "Svårt",
-        "mod": -5
+        "mod": "-5"
       },
       {
         "name": "Mycket svårt",
-        "mod": -10
+        "mod": "-10"
       }
     ];
     return context;
   }
 
+  
+  calculate() {
+    this.data.cl = Number(this.data.skill.system.fv) + Number(this.data.mod);
+  }
+
+  async _onSelectDifficulty(event) {
+    const a = event.currentTarget;
+    const data = a.dataset;
+
+    this.data.mod = Number(data.mod);
+
+    this.refresh();
+  }
+
+  async _onModInputChange(event) {
+    event.preventDefault();
+    const element = event.currentTarget;
+    /*
+    const itemElement = element.closest(".item");
+    const itemId = itemElement.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const field = element.dataset.field;
+    return item.update({ [field]: element.value });
+*/
+    this.data.mod = Number(element.value);
+    this.refresh();
+  }
+
+  async refresh() {
+    this.modElement.val(this.getModText());
+    this.calculate();
+    this.clElement.html(this.data.cl);
+
+  }
+
+  getModText() {
+    if (this.data.mod >= 0) {
+      return "+" + this.data.mod;
+    } else {
+      return this.data.mod;
+    }
+  }
   /**
    * @override
    */

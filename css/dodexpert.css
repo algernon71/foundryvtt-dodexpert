@@ -13,6 +13,41 @@
 .skill-check-panel {
   width: 600px;
 }
+.skillcheck-table {
+  width: 100%;
+}
+.skillcheck-row {
+  font-size: 20px;
+  vertical-align: middle;
+}
+.skillcheck-actor {
+  text-align: left;
+}
+
+.skillcheck-fv {
+  font-weight: bold;
+  text-align: left;
+  width: 50px;
+}
+
+.skillcheck-mod {
+  text-align: center;
+  width: 50px;
+}
+.skillcheck-eq {
+  text-align: center;
+  width: 50px;
+}
+
+.skillcheck-mod-input {
+  border: none !important;
+}
+.skillcheck-cl {
+  text-align: right;
+  font-weight: bold;
+  width: 50px;
+}
+
 .select-difficulty {
   display: flex;
   flex-direction: row;
@@ -29,6 +64,11 @@
 
 .difficulty:hover {
   background-color: darkgreen;
+
+}
+
+.difficulty-selected {
+  background-color: blue;
 
 }
 

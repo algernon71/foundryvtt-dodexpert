@@ -1,27 +1,48 @@
 <form>
   <div class="skill-check-panel">
-    <h1>Slå för: {{ check.skill.name}}</h1>
-     
-
+    <h1>Färdighetsslag - {{ skillname}}</h1>
 
     <div class="select-difficulty">
       {{#each difficulties as |difficulty id|}}
-      <div class="difficulty">{{difficulty.name}}</div>
+      {{#ifeq difficulty.mod ../mod}}
+      <div class="difficulty selected" data-mod="{{difficulty.mod}}">
+        {{difficulty.name}}<br>
+        ({{difficulty.mod}})
+
+      </div>
+      {{else}}
+      <div class="difficulty" data-mod="{{difficulty.mod}}">
+        {{difficulty.name}}<br>
+        ({{difficulty.mod}})
+
+      </div>
+      {{/ifeq}}
       {{/each}}
     </div>
 
 
-    <h1>FV: {{check.skill.system.fv}}</h1>
-    <input id="mod" class="roll-parameter" type="number" value="{{mod}}"/>
-    <h1>CL: <span id="cl">{{check.cl}}</span></h1>
+    <table class="skillcheck-table">
+      <tr class="skillcheck-row">
+        <th class="skillcheck-actor"></th>
+        <th class="skillcheck-fv">FV</th>
+        <th class="skillcheck-mod">Mod</th>
+        <th class="skillcheck-mod"></th>
+        <th class="skillcheck-cl">CL</th>
+      </tr>
+      <tr class="skillcheck-row">
+        <td class="skillcheck-actor">{{check.skill.parent.name}}</td>
+        <td class="skillcheck-fv">{{check.skill.system.fv}}</td>
+        <td class="skillcheck-mod"><input id="mod" class="skillcheck-mod-input" type="number" value="{{mod}}" /></td>
+        <td class="skillcheck-eq">=</td>
+        <td class="skillcheck-cl" id="cl">{{check.cl}}</td>
+      </tr>
+
+    </table>
 
     <div id="result">
 
     </div>
-    
+
     <button id="roll-button" type="button" data-action="roll">Slå</button>
-    <div class="skill-description">
-      {{{check.skill.system.description}}}
-    </div>
   </div>
-  </form>
+</form>
