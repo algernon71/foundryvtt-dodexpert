@@ -1,7 +1,6 @@
 import { SkillCheckDialog } from "../dialogs/SkillCheckDialog.mjs"
 import { AddSkillDialog } from "../dialogs/AddSkillDialog.mjs"
 import { AddMagicSchoolDialog } from "../dialogs/AddMagicSchoolDialog.mjs"
-import { AddSpellDialog } from "../dialogs/AddSpellDialog.mjs"
 import { AttackDialog } from "../dialogs/AttackDialog.mjs"
 import { CastSpellDialog } from "../dialogs/CastSpellDialog.mjs"
 
@@ -289,9 +288,7 @@ export class DODExpertActorSheet extends ActorSheet {
     html.find('.deduct-power').click(this._onDeductPower.bind(this));
     // Add Inventory Item
     html.find('.add-skill').click(this._onAddSkill.bind(this));
-    html.find('.attack').click(this._onAttack.bind(this));
     html.find('.cast').click(this._onCastSpell.bind(this));
-    html.find('.skill-roll').click(this._onSkillRoll.bind(this));
     html.find('.use-item').click(this._onUseItem.bind(this));
     html.find('.fv-input').keyup(this._onSkillUpdate.bind(this));
     html.find('.add-experience').click(this._onSkillExperienceAdd.bind(this));
@@ -547,32 +544,12 @@ export class DODExpertActorSheet extends ActorSheet {
     item.sheet.render(true);
   }
 
-  async _onAttack(event) {
-    this.dialog = new AttackDialog({ actor: this.actor });
-    this.dialog.render(true, {
-      renderData: {}
-    });
-  }
+  
   async _onCastSpell(event) {
     this.dialog = new CastSpellDialog({ actor: this.actor });
     this.dialog.render(true, {
       renderData: {}
     });
   }
-  async _onSkillRoll(event) {
-
-
-    console.log('_onSkillRoll, event:', event);
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-    console.log('_onSkillRoll, dataset:', dataset);
-    const item = this.actor.items.get(dataset.id);
-    console.log('_onSkillRoll, item:', item);
-    this.skillCheckDialog = new SkillCheckDialog({ skill: item });
-    this.skillCheckDialog.render(true, {
-      renderData: { skill: item }
-    });
-  }
-
-
+  
 }

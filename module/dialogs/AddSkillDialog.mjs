@@ -358,7 +358,7 @@ export class AddSkillDialog extends FormApplication {
   }
 
   async addSkill(event) {
-    const skillsPack = game.packs.get(this.data.pack);
+    const skillsPack = this.selectedSkill.pack;
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
     console.info('addSkill:', skill);
     //    const itemData = game.items.fromCompendium(skill);
@@ -367,7 +367,7 @@ export class AddSkillDialog extends FormApplication {
       type: this.data.type,
       system: {
         def_id: skill._id,
-        def_pack: this.data.pack,
+        def_pack: skillsPack.metadata.id,
         category: skill.system.category,
         cost: skill.system.ability,
         cost: skill.system.cost,

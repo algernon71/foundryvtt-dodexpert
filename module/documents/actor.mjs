@@ -47,6 +47,18 @@ export class DODExpertActor extends Actor {
     Stats.calculateSecondaryStats(actorData.system);
   }
 
+  getSkill(skillId) {
+    for (let i of this.items) {
+      if (i.type === 'skill') {
+        if (i.system.def_id === skillId) {
+          return i;
+        }
+      }
+
+    }
+    return null;
+
+  }
   /**
    * Prepare Character type specific data
    */
