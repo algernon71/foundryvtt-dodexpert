@@ -94,18 +94,26 @@ export class AddSkillDialog extends FormApplication {
   }
   async filterMatches(searchString) {
     const resultsList = [];
-    const matches = [];
+    this.matchedSkills = [];
 
-
-    const skillsPack = game.packs.get(this.data.pack);
-    const index = await skillsPack.getIndex({ fields: this.getFields() });
-    index.forEach((item, key) => {
+    game.items.forEach((item, key) => {
       if (this.matchItem(item, searchString)) {
-        matches.push(item);
+        this.matchedSkills.push(item);
       }
     });
-    matches.sort((a, b) => compareNumbers(this.sortOrder(a), this.sortOrder(b)));
-    return matches;
+
+    const skillsPack = game.packs.get(this.data.pack);
+    game.packs.forEach(async gamePack => {
+      const index = await gamePack.getIndex({ fields: this.getFields() });
+      index.forEach((item, key) => {
+        if (this.matchItem(item, searchString)) {
+          item.pack = gamePack;
+          this.matchedSkills.push(item);
+        }
+      });
+      this.matchedSkills.sort((a, b) => compareNumbers(this.sortOrder(a), this.sortOrder(b)));
+      this.populateMatchList();
+    });
 
   }
 
@@ -174,14 +182,18 @@ export class AddSkillDialog extends FormApplication {
 
     return true;
   }
-
   async updateMatchList(searchString) {
+    await this.filterMatches(searchString);
+
+  }
+
+  async populateMatchList() {
     this.clearSelect();
-    this.matchedSkills = await this.filterMatches(searchString);
     this.matchListElement.innerHTML = "";
     let innerElement = "";
     const t = this;
     this.matchEntryElements = [];
+
     this.matchedSkills.forEach((skill, index) => {
       const matchEntry = document.createElement('DIV');
       matchEntry.innerHTML = t.buildMatchEntryHTML(skill, index, false);
@@ -207,7 +219,7 @@ export class AddSkillDialog extends FormApplication {
         return this.buildSpellMatchEntryHTML(skill, index, selected);
 
       case "skilldef":
-        default:
+      default:
         return this.buildSkillMatchEntryHTML(skill, index, selected);
     }
     return `
@@ -284,14 +296,18 @@ export class AddSkillDialog extends FormApplication {
       element.classList.remove("selected-skill-entry");
     }
     const skill = this.matchedSkills[index];
-    const skillsPack = game.packs.get(this.data.pack);
-
+    let skillObject = null;
     this.selectedSkill = skill;
     this.selectedSkillIndex = index;
+    if (skill.pack) {
+      skillObject = await skill.pack.getDocument(this.selectedSkill._id);
+    } else {
+      skillObject = game.items.get(this.selectedSkill._id);
+    }
+
     const element = document.querySelector('#skill-match-entry-' + index);
     //    element.innerHTML = this.buildMatchEntryHTML(skill, index, true);
     element.classList.add("selected-skill-entry");
-    const skillObject = await skillsPack.getDocument(this.selectedSkill._id);
 
     this.selectedSkillInfoElement.innerHTML = this.renderSkillDescription(skillObject);
 
@@ -345,11 +361,11 @@ export class AddSkillDialog extends FormApplication {
     const skillsPack = game.packs.get(this.data.pack);
     const skill = await skillsPack.getDocument(this.selectedSkill._id);
     console.info('addSkill:', skill);
-//    const itemData = game.items.fromCompendium(skill);
+    //    const itemData = game.items.fromCompendium(skill);
     const itemData = {
       name: skill.name,
       type: this.data.type,
-      system : {
+      system: {
         def_id: skill._id,
         def_pack: this.data.pack,
         category: skill.system.category,
