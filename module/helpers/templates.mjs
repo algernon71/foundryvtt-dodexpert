@@ -21,7 +21,9 @@
     "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html",
     "systems/dodexpert/templates/actor/character/classic/parts/gearList.html",
     "systems/dodexpert/templates/actor/npc/gm-sheet.html",
+    "systems/dodexpert/templates/actor/npc/skillsList.html",
     "systems/dodexpert/templates/actor/public/info.html",
     "systems/dodexpert/templates/item/item-skill-sheet.html",
+    "systems/dodexpert/templates/chat/skill-check-result.html",
   ]);
 };

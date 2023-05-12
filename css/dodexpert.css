@@ -38,7 +38,7 @@
   text-align: center;
   width: 50px;
 }
-
+.skill
 .skillcheck-mod-input {
   border: none !important;
 }
@@ -67,7 +67,7 @@
 
 }
 
-.difficulty-selected {
+.select-difficulty .selected {
   background-color: blue;
 
 }

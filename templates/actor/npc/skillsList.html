@@ -1,0 +1,30 @@
+<div class="skills">
+    <div class="npc-skills-title"> {{list.listTitle}}
+    </div>
+    <table>
+        {{#each list.list as |skill id|}}
+
+        <tr class="item" data-item-id="{{skill._id}}">
+            <td class="skill use-item" data-skill="{{skill._id}}"
+                data-item-id="{{skill._id}}">
+                {{skill.name}}
+            </td>
+            <td class="skill-fv" data-skill="{{skill._id}}">
+
+                <input type="text" class="expert-classic-input-value inline-edit" name="skill.system.fv"
+                    value="{{skill.system.fv}}" data-dtype="Number" data-field="system.fv" />
+            </td>
+        </tr>
+        {{/each}}
+         <tr>
+            <td>
+                <div class="add-skill"  data-title="Lägg till"  data-title="{{list.title}}"  data-listType="{{listType}}">
+                    <i class="fas fa-plus"></i>Lägg till
+                </div>
+
+            </td>
+
+        </tr>
+        </table>
+
+</div>

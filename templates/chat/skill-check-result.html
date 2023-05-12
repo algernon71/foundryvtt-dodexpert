@@ -1,0 +1,25 @@
+<div class="skill-check">
+  <div>{{skill.name}}</div>
+  <div>CL: {{cl}} ({{fv}} {{mod}}) </div>
+  <div class="dice-result">
+    <div class="dice-tooltip" style="display: block;">
+      <section class="tooltip-part">
+        <div class="dice">
+          <table>
+          {{#each rollsList as |roll id|}}
+          <tr class="dice-rolls">
+            <td class="roll d20">{{roll.roll}}</td> 
+            <td>{{roll.title}}</td>
+          </tr>
+          {{/each}}
+        </table>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <div class="skillcheck-result">
+    {{result}}
+  </div>
+</div>

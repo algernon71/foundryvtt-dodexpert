@@ -60,10 +60,25 @@ export class SkillCheckDialog extends FormApplication {
     html.find("#mod").change(this._onModInputChange.bind(this));
     this.modElement = html.find('#mod');
     this.clElement = html.find('#cl');
+    
     this.resultElement = html.find('#result');
     this.rollButton = html.find('#roll-button');
+
+    this.difficultyElements = html.find('.difficulty');
+
+    this.updateSelectedElement();
   }
 
+  updateSelectedElement() {
+    this.difficultyElements.each((i, e) => {
+      const data = e.dataset;
+      const mod = Number(data.mod);;
+      e.classList.remove("selected");
+      if (mod == this.data.mod) {
+        e.classList.add("selected");        
+      }
+    })
+  }
   _onUpdateSettings(event) {
     this.mod = this.modElement.val();
     this.data.mod = Number(this.mod);
@@ -71,88 +86,13 @@ export class SkillCheckDialog extends FormApplication {
   }
 
   async roll() {
-    let r = new Roll("d20");
-
     const skill = this.data.skill;
-    // this.rollButton.prop("disabled", true);
-    // The parsed terms of the roll formula
-    console.log(r.terms);    // [Die, OperatorTerm, NumericTerm, OperatorTerm, NumericTerm]
-
-    // Execute the roll
-    await r.evaluate({ async: true });
-    await game.dice3d.showForRoll(r);
-
-    let rolls = '';
-    const rollResult = r.total;
-    const fv = skill.system.fv;
-    const mod = this.data.mod;
-    const cl = this.data.cl;
-    const isGM = game.user.isGM;
-    const isObserver = skill.testUserPermission(game.user, "OBSERVER") ;
-    var result = "MISSLYCKAT";
-    if (rollResult <= cl) {
-      rolls = rolls + `<li><div class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${rollResult}</div>   &lt= ${cl}</li>`;
-      result = "LYCKAT";
-    } else {
-      rolls = rolls + `<li class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${rollResult}   &gt ${cl}</li>`;
-
-    }
-    if (rollResult == 1) {
-      let fr = new Roll("d20");
-      await game.dice3d.showForRoll(fr);
-      await fr.evaluate({ async: true });
-      if (fr.total <= cl) {
-        rolls = rolls + `<li><div class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${fr.total} </div>  &lt= ${cl} - kontrollslag för perfekt</li>`;
-        result = "PERFEKT";
-      }
-      else {
-        rolls = rolls + `<li class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${fr.total}   &gt ${cl} - kontrollslag för perfekt</li>`;
-      }
-    }
-    if (rollResult == 20) {
-      let fr = new Roll("d20");
-      await game.dice3d.showForRoll(fr);
-      await fr.evaluate({ async: true });
-      if (fr.total > cl) {
-        result = "FUMMEL";
-      }
-    }
-
-
-    var content = `
-    <div class="dice-roll attack-roll">
-      <div>Färdighetsslag för ${skill.name}</div>
-      <div>CL: ${cl} (${fv} ${mod}) </div>
-      <div class="dice-result">
-       <div class="dice-tooltip" style="display: block;">
-        <section class="tooltip-part">
-            <div class="dice">
-                  <ol class="dice-rolls">
-                    ${rolls}
-                </ol>
-    
-            </div>
-        </section>
-      </div>
-         <h4 class="dice-total damage-value" data-damage="${rollResult}" data-skill"${this}">
-         ${result} 
-         </h4>
-         <button class="roll-damage" data-damage="${rollResult}" data-skill="${skill._id}" data-actor="${skill.actor}" >Slå för skada</button>
-     </div>
-    </div> `;
-    var messageContent = `${skill.name}:  ${rollResult} (${skill.system.fv}) : ${result}`;
-    this.resultElement.append(content);
-
-    const rollMode = game.settings.get("core", "rollMode");
-    var chatData = {
-      user: game.user._id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: content,
-      rolls: [r]
-    };
-    ChatMessage.create(chatData, { item: this.data.skill, rollResult: rollResult, result: result });
-
+    skill.skillRoll({
+      mod: mod = this.data.mod,
+      cl: cl = this.data.cl
+    });
   }
+  
   /**
    * @override
    */
@@ -190,7 +130,7 @@ export class SkillCheckDialog extends FormApplication {
     return context;
   }
 
-  
+
   calculate() {
     this.data.cl = Number(this.data.skill.system.fv) + Number(this.data.mod);
   }
@@ -198,7 +138,7 @@ export class SkillCheckDialog extends FormApplication {
   async _onSelectDifficulty(event) {
     const a = event.currentTarget;
     const data = a.dataset;
-
+    
     this.data.mod = Number(data.mod);
 
     this.refresh();
@@ -222,7 +162,7 @@ export class SkillCheckDialog extends FormApplication {
     this.modElement.val(this.getModText());
     this.calculate();
     this.clElement.html(this.data.cl);
-
+    this.updateSelectedElement();
   }
 
   getModText() {

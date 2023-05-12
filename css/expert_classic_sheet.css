@@ -8,7 +8,7 @@ table tr:nth-child(even) {
 
 .use-item:hover {
     font-weight: bold;
-    background-color: #752d24;
+    background-color: #e4d4d2;
 }
 .hover-show-item {
     display: none;

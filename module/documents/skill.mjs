@@ -133,64 +133,61 @@ export class DODExpertSkill extends Item {
 
     let rolls = '';
     const rollResult = r.total;
-    const fv = skill.system.fv;
-    const mod = skillCheckData.mod;
     const cl = skillCheckData.cl;
     const isGM = game.user.isGM;
     const isObserver = this.testUserPermission(game.user, "OBSERVER") ;
     var result = "MISSLYCKAT";
-    if (rollResult <= cl) {
-      rolls = rolls + `<li><div class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${rollResult}</div>   &lt= ${cl}</li>`;
-      result = "LYCKAT";
-    } else {
-      rolls = rolls + `<li class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${rollResult}   &gt ${cl}</li>`;
+    const skillCheckResult = {
+      skill: this,
+      mod : skillCheckData.mod,
+      diff: 0,
+      fv: this.system.fv,
+      cl: skillCheckData.cl,
+      result: "MISSLYCKAT",
+      rollsList: []
 
-    }
+  };
+
+
+    if (rollResult <= cl) {
+      skillCheckResult.result = "LYCKAT";
+      skillCheckResult.diff = cl - rollResult;
+    } 
+    
+    skillCheckResult.rollsList.push({ roll: rollResult, title: ""});
     if (rollResult == 1) {
       let fr = new Roll("d20");
-      await game.dice3d.showForRoll(fr);
       await fr.evaluate({ async: true });
+      await game.dice3d.showForRoll(fr);
+      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för perfekt"});
       if (fr.total <= cl) {
-        rolls = rolls + `<li><div class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${fr.total} </div>  &lt= ${cl} - kontrollslag för perfekt</li>`;
-        result = "PERFEKT";
+        skillCheckResult.diff *= 4;
+        skillCheckResult.result = "PERFEKT";
       }
-      else {
-        rolls = rolls + `<li class="roll die d20" style="transform: scale(1.1);margin-right: 4px">${fr.total}   &gt ${cl} - kontrollslag för perfekt</li>`;
+    } else if (rollResult <= 5) {
+      let fr = new Roll("d20");
+      await fr.evaluate({ async: true });
+      await game.dice3d.showForRoll(fr);
+      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för särskild"});
+      if (fr.total <= cl) {
+        skillCheckResult.diff *= 2;
+        skillCheckResult.result = "SÄRSKILLT";
       }
+
     }
     if (rollResult == 20) {
       let fr = new Roll("d20");
-      await game.dice3d.showForRoll(fr);
       await fr.evaluate({ async: true });
+      await game.dice3d.showForRoll(fr);
+      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för fummel"});
+      
       if (fr.total > cl) {
-        result = "FUMMEL";
+        skillCheckResult.result = "FUMMEL";
       }
     }
 
 
-    var content = `
-    <div class="dice-roll attack-roll">
-      <div>Färdighetsslag för ${skill.name}</div>
-      <div>CL: ${cl} (${fv} ${mod}) </div>
-      <div class="dice-result">
-       <div class="dice-tooltip" style="display: block;">
-        <section class="tooltip-part">
-            <div class="dice">
-                  <ol class="dice-rolls">
-                    ${rolls}
-                </ol>
-    
-            </div>
-        </section>
-      </div>
-         <h4 class="dice-total damage-value" data-damage="${rollResult}" data-skill"${this}">
-         ${result} 
-         </h4>
-         <button class="roll-damage" data-damage="${rollResult}" data-skill="${skill._id}" data-actor="${skill.actor}" >Slå för skada</button>
-     </div>
-    </div> `;
-    var messageContent = `${skill.name}:  ${rollResult} (${skill.system.fv}) : ${result}`;
-    this.resultElement.append(content);
+    const content = await renderTemplate("systems/dodexpert/templates/chat/skill-check-result.html", skillCheckResult);
 
     const rollMode = game.settings.get("core", "rollMode");
     var chatData = {
@@ -199,7 +196,7 @@ export class DODExpertSkill extends Item {
       content: content,
       rolls: [r]
     };
-    ChatMessage.create(chatData, { item: this.skillCheckData.skill, rollResult: rollResult, result: result });
-
+    ChatMessage.create(chatData, { item: this, rollResult: rollResult, result: result });
+    return skillCheckResult;
   }
 }

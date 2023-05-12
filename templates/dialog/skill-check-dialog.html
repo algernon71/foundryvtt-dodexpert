@@ -4,19 +4,11 @@
 
     <div class="select-difficulty">
       {{#each difficulties as |difficulty id|}}
-      {{#ifeq difficulty.mod ../mod}}
-      <div class="difficulty selected" data-mod="{{difficulty.mod}}">
-        {{difficulty.name}}<br>
-        ({{difficulty.mod}})
-
-      </div>
-      {{else}}
       <div class="difficulty" data-mod="{{difficulty.mod}}">
         {{difficulty.name}}<br>
         ({{difficulty.mod}})
 
       </div>
-      {{/ifeq}}
       {{/each}}
     </div>
 

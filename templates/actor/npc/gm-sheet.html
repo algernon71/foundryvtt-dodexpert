@@ -47,31 +47,10 @@
         </div>
         <div class="sheet-row">
             <div class="npc-skills slim">
-                <table>
-                    {{#each skills.list as |skill id|}}
+                {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=skills listType="skills"}}
+                {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=magicSchools listType="magicSchools" skillsListStart=0 skillsListSize=5}}
+                {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=spells listType="spells"}}
 
-                    <tr class="item" data-item-id="{{skill._id}}">
-                        <td class="skill use-item" data-skill="{{skill._id}}"
-                            data-item-id="{{skill._id}}">
-                            {{skill.name}}
-                        </td>
-                        <td class="skill-fv" data-skill="{{skill._id}}">
-
-                            <input type="text" class="expert-classic-input-value inline-edit" name="skill.system.fv"
-                                value="{{skill.system.fv}}" data-dtype="Number" data-field="system.fv" />
-                        </td>
-                    </tr>
-                    {{/each}}
-                    <tr>
-                        <td>
-                            <div class="add-skill"  data-title="Lägg till färdighet"  data-listType="skills">
-                                <i class="fas fa-plus"></i>Lägg till färdighet
-                            </div>
-        
-                        </td>
-
-                    </tr>
-                    </table>
             </div>
             <div class="npc-weapons grow">
                 {{> "systems/dodexpert/templates/actor/parts/actor-weapons.html" weaponsList=weapons}}
