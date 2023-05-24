@@ -119,12 +119,8 @@
                 </tr>
                 {{#each weapons as |item id|}}
                 <tr class="expert-classic-table-row item" data-item-id="{{item._id}}">
-                    <td class="expert-classic-table-row-title rightch hover-show">
+                    <td class="expert-classic-table-row-title rightch use-item" data-item-id="{{item._id}}">
                         {{item.name}}
-                        <div class="hover-show-item">
-                            <a class="item-control item-edit" title="Edit Item"><i class="fas fa-edit"></i></a>
-                            <a class="item-control item-delete" title="Delete Item"><i class="fas fa-trash"></i></a>
-                        </div>
                     </td>
                     <td class="expert-classic-table-row-value leftch rightch">{{item.system.skill.system.fv}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{item.system.damage}}</td>

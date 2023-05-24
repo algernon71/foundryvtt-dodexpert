@@ -1,5 +1,4 @@
-import { SkillCheckDialog} from "../dialogs/SkillCheckDialog.mjs"
-import { AddSkillDialog} from "../dialogs/AddSkillDialog.mjs"
+import { AttackDialog} from "../dialogs/AttackDialog.mjs"
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -52,8 +51,8 @@ export class DODExpertWeapon extends Item {
   async use(event) {
 
 
-    this.skillCheckDialog = new SkillCheckDialog({skill: this} );
-    this.skillCheckDialog.render(true, { 
+    this.attackDialog = new AttackDialog({weapon: this, skill: this.system.skill} );
+    this.attackDialog.render(true, { 
       renderData: {} 
     });
   }

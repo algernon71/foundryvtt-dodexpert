@@ -1,4 +1,3 @@
-import { SkillCheckDialog } from "../dialogs/SkillCheckDialog.mjs"
 import { AddSkillDialog } from "../dialogs/AddSkillDialog.mjs"
 import { AddMagicSchoolDialog } from "../dialogs/AddMagicSchoolDialog.mjs"
 import { AttackDialog } from "../dialogs/AttackDialog.mjs"

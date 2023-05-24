@@ -1,8 +1,89 @@
 <form>
+  <div class="skill-check-panel">
+    <h1>Attack av</h1>
+    <table class="attack-table">
+      <tr>
+        <td>{{ actor.name}}</td>
+      </tr>
+    </table>
+    <h1>Med</h1>
+    <table class="attack-table">
+      <tr>
+        <td>Vapen</td>
+        <td>FV</td>
+        <td>CL</td>
+      </tr>
+      <tr>
+        <td>{{ weapon.name}}</td>
+        <td>{{ fv}}</td>
+        <td id="mod">{{ mod}}</td>
+        <td id="cl">{{ fv}}</td>
+      </tr>
+    </table>
 
-    <h1>Attack</h1>
-    
-    <input id="skill-name" class="skill-name" type="text"/>
-    
-    <button id="roll-button" type="button" data-action="roll">Attackera!</button>
-  </form>
+    <h1>Mot</h1>
+    <table>
+      {{#each targets as |target key|}}
+      <tr class="attack-target-row">
+        <td>
+          <img src="{{target.document.texture.src}}" class="attack-target-image">
+        </td>
+        <td>
+          {{target.name}}
+        </td>
+      </tr>
+      {{/each}}
+
+    </table>
+
+    <h1>Alternativ</h1>
+
+    <table>
+      {{#if aimable}}
+      <tr>
+
+        <td>Sikta </td>
+        <td>
+          <select id="aim-part" class="aim-selector" name="aim" value="{{aim}}">
+            <option value="any">var som helst</option>
+            {{#select aim}}
+            {{#each aimTargets as |target|}}
+            <option value="{{target.id}}">{{target.name}} ({{target.mod}})</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+      </tr>
+      {{/if}}
+      {{#if ranged}}
+      <tr>
+
+        <td>Målet</td>
+        <td>
+          <select id="aim-part" class="aim-selector" name="aim" value="{{aim}}">
+            {{#select targetMovement}}
+            {{#each movementTypes as |movementType|}}
+            <option value="{{movementType.id}}">{{movementType.name}} ({{movementType.modStr}})</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+
+        <td>Avstånd</td>
+        <td>
+          <input type="number" name="range" value="{{range}}" size="3" maxlength="4" class="attack-range-input"> m
+        </td>
+      </tr>
+      {{/if}}
+    </table>
+
+    <div id="result">
+
+    </div>
+
+    <button id="roll-button" type="button" data-action="roll">Slå för attack</button>
+  </div>
+</form>

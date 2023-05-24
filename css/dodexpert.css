@@ -62,6 +62,13 @@
   background-color: lightcoral;
 }
 
+.attack-target-image {
+  height: 60px;
+}
+
+.attack-range-input {
+  width: 40px !important;
+}
 .difficulty:hover {
   background-color: darkgreen;
 

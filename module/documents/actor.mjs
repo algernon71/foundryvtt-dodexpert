@@ -1,4 +1,5 @@
 import * as Stats from "../stats.mjs";
+import { races, bodyShapes } from "../constants.mjs";
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -42,9 +43,9 @@ export class DODExpertActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
+    Stats.calculateSecondaryStats(actorData.system);
     this._prepareCharacterData(actorData);
     this._prepareNpcData(actorData);
-    Stats.calculateSecondaryStats(actorData.system);
   }
 
   getSkill(skillId) {
@@ -63,7 +64,43 @@ export class DODExpertActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    if (actorData.type !== 'character') return;
+    if (actorData.type !== 'character') {
+      const bodyShape = bodyShapes["humanoid"];
+
+      const health = this.system.health;
+      if (health) {
+        const kpOffset = Math.floor((this.system.health.max - 5) / 3) - 1;
+  
+        if (!this.system.body) {
+          this.system.body = {};
+        }
+        for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
+          let bodyPart = this.system.body[part];
+          // console.log('Building body part:' + part);
+          const partMaxHealth = v.baseKp + kpOffset;
+          if (!bodyPart) {
+            bodyPart = {
+              name: v.name,
+              health: {
+                max: partMaxHealth,
+                value: partMaxHealth
+              }
+            };
+            this.system.body[part] = bodyPart;
+          }
+          let armorList = this.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
+          if (armorList) {
+            armorList.forEach(armor => {
+              bodyPart.armor = armor.name;
+              bodyPart.abs = armor.system.abs;
+            });
+  
+          }
+        }
+    
+      };
+  
+      }
 
   }
 
