@@ -1,3 +1,4 @@
+import { Check} from "../documents/skill.mjs"
 
 export class AttackDialog extends FormApplication {
 
@@ -6,6 +7,9 @@ export class AttackDialog extends FormApplication {
     super(data, { title: 'Attack' });
     this.data = data;
     this.data.mod = 0;
+
+    this.data.skill = this.data.weapon.system.skill;
+    this.check = new Check('Attack', 'FV', this.data.skill.system.fv);
 
   }
 
@@ -58,7 +62,9 @@ export class AttackDialog extends FormApplication {
     super.activateListeners(html);
 
     html.on('click', "[data-action]", this._handleButtonClick.bind(this));
-    html.find('.roll-parameter').keyup(this._onUpdateSettings.bind(this));
+    html.find('#aim-part').change(this._onAimChange.bind(this));
+    html.find('#target-movement').change(this._onTargetMovementChange.bind(this));
+    this.calcElement = html.find('#calculation');
     this.modElement = html.find('#mod');
     this.clElement = html.find('#cl');
     this.resultElement = html.find('#result');
@@ -70,6 +76,41 @@ export class AttackDialog extends FormApplication {
     this.calculate();
   }
 
+  _onAimChange(event) {
+    const partId = event.currentTarget.value;
+    this.setAim(partId);
+  }
+  _onTargetMovementChange(event) {
+    const movementTypeId = event.currentTarget.value;
+    this.setTargetMovement(movementTypeId);
+  }
+
+  setAim(partId) {
+    if (partId === 'any') {
+      this.check.updateModifier('aim', 'Varsomhelst', '0');
+      return ;
+    }
+    const part = this.context.aimTargets.find(part => part.id === partId);
+    const modName = part.name;
+    this.updateModifier('aim', modName, part.mod);
+  }
+
+  setTargetMovement(movementTypeId) {
+    const movementType = this.context.movementTypes.find(type => type.id === movementTypeId);
+    this.updateModifier('targetMovement', movementType.name, movementType.modStr);
+  }
+
+  updateModifier(id, name, mod) {
+    this.check.updateModifier(id, name, mod);
+    this.updateCalculation();
+  }
+
+  async updateCalculation() {
+    const calculation = await this.check.render();
+
+    console.info('Calculation:' + calculation);
+    this.calcElement.html(calculation);
+  }
   /**
    * @override
    */
@@ -109,14 +150,17 @@ export class AttackDialog extends FormApplication {
         for (const sceneToken of scene.tokens.entries()) {
         }
 
-        for (const [key, part] of Object.entries(body)) {
-          const aimTarget = {
-            id: key,
-            name: part.name,
-            mod: -5,
-            part: part
-          };
-          context.aimTargets.push(aimTarget);
+        if (body) {
+          for (const [key, part] of Object.entries(body)) {
+            const aimTarget = {
+              id: key,
+              name: part.name,
+              mod: '-5',
+              part: part
+            };
+            context.aimTargets.push(aimTarget);
+          }
+  
         }
       }
 
@@ -158,11 +202,14 @@ export class AttackDialog extends FormApplication {
         context.range = 10;
         const token = context.actor.token ?? context.actor.getActiveTokens()[0];
         const user = game.user;
-        const target = user.targets.first();
-        const ac = token.object.center;
-        const tc = target.center;
-        const distance = canvas.grid.measureDistance(ac, tc);
-        context.range = Math.round(distance);
+        if (token.object) {
+          const target = user.targets.first();
+          const ac = token.object.center;
+          const tc = target.center;
+          const distance = canvas.grid.measureDistance(ac, tc);
+          context.range = Math.round(distance);
+            
+        }
         break;
 
       default:
@@ -170,6 +217,14 @@ export class AttackDialog extends FormApplication {
         break;
     }
 
+    this.context = context;
+    if (context.ranged) {
+      this.setTargetMovement('still');
+    }
+
+    if (context.aimable) {
+      this.setAim('any');
+    }
     return context;
   }
 

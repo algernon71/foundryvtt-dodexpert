@@ -56,7 +56,6 @@ export class DODExpertItemSheet extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-    this.getAllPacks();
     // Use a safe clone of the item data for further operations.
     const itemData = context.item;
 

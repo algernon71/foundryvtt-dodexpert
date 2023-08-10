@@ -196,11 +196,26 @@ export class DODExpertActorSheet extends ActorSheet {
 
 
 
+    let itemsToRemove = [];
+    for (let i of context.items) {
+      switch (i.type) {
+        case "skilldef":
+          itemsToRemove.push(i);
+          break;
+      }
+    }
+
+    for (let i of itemsToRemove) {
+      const skillId = i._id;
+      const skill = this.actor.items.get(skillId);
+      skill.delete();
+      console.info('remove:', i);
+    }
+
     // Iterate through items, allocating to containers
     for (let i of context.items) {
       i.img = i.img || DEFAULT_TOKEN;
 
-      console.info('Processing item:', i);
       this.addToList(skills, i);
       this.addToList(spells, i);
       this.addToList(magicSchools, i);
@@ -222,6 +237,9 @@ export class DODExpertActorSheet extends ActorSheet {
           break;
         }
     }
+
+
+
       this.listTypes.skills = skills;
     this.listTypes.magicSchools = magicSchools;
     this.listTypes.spells = spells;

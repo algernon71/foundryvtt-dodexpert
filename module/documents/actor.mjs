@@ -65,6 +65,22 @@ export class DODExpertActor extends Actor {
    */
   _prepareCharacterData(actorData) {
     if (actorData.type !== 'character') {
+      let itemsToRemove = [];
+      for (let i of this.items) {
+        switch (i.type) {
+          case "skilldef":
+            itemsToRemove.push(i);
+            break;
+        }
+      }
+  
+      for (let i of itemsToRemove) {
+        const skillId = i._id;
+        const skill = this.items.get(skillId);
+        skill.delete();
+        console.info('removed invalid skilldef from actor:', i);
+      }
+
       const bodyShape = bodyShapes["humanoid"];
 
       const health = this.system.health;

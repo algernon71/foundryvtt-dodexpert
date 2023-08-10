@@ -24,6 +24,7 @@
     "systems/dodexpert/templates/actor/npc/skillsList.html",
     "systems/dodexpert/templates/actor/public/info.html",
     "systems/dodexpert/templates/item/item-skill-sheet.html",
+    "systems/dodexpert/templates/check/check.html",
     "systems/dodexpert/templates/chat/skill-check-result.html",
   ]);
 };

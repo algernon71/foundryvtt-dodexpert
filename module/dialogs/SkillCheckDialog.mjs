@@ -87,7 +87,7 @@ export class SkillCheckDialog extends FormApplication {
 
   async roll() {
     const skill = this.data.skill;
-    skill.skillRoll({
+    const result = skill.skillRoll({
       mod: mod = this.data.mod,
       cl: cl = this.data.cl
     });

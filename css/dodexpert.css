@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.check-calculation {
+  display: flex;
+  flex-direction: row;
+}
 .skill-check-panel {
   width: 600px;
 }

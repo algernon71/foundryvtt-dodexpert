@@ -36,7 +36,7 @@ export function calculateMovement(sto, fys, smi) {
   }
 
   const n = Math.ceil((sum - 11) / 9);
-  console.log('calculateMovement,n:' + n);
+  
   return n + 7;  
 }
 

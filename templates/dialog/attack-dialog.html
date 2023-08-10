@@ -39,28 +39,12 @@
     <h1>Alternativ</h1>
 
     <table>
-      {{#if aimable}}
-      <tr>
-
-        <td>Sikta </td>
-        <td>
-          <select id="aim-part" class="aim-selector" name="aim" value="{{aim}}">
-            <option value="any">var som helst</option>
-            {{#select aim}}
-            {{#each aimTargets as |target|}}
-            <option value="{{target.id}}">{{target.name}} ({{target.mod}})</option>
-            {{/each}}
-            {{/select}}
-          </select>
-        </td>
-      </tr>
-      {{/if}}
       {{#if ranged}}
       <tr>
 
         <td>Målet</td>
         <td>
-          <select id="aim-part" class="aim-selector" name="aim" value="{{aim}}">
+          <select id="target-movement" class="target-movement-selector" name="aim" value="{{aim}}">
             {{#select targetMovement}}
             {{#each movementTypes as |movementType|}}
             <option value="{{movementType.id}}">{{movementType.name}} ({{movementType.modStr}})</option>
@@ -78,7 +62,27 @@
         </td>
       </tr>
       {{/if}}
+      {{#if aimable}}
+      <tr>
+
+        <td>Sikta </td>
+        <td>
+          <select id="aim-part" class="aim-selector" name="aim" value="{{aim}}">
+            <option value="any">var som helst</option>
+            {{#select aim}}
+            {{#each aimTargets as |target|}}
+            <option value="{{target.id}}">{{target.name}} ({{target.mod}})</option>
+            {{/each}}
+            {{/select}}
+          </select>
+        </td>
+      </tr>
+      {{/if}}
     </table>
+
+    <div id="calculation">
+
+    </div>
 
     <div id="result">
 

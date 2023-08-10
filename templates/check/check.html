@@ -1,0 +1,16 @@
+<div class="check">
+  <div>{{title}}</div>
+  <div class="check-calculation">
+    <div class="check-base">{{basename}}: {{basecl}}</div>
+    {{#each modifiers as |modifier|}}
+    {{#if modifier.active}}
+    <div class="check-modifier">
+      {{modifier.description}}
+    </div>
+    {{/if}}
+    {{/each}}
+    <div class="check-cl">CL {{cl}}</div>
+  </div>
+
+
+</div>

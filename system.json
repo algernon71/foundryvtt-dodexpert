@@ -67,6 +67,19 @@
       "flags": {
         "itemType": "weapon"
       }
+    },
+    {
+      "name": "shields",
+      "label": "Sköldar",
+      "system": "dodexpert",
+      "module": "Expert",
+      "path": "packs/expert/shields.db",
+      "type": "Item",
+      "itemType": "shield",
+      "private": false,
+      "flags": {
+        "itemType": "shield"
+      }
     }
     ],
   "languages": [

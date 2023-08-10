@@ -18,6 +18,7 @@ export class DODExpertWeapon extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     this.img = "systems/dodexpert/media/skill.svg";
+    this.prepareDerivedData();
     super.prepareData();
   }
 
@@ -26,7 +27,6 @@ export class DODExpertWeapon extends Item {
         const skill = this.parent.getSkill(this.system.skilldef);
         if (skill) {
           this.system.skill = skill;
-          console.info("weapon skill:", skill);
         }
 
     }
