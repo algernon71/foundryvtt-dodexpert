@@ -1,7 +1,6 @@
 # IDE
 .vscode/
 .gitattributesgi
-*.log
 LOCK
 
 # Node Modules
