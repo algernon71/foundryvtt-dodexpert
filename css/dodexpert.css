@@ -4,6 +4,51 @@
   font-family: "Roboto", sans-serif;
 }
 
+.skillcheck-result {
+  font-size: 48px;
+  border-radius: 5px;
+  border-width: 2px;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.skillcheck-chat-result {
+  font-size: 32px;
+  border-radius: 5px;
+  border-width: 2px;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+}
+
+.result-FAIL {
+  background-color: red;
+  color: white;
+}
+
+.result-SUCCESS {
+  background-color: green;
+  color: black;
+}
+
+
+.result-SPECIAL {
+  background-color: goldenrod;
+  color: black;
+}
+
+.result-PERFECT {
+  background-color: greenyellow;
+  color: black;
+}
+
+.result-FUMBLE {
+  background-color: black;
+  color: white;
+}
+
+
 .rollable:hover, .rollable:focus {
   color: #000;
   text-shadow: 0 0 10px red;

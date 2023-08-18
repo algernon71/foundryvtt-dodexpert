@@ -1,5 +1,3 @@
-2023/08/11-23:38:05.236 6008 Delete type=3 #1
-2023/08/11-23:40:44.014 3c78 Level-0 table #5: started
-2023/08/11-23:40:44.017 3c78 Level-0 table #5: 1919 bytes OK
-2023/08/11-23:40:44.017 3c78 Delete type=0 #3
-2023/08/11-23:40:44.022 3c78 Manual compaction at level-0 from '!items!FjllpansarXXXXXX' @ 72057594037927935 : 1 .. '!items!ppenhjlmXXXXXXXX' @ 0 : 0; will stop at (end)
+2023/08/18-16:37:51.731 5478 Recovering log #11
+2023/08/18-16:37:51.733 5478 Delete type=0 #11
+2023/08/18-16:37:51.733 5478 Delete type=3 #10

@@ -26,5 +26,6 @@
     "systems/dodexpert/templates/item/item-skill-sheet.html",
     "systems/dodexpert/templates/check/check.html",
     "systems/dodexpert/templates/chat/skill-check-result.html",
+    "systems/dodexpert/templates/dialog/skill-check-result.html",
   ]);
 };

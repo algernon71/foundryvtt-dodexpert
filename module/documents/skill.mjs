@@ -261,14 +261,17 @@ export class DODExpertSkill extends Item {
       diff: 0,
       fv: this.system.fv,
       cl: skillCheckData.cl,
-      result: "MISSLYCKAT",
-      rollsList: []
+      result: "FAIL",
+      resultTitle: "Misslyckat",
+      rollsList: [],
+      content: ''
 
   };
 
 
     if (rollResult <= cl) {
-      skillCheckResult.result = "LYCKAT";
+      skillCheckResult.result = "SUCCESS";
+      skillCheckResult.resultTitle = "Lyckat";
       skillCheckResult.diff = cl - rollResult;
     } 
     
@@ -280,7 +283,8 @@ export class DODExpertSkill extends Item {
       skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för perfekt"});
       if (fr.total <= cl) {
         skillCheckResult.diff *= 4;
-        skillCheckResult.result = "PERFEKT";
+        skillCheckResult.result = "PERFECT";
+        skillCheckResult.resultTitle = "PERFEKT!";
       }
     } else if (rollResult <= 5) {
       let fr = new Roll("d20");
@@ -289,7 +293,8 @@ export class DODExpertSkill extends Item {
       skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för särskild"});
       if (fr.total <= cl) {
         skillCheckResult.diff *= 2;
-        skillCheckResult.result = "SÄRSKILLT";
+        skillCheckResult.result = "SPECIAL";
+        skillCheckResult.resultTitle = "Särskillt!";
       }
 
     }
@@ -300,18 +305,18 @@ export class DODExpertSkill extends Item {
       skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för fummel"});
       
       if (fr.total > cl) {
-        skillCheckResult.result = "FUMMEL";
+        skillCheckResult.resultTitle = "FUMMEL!";
+        skillCheckResult.result = "FUMBLE";
       }
     }
 
 
-    const content = await renderTemplate("systems/dodexpert/templates/chat/skill-check-result.html", skillCheckResult);
-
+    const chatMessage = await renderTemplate("systems/dodexpert/templates/chat/skill-check-result.html", skillCheckResult);
     const rollMode = game.settings.get("core", "rollMode");
     var chatData = {
       user: game.user._id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      content: content,
+      content: chatMessage,
       rolls: [r]
     };
     ChatMessage.create(chatData, { item: this, rollResult: rollResult, result: result });

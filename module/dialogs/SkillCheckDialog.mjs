@@ -87,10 +87,14 @@ export class SkillCheckDialog extends FormApplication {
 
   async roll() {
     const skill = this.data.skill;
-    const result = skill.skillRoll({
-      mod: mod = this.data.mod,
-      cl: cl = this.data.cl
+    const result = await skill.skillRoll({
+      mod: this.data.mod,
+      cl: this.data.cl
     });
+    const content = await renderTemplate("systems/dodexpert/templates/dialog/skill-check-result.html", result);
+
+    this.resultElement.html(content);
+
   }
   
   /**
