@@ -145,8 +145,13 @@ export class DODExpertSkill extends Item {
     const skillId = this.system.def_id;
     const skillPack = this.system.def_pack;
     if (skillId) {
-      const skillsPack = game.packs.get(skillPack);
-      this.skillDef = await skillsPack.getDocument(skillId);
+
+      if (skillPack) {
+        const skillsPack = game.packs.get(skillPack);
+        this.skillDef = await skillsPack.getDocument(skillId);
+      } else {
+        this.skillDef = game.items.get(skillId);
+      }
 
       if (this.skillDef) {
         this.name = this.skillDef.name;
