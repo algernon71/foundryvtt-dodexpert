@@ -20,6 +20,8 @@
     "systems/dodexpert/templates/actor/character/classic/bio.html",
     "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html",
     "systems/dodexpert/templates/actor/character/classic/parts/gearList.html",
+    "systems/dodexpert/templates/actor/boat/info.html",
+    "systems/dodexpert/templates/actor/location/info.html",
     "systems/dodexpert/templates/actor/npc/gm-sheet.html",
     "systems/dodexpert/templates/actor/npc/skillsList.html",
     "systems/dodexpert/templates/actor/public/info.html",

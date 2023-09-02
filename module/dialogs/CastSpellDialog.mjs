@@ -37,6 +37,9 @@ export class CastSpellDialog extends FormApplication {
   async _handleButtonClick(event) {
     const clickedElement = $(event.currentTarget);
     const action = clickedElement.data().action;
+    if (action == 'roll') {
+      this.roll();
+    }
 
   }
 

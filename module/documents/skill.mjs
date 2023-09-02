@@ -33,6 +33,7 @@ export class CheckModifier {
 
   }
 
+
   apply(cl) {
     const clIn = cl;
     if (this.numerator) {
@@ -155,13 +156,18 @@ export class DODExpertSkill extends Item {
         this.system.category =  this.skillDef.system.category;
         this.system.schoolId =  this.skillDef.system.schoolId;
         // console.info('Skill initialized!', this);
-  
       } else {
         console.info('Failed to initialize skill, with def id:' + skillId, this);
       }
     }
   }
 
+  getFV() {
+    if (this.skillDef.system.type == 'B') {
+      return this.system.fv * 4;
+    }
+    return this.system.fv;
+  }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private

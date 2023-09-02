@@ -104,7 +104,7 @@ export class SkillCheckDialog extends FormApplication {
     const context = super.getData();
     const renderData = options.renderData;
     context.skillname = this.data.skill.skillDef.name;
-    context.fv = this.data.skill.system.fv;
+    context.fv = this.data.skill.getFV();
     context.skill = this.data.skill;
     context.check = this.data;
     context.mod = this.mod;
@@ -136,7 +136,7 @@ export class SkillCheckDialog extends FormApplication {
 
 
   calculate() {
-    this.data.cl = Number(this.data.skill.system.fv) + Number(this.data.mod);
+    this.data.cl = Number(this.data.skill.getFV()) + Number(this.data.mod);
   }
 
   async _onSelectDifficulty(event) {

@@ -7,11 +7,9 @@
                 <img class="profile-img" src="{{actor.img}}" title="{{actor.name}}" />
             </div>
         </div>
-        <div class="sheet-column">
+        <div class="sheet-column grow">
             <h2>Beskrivning</h2>
-            <div class="info-description">
-                {{editor system.bio.appearance target="system.bio.appearance" button=true owner=owner editable=editable}}
-            </div>
+                {{editor system.appearance target="system.appearance" button=true owner=owner editable=editable}}
 
         </div>
     </div>

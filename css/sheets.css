@@ -4,11 +4,13 @@
 .sheet-column {
     display: flex;
     flex-direction: column;
+    min-height: 100px;
 }
 
 .sheet-row {
     display: flex;
     flex-direction: row;
+    min-height: 100px;
 }
 
 .gaps {

@@ -1,5 +1,6 @@
 import { DODExpertSkill } from "./skill.mjs"
 
+import { CastSpellDialog} from "../dialogs/CastSpellDialog.mjs"
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -39,8 +40,8 @@ export class DODExpertSpell extends DODExpertSkill {
   async use(event) {
 
 
-    this.skillCheckDialog = new SkillCheckDialog({skill: this} );
-    this.skillCheckDialog.render(true, { 
+    this.castSpellDialog = new CastSpellDialog({skill: this} );
+    this.castSpellDialog.render(true, { 
       renderData: {} 
     });
   }

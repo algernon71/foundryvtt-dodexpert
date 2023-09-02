@@ -10,6 +10,9 @@
                 {{skill.name}}
             </td>
             <td class="skill-fv" data-skill="{{skill._id}}">
+                {{#if skill.isB}}
+                    B
+                {{/if}}
 
                 <input type="text" class="expert-classic-input-value inline-edit" name="skill.system.fv"
                     value="{{skill.system.fv}}" data-dtype="Number" data-field="system.fv" />

@@ -48,7 +48,8 @@
         <div class="sheet-row">
             <div class="npc-skills slim">
                 {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=skills listType="skills"}}
-                {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=magicSchools listType="magicSchools" skillsListStart=0 skillsListSize=5}}
+                {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=magicSchools listType="magicSchools"
+                skillsListStart=0 skillsListSize=5}}
                 {{> "systems/dodexpert/templates/actor/npc/skillsList.html" list=spells listType="spells"}}
 
             </div>
@@ -56,9 +57,16 @@
                 {{> "systems/dodexpert/templates/actor/parts/actor-weapons.html" weaponsList=weapons}}
             </div>
         </div>
+        <div class="sheet-row">
+            <h2>Utseende</h2>
+            {{editor system.bio.appearance target="system.bio.appearance" button=true owner=owner editable=editable}}
+        </div>
+        <div class="sheet-row">
+            <h2>Information</h2>
+            {{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
+            editable=editable}}
+        </div>
 
-        {{editor system.biography target="system.biography" rollData=rollData button=true owner=owner
-        editable=editable}}
 
     </div>
 
