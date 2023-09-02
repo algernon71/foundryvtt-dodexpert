@@ -1,0 +1,21 @@
+<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+
+
+    {{#if isGM}}
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="public">Info</a>
+    </nav>
+  
+    <section class="sheet-body">
+  
+      <div class="tab public" data-group="primary" data-tab="public">
+        {{> "systems/dodexpert/templates/actor/boat/info.html"}}
+      </div>
+  
+    </section>
+    {{else}}
+        {{> "systems/dodexpert/templates/actor/public/info.html"}}
+    {{/if}}
+  
+</form>
