@@ -253,12 +253,15 @@ export class DODExpertSkill extends Item {
 
   
   async skillRoll( skillCheckData) {
+    const rollsList = []; 
     let r = new Roll("d20");
 
 
     // Execute the roll
-    await r.evaluate({ async: true });
-    await game.dice3d.showForRoll(r);
+    //game.dice3d.messageHookDisabled=true;
+    await r.evaluate();
+    rollsList.push(r);
+    // await game.dice3d.showForRoll(r);
 
     let rolls = '';
     const rollResult = r.total;
@@ -284,42 +287,47 @@ export class DODExpertSkill extends Item {
       skillCheckResult.result = "SUCCESS";
       skillCheckResult.resultTitle = "Lyckat";
       skillCheckResult.diff = cl - rollResult;
+      skillCheckResult.rollsList.push({ roll: rollResult, title: ""});
+      if (rollResult == 1) {
+        let fr = new Roll("d20");
+        await fr.evaluate();
+        rollsList.push(fr);
+        // await game.dice3d.showForRoll(fr);
+        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för perfekt"});
+        if (fr.total <= cl) {
+          skillCheckResult.diff *= 4;
+          skillCheckResult.result = "PERFECT";
+          skillCheckResult.resultTitle = "PERFEKT!";
+        }
+      } else if (rollResult <= 5) {
+        let fr = new Roll("d20");
+        await fr.evaluate();
+        rollsList.push(fr);
+        // await game.dice3d.showForRoll(fr);
+        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för särskilt"});
+        if (fr.total <= cl) {
+          skillCheckResult.diff *= 2;
+          skillCheckResult.result = "SPECIAL";
+          skillCheckResult.resultTitle = "Särskilt!";
+        }
+  
+      }
+    } else {
+      if (rollResult == 20) {
+        let fr = new Roll("d20");
+        await fr.evaluate();
+        rollsList.push(fr);
+        // await game.dice3d.showForRoll(fr);
+        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för fummel"});
+        
+        if (fr.total > cl) {
+          skillCheckResult.resultTitle = "FUMMEL!";
+          skillCheckResult.result = "FUMBLE";
+        }
+      }
+  
     } 
-    
-    skillCheckResult.rollsList.push({ roll: rollResult, title: ""});
-    if (rollResult == 1) {
-      let fr = new Roll("d20");
-      await fr.evaluate({ async: true });
-      await game.dice3d.showForRoll(fr);
-      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för perfekt"});
-      if (fr.total <= cl) {
-        skillCheckResult.diff *= 4;
-        skillCheckResult.result = "PERFECT";
-        skillCheckResult.resultTitle = "PERFEKT!";
-      }
-    } else if (rollResult <= 5) {
-      let fr = new Roll("d20");
-      await fr.evaluate({ async: true });
-      await game.dice3d.showForRoll(fr);
-      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för särskild"});
-      if (fr.total <= cl) {
-        skillCheckResult.diff *= 2;
-        skillCheckResult.result = "SPECIAL";
-        skillCheckResult.resultTitle = "Särskillt!";
-      }
 
-    }
-    if (rollResult == 20) {
-      let fr = new Roll("d20");
-      await fr.evaluate({ async: true });
-      await game.dice3d.showForRoll(fr);
-      skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för fummel"});
-      
-      if (fr.total > cl) {
-        skillCheckResult.resultTitle = "FUMMEL!";
-        skillCheckResult.result = "FUMBLE";
-      }
-    }
 
 
     const chatMessage = await renderTemplate("systems/dodexpert/templates/chat/skill-check-result.html", skillCheckResult);
@@ -328,9 +336,11 @@ export class DODExpertSkill extends Item {
       user: game.user._id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: chatMessage,
-      rolls: [r]
+      rolls: rollsList
     };
+    console.info('Chat log rolls:', r);
     ChatMessage.create(chatData, { item: this, rollResult: rollResult, result: result });
+    // game.dice3d.messageHookDisabled=false;
     return skillCheckResult;
   }
 }

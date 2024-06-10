@@ -38,7 +38,7 @@ export class DODExpertActorSheet extends ActorSheet {
   listTypes = {};
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["dodexpert", "sheet", "actor"],
       template: "systems/dodexpert/templates/actor/expert-character-sheet.html",
       width: 800,

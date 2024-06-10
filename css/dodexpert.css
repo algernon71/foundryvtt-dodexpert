@@ -110,7 +110,38 @@
   width: 80px;
   background-color: lightcoral;
 }
+.spell-power-section {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+}
 
+.select-spell-power {
+  display: flex;
+  flex-direction: row;
+}
+.spell-power {
+  border: solid 2px black;
+  color: black;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 3px;
+  text-align: center;
+  background-color: rgb(217, 210, 224);
+  font-weight: bold;
+  font-size: 32px;
+
+}
+.spell-power:hover {
+  background-color: darkgreen;
+
+}
+
+.select-spell-power .selected {
+  background-color: black;
+  color: white;
+
+}
 .attack-target-image {
   height: 60px;
 }
