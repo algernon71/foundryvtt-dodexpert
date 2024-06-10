@@ -1,8 +1,40 @@
 <form>
 
     <h1>Kasta besvärjelse</h1>
+    <h2>{{skill.name}}</h2>
     
     <input id="skill-name" class="skill-name" type="text"/>
+    <div class="spell-power-section">
+      <h2>Effektgrad</h2>
+        <div class="select-spell-power">
+        {{#each spellPowers as |power id|}}
+        <div class="spell-power" data-power="{{power.power}}">
+          {{power.name}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <table class="skillcheck-table">
+      <tr class="skillcheck-row">
+        <th class="skillcheck-fv">FV</th>
+        <th class="skillcheck-mod">Mod</th>
+        <th class="skillcheck-mod"></th>
+        <th class="skillcheck-cl">CL</th>
+      </tr>
+      <tr class="skillcheck-row">
+        <td class="skillcheck-fv">{{fv}}</td>
+        <td class="skillcheck-mod"><input id="mod" class="skillcheck-mod-input" type="number" value="{{mod}}" readonly/></td>
+        <td class="skillcheck-eq">=</td>
+        <td class="skillcheck-cl" id="cl">{{check.cl}}</td>
+      </tr>
+    </table>
+    
+
+    <div id="result">
+
+    </div>
+
     
     <button id="roll-button" type="button" data-action="roll">Kasta!</button>
   </form>
