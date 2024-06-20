@@ -2,6 +2,8 @@
 import { DODExpertItemProxy } from "./documents/itemproxy.mjs";
 import { DODExpertActor } from "./documents/actor.mjs";
 import { DODExpertItem } from "./documents/item.mjs";
+import { DODExpertCharacterTokenHUD } from "./hud/token-hud.mjs";
+
 // Import sheet classes.
 import { DODExpertActorSheet } from "./sheets/actor-sheet.mjs";
 import { DODExpertItemSheet } from "./sheets/item-sheet.mjs";
@@ -45,6 +47,10 @@ Hooks.once('init', async function() {
   // Define custom Document classes
   CONFIG.Actor.documentClass = DODExpertActor;
   CONFIG.Item.documentClass = DODExpertItemProxy;
+
+  CONFIG.Token.hudClass = DODExpertCharacterTokenHUD;
+  
+  CONFIG.compatibility.includePatterns.push(/systems\dodexpert/);
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);

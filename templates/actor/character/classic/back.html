@@ -157,7 +157,11 @@
                 <table class="expert-classic-table">
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">Skadebonus</td>
-                        <td class="expert-classic-table-row-value leftch rightch">{{system.sb}}</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{#if system.sb}}{{system.sb}}{{else}}-{{/if}}</td>
+                    </tr>
+                    <tr class="expert-classic-table-row">
+                        <td class="expert-classic-table-row-title rightch">Initiativ</td>
+                        <td class="expert-classic-table-row-value leftch rightch">{{system.initiative}}</td>
                     </tr>
                     <tr class="expert-classic-table-row">
                         <td class="expert-classic-table-row-title rightch">Svärdshand</td>

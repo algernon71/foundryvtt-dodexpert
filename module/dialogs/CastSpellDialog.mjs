@@ -53,7 +53,7 @@ export class CastSpellDialog extends FormApplication {
       mod: this.data.mod,
       cl: this.data.cl
     });
-    const content = await renderTemplate("systems/dodexpert/templates/dialog/skill-check-result.html", result);
+    const content = await renderTemplate("systems/dodexpert/templates/common/skill-check-result.html", result);
 
     this.resultElement.html(content);
 
@@ -97,7 +97,7 @@ export class CastSpellDialog extends FormApplication {
 
 
     context.spellPowers = [];
-    for (var i = 1 ; i < context.fv / 2 ; ++i) {
+    for (var i = 1 ; i <= context.fv / 2 ; ++i) {
       context.spellPowers.push({
         "name": i,
         "power": i

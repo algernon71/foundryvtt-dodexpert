@@ -1,4 +1,4 @@
-import { Check} from "../documents/skill.mjs"
+import { Check, DODExpertSkill} from "../documents/skill.mjs"
 
 export class AttackDialog extends FormApplication {
 
@@ -48,11 +48,19 @@ export class AttackDialog extends FormApplication {
 
   }
   async roll() {
+    this.resultElement.html('');
+    this.damageResultElement.html('');
     const skill = this.data.skill;
-    skill.skillRoll({
-      mod: this.data.mod,
-      cl: this.data.cl
-    });
+    const result = await skill.skillRoll(this.check);
+    const content = await renderTemplate("systems/dodexpert/templates/common/skill-check-result.html", result);
+
+    this.resultElement.html(content);
+
+
+    const damageResult = await this.data.weapon.rollDamage(result.result);
+    const damageContent = await renderTemplate("systems/dodexpert/templates/common/damage-result.html", damageResult);
+    this.damageResultElement.html(damageContent);
+
   }
 
   /**
@@ -68,6 +76,7 @@ export class AttackDialog extends FormApplication {
     this.modElement = html.find('#mod');
     this.clElement = html.find('#cl');
     this.resultElement = html.find('#result');
+    this.damageResultElement = html.find('#damage-result');
     this.rollButton = html.find('#roll-button');
   }
 

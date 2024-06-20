@@ -5,8 +5,7 @@ import { CastSpellDialog } from "../dialogs/CastSpellDialog.mjs"
 
 
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
-import { giveSkillExperience, removeSkillExperience } from "../skills.mjs";
-import { initSkill } from "../skills.mjs";
+
 import { races, bodyShapes } from "../constants.mjs";
 
 const sheetStyles = [
@@ -103,7 +102,6 @@ export class DODExpertActorSheet extends ActorSheet {
     context.sheetStyles = sheetStyles;
     context.sheet = sheetStyles[0];
     context.tabs = [];
-    console.log('context:', context);
     return context;
   }
 
@@ -148,7 +146,6 @@ export class DODExpertActorSheet extends ActorSheet {
       });
     }
 
-    console.log("body:", context.system.body);
   }
 
   /**
@@ -254,7 +251,6 @@ export class DODExpertActorSheet extends ActorSheet {
     context.magicSchools = magicSchools;
     context.isGM = game.user.isGM;
     context.carriedWeight = carriedWeight;
-    console.log('context:', context);
   }
 
   addToList(list, item) {
@@ -386,7 +382,7 @@ export class DODExpertActorSheet extends ActorSheet {
 
     const item = this.actor.items.get(skillId);
     if (item) {
-      await giveSkillExperience(item, 1);
+      await item.giveExperience(1);
       this.render();
     }
 
@@ -399,7 +395,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const itemId = data.skill;
     const item = this.actor.items.get(itemId);
     if (item) {
-      await giveSkillExperience(item, 1);
+      await item.giveExperience(1);
       this.render();
     }
 
@@ -413,7 +409,7 @@ export class DODExpertActorSheet extends ActorSheet {
     const itemId = data.skill;
     const item = this.actor.items.get(itemId);
     if (item) {
-      await removeSkillExperience(item, 1);
+      await item.removeExperience(1);
       this.render();
     }
 

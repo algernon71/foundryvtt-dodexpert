@@ -112,6 +112,58 @@ export class DODExpertWeapon extends Item {
     }
   }
 
+  async rollDamage(skillCheckResult) {
+
+    const formula = this.calcDamageFormula();
+    const roll = new Roll(formula) ;
+    let maximize = false;
+    switch (skillCheckResult) {
+      case 'SPECIAL':
+      case 'PERFECT':
+        maximize = true;
+        break;
+
+      default:
+        break;
+    }
+    let result = await roll.evaluate({maximize: maximize});
+
+
+    const damageResult = {
+      title: this.name, 
+      damage: roll.total,
+      roll: roll
+    };
+
+    const rollResult = roll.result;
+    const chatMessage = await renderTemplate("systems/dodexpert/templates/common/damage-result.html", damageResult);
+    var chatData = {
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: chatMessage
+    };
+
+    ChatMessage.create(chatData, { item: this, rollResult: roll.total, result: result});
+    const stdMessage = await roll.toMessage({
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: "Skada från " + this.name
+    });
+
+
+    return damageResult;
+  }
+
+  calcDamageFormula() {
+    let formula = this.system.damage.replace('T', 'd');
+
+    if (this.actor.system.sb) {
+      formula += "+ " + this.actor.system.sb + "[skadebonus]"
+    }
+
+    
+    return formula;
+  }
   
   async skillRoll( skillCheckData) {
     let r = new Roll("d20");

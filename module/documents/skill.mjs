@@ -1,5 +1,5 @@
-import { SkillCheckDialog} from "../dialogs/SkillCheckDialog.mjs"
-import { AddSkillDialog} from "../dialogs/AddSkillDialog.mjs"
+import { SkillCheckDialog } from "../dialogs/SkillCheckDialog.mjs"
+import { AddSkillDialog } from "../dialogs/AddSkillDialog.mjs"
 
 export class CheckModifier {
 
@@ -10,7 +10,7 @@ export class CheckModifier {
 
   update(name, modifier) {
     this.name = name;
-    this.modifierString = modifier;      
+    this.modifierString = modifier;
     this.description = modifier;
     this.active = false;
     this.numerator = null;
@@ -20,7 +20,7 @@ export class CheckModifier {
       const dp = modifier.indexOf('/');
       if (dp > 0) {
         this.numerator = Number(modifier.substring(1, dp));
-        this.denominator = Number(modifier.substring(dp+1));
+        this.denominator = Number(modifier.substring(dp + 1));
       } else {
         this.numerator = Number(modifier.substring(1));
       }
@@ -57,7 +57,7 @@ export class CheckModifier {
   }
 
 
-  
+
 }
 
 export class CheckResult {
@@ -75,7 +75,7 @@ export class Check {
 
   updateModifier(id, modName, modifier) {
     let m = null;
-    for (let i = 0 ; i < this.modifiers.length ; ++i) {
+    for (let i = 0; i < this.modifiers.length; ++i) {
       if (this.modifiers[i].id === id) {
         m = this.modifiers[i];
       }
@@ -95,13 +95,13 @@ export class Check {
 
   recalculate() {
     let cl = Number(this.basecl);
-    
-    for (let i = 0 ; i < this.modifiers.length ; ++i) {
+
+    for (let i = 0; i < this.modifiers.length; ++i) {
       cl = this.modifiers[i].apply(cl);
     }
     this.cl = cl;
     let descr = this.name + ' ' + this.basename + ' ' + this.basecl + ' ';
-    for (let i = 0 ; i < this.modifiers.length ; ++i) {
+    for (let i = 0; i < this.modifiers.length; ++i) {
       const modifier = this.modifiers[i];
       if (modifier.active) {
         descr += modifier.modifierString + ' ';
@@ -128,7 +128,7 @@ export class DODExpertSkill extends Item {
 
   constructor(target, args) {
     super(target, args);
-    
+
   }
 
   /**
@@ -156,16 +156,96 @@ export class DODExpertSkill extends Item {
       if (this.skillDef) {
         this.name = this.skillDef.name;
         this.system.description = this.skillDef.system.description;
-        this.system.cost =  this.skillDef.system.cost;
-        this.system.ability =  this.skillDef.system.ability;
-        this.system.category =  this.skillDef.system.category;
-        this.system.schoolId =  this.skillDef.system.schoolId;
+        this.system.cost = this.skillDef.system.cost;
+        this.system.ability = this.skillDef.system.ability;
+        this.system.category = this.skillDef.system.category;
+        this.system.schoolId = this.skillDef.system.schoolId;
         // console.info('Skill initialized!', this);
       } else {
         console.info('Failed to initialize skill, with def id:' + skillId, this);
       }
     }
   }
+
+  async giveExperience(xp) {
+    console.info('giveExperience skill:', this);
+    console.info('giveExperience xp:', xp);
+
+    let erf = Number(this.system.erf) + Number(xp);
+    let fv = Number(this.system.fv);
+    let increaseCost = this.getSkillIncreaseCost(fv);
+    while (increaseCost <= erf && increaseCost > 0) {
+      fv = fv + 1;
+      erf = erf - increaseCost;
+      increaseCost = this.getSkillIncreaseCost(fv);
+    }
+    if (increaseCost <= 0) {
+      erf = 0;
+    }
+    let update = {
+      "system":
+      {
+        "fv": fv,
+        "erf": erf,
+        "lastXpTime": game.time.worldTime
+      }
+    };
+    console.info('update skill:', this);
+    console.info('update skill, update:', update);
+    await this.update(update, {});
+  }
+
+  async removeExperience(xp) {
+    let erf = this.system.erf - xp;
+    let fv = Number(this.system.fv);
+    while (erf < 0) {
+      fv = fv - 1;
+      erf = erf + 1;
+      erf = erf + this.getSkillIncreaseCost(fv) - 1;
+    }
+    let update = {
+      "system":
+      {
+        "fv": fv,
+        "erf": erf
+      }
+    };
+    await this.update(update, {});
+  }
+
+  getSkillIncreaseCost(fv) {
+    if (this.system.type == "B") {
+      return this.getBSkillMultiplier(fv + 1) * this.system.cost;
+
+    }
+    return this.getSkillMultiplier(fv + 1) * this.system.cost;
+  }
+
+  getSkillMultiplier(fv) {
+    if (fv <= 10) {
+      return 1;
+    }
+    if (fv <= 14) {
+      return 2;
+    }
+
+    return 3 + Math.floor((fv - 14) / 3);
+  }
+
+  getBSkillMultiplier(fv) {
+    if (fv <= 2) {
+      return 1;
+    }
+    if (fv <= 4) {
+      return 2;
+    }
+    if (fv <= 5) {
+      return 3;
+    }
+
+    return -1;
+  }
+
 
   getFV() {
     if (this.skillDef.system.type == 'B') {
@@ -177,9 +257,9 @@ export class DODExpertSkill extends Item {
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private
    */
-   getRollData() {
+  getRollData() {
     // If present, return the actor's roll data.
-    if ( !this.actor ) return null;
+    if (!this.actor) return null;
     const rollData = this.actor.getRollData();
     // Grab the item's system data as well.
     rollData.item = foundry.utils.deepClone(this.system);
@@ -190,9 +270,9 @@ export class DODExpertSkill extends Item {
   async use(event) {
 
 
-    this.skillCheckDialog = new SkillCheckDialog({skill: this} );
-    this.skillCheckDialog.render(true, { 
-      renderData: {} 
+    this.skillCheckDialog = new SkillCheckDialog({ skill: this });
+    this.skillCheckDialog.render(true, {
+      renderData: {}
     });
   }
 
@@ -202,9 +282,9 @@ export class DODExpertSkill extends Item {
     if (actor) {
       const ability = actor.system.abilities[this.system.ability];
       if (this.system.bc && this.system.fv < ability.group) {
-          this.system.fv = ability.group;
+        this.system.fv = ability.group;
       }
-  
+
     }
   }
 
@@ -214,133 +294,160 @@ export class DODExpertSkill extends Item {
    * @private
    */
   async roll() {
-    const item = this;
-
-    // Initialize chat data.
-    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const rollMode = game.settings.get('core', 'rollMode');
-    const label = `[${item.type}] ${item.name}`;
-
-    console.log('item roll, speaker:', speaker);
-    console.log('item roll, rollmode:', rollMode);
-    console.log('item roll, label:', label);
-    // If there's no roll data, send a chat message.
-    if (!this.system.formula) {
-      ChatMessage.create({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-        content: item.system.description ?? ''
-      });
-    }
-    // Otherwise, create a roll and send a chat message from it.
-    else {
-      // Retrieve roll data.
-      const rollData = this.getRollData();
-
-      // Invoke the roll and submit it to chat.
-      const roll = new Roll(rollData.item.formula, rollData);
-      // If you need to store the value first, uncomment the next line.
-      // let result = await roll.roll({async: true});
-      roll.toMessage({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-      });
-      return roll;
-    }
+    this.skillRoll({
+      cl: this.system.fv,
+      mod: 0
+    });
   }
 
-  
-  async skillRoll( skillCheckData) {
-    const rollsList = []; 
-    let r = new Roll("d20");
 
-
-    // Execute the roll
-    //game.dice3d.messageHookDisabled=true;
-    await r.evaluate();
-    rollsList.push(r);
-    // await game.dice3d.showForRoll(r);
-
-    let rolls = '';
-    const rollResult = r.total;
+  async skillRoll(skillCheckData) {
     const cl = skillCheckData.cl;
     const isGM = game.user.isGM;
-    const isObserver = this.testUserPermission(game.user, "OBSERVER") ;
-    var result = "MISSLYCKAT";
+    const isObserver = this.testUserPermission(game.user, "OBSERVER");
     const skillCheckResult = {
       skill: this,
-      mod : skillCheckData.mod,
+      mod: skillCheckData.mod,
       diff: 0,
       fv: this.system.fv,
       cl: skillCheckData.cl,
-      result: "FAIL",
-      resultTitle: "Misslyckat",
+      xp: 0,
+      result: "PENDING",
+      resultTitle: "Inget slag",
       rollsList: [],
+      rolls: [],
       content: ''
 
-  };
+    };
+
+    let mainRoll = new Roll("d20");
 
 
-    if (rollResult <= cl) {
+    // Execute the roll
+    await mainRoll.evaluate();
+    skillCheckResult.rolls.push(mainRoll);
+
+
+
+    if (mainRoll.total <= cl) {
       skillCheckResult.result = "SUCCESS";
       skillCheckResult.resultTitle = "Lyckat";
-      skillCheckResult.diff = cl - rollResult;
-      skillCheckResult.rollsList.push({ roll: rollResult, title: ""});
-      if (rollResult == 1) {
-        let fr = new Roll("d20");
-        await fr.evaluate();
-        rollsList.push(fr);
-        // await game.dice3d.showForRoll(fr);
-        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för perfekt"});
-        if (fr.total <= cl) {
+      skillCheckResult.diff = cl - mainRoll.total;
+      skillCheckResult.rollsList.push({ roll: mainRoll.total, title: "Färdighetsslag" });
+      if (mainRoll.total == 1) {
+        let perfectCheckRoll = new Roll("d20");
+        await perfectCheckRoll.evaluate();
+        skillCheckResult.rolls.push(perfectCheckRoll);
+        skillCheckResult.rollsList.push({ roll: perfectCheckRoll.total, title: "Kontrolslag för perfekt" });
+        if (perfectCheckRoll.total <= cl) {
           skillCheckResult.diff *= 4;
           skillCheckResult.result = "PERFECT";
           skillCheckResult.resultTitle = "PERFEKT!";
         }
-      } else if (rollResult <= 5) {
-        let fr = new Roll("d20");
-        await fr.evaluate();
-        rollsList.push(fr);
-        // await game.dice3d.showForRoll(fr);
-        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för särskilt"});
-        if (fr.total <= cl) {
+      } else if (mainRoll.total <= 5) {
+        let specialCheckRoll = new Roll("d20");
+        await specialCheckRoll.evaluate();
+        skillCheckResult.rolls.push(specialCheckRoll);
+        skillCheckResult.rollsList.push({ roll: specialCheckRoll.total, title: "Kontrolslag för särskilt" });
+        if (specialCheckRoll.total <= cl) {
           skillCheckResult.diff *= 2;
           skillCheckResult.result = "SPECIAL";
           skillCheckResult.resultTitle = "Särskilt!";
         }
-  
+
       }
     } else {
-      if (rollResult == 20) {
-        let fr = new Roll("d20");
-        await fr.evaluate();
-        rollsList.push(fr);
-        // await game.dice3d.showForRoll(fr);
-        skillCheckResult.rollsList.push({ roll: fr.total, title: "Kontrolslag för fummel"});
-        
-        if (fr.total > cl) {
+      skillCheckResult.result = "FAIL";
+      skillCheckResult.resultTitle = "Misslyckat";
+      skillCheckResult.diff = cl - mainRoll.total;
+      skillCheckResult.rollsList.push({ roll: mainRoll.total, title: "Färdighetsslag" });
+    if (mainRoll.total == 20) {
+          let fumbleCheckRoll = new Roll("d20");
+        await fumbleCheckRoll.evaluate();
+        skillCheckResult.rolls.push(fumbleCheckRoll);
+        skillCheckResult.rollsList.push({ roll: fumbleCheckRoll.total, title: "Kontrolslag för fummel" });
+
+        if (fumbleCheckRoll.total > cl) {
           skillCheckResult.resultTitle = "FUMMEL!";
           skillCheckResult.result = "FUMBLE";
         }
       }
-  
-    } 
+
+    }
 
 
 
-    const chatMessage = await renderTemplate("systems/dodexpert/templates/chat/skill-check-result.html", skillCheckResult);
+    skillCheckResult.xp = await this.getResultXP(skillCheckResult.result);
     const rollMode = game.settings.get("core", "rollMode");
+    
+
+    const chatMessage = await renderTemplate("systems/dodexpert/templates/common/skill-check-result.html", skillCheckResult);
     var chatData = {
       user: game.user._id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
       content: chatMessage,
-      rolls: rollsList
+      rolls: skillCheckResult.rolls
     };
-    console.info('Chat log rolls:', r);
-    ChatMessage.create(chatData, { item: this, rollResult: rollResult, result: result });
-    // game.dice3d.messageHookDisabled=false;
+    ChatMessage.create(chatData, { item: this, rollResult: mainRoll.total, result: result });
     return skillCheckResult;
+  }
+
+
+  async getResultXP(result) {
+    let xp = await this.calcResultXP(result);
+
+    let fv = this.system.fv;
+    if (xp && xp.gained > 0) {
+      await this.giveExperience(xp.gained);
+      let newFv = this.system.fv;
+      if (newFv > fv) {
+        xp.newFv = newFv;
+      }
+
+    }
+
+    return xp;
+  }
+  async calcResultXP(result) {
+    const gameTime = game.time.worldTime;
+    const durationSinceLastXp = gameTime - this.lastXpTime();
+    switch(result) {
+      case 'SUCCESS':
+
+        if (durationSinceLastXp > 0) {
+          return {
+            gained: 1
+          };
+        } else {
+          return null;
+  
+        }
+      case 'SPECIAL':
+        return {
+          gained: 2
+        };
+      case 'PERFECT':
+        let xpRoll = new Roll('d3+1');
+        await xpRoll.evaluate();
+
+        return {
+          roll:xpRoll,
+          gained: xpRoll.total
+        };
+
+        case 'FAIL':
+          default:
+          return null;
+    }
+
+
+
+  }
+
+  lastXpTime() {
+    if (this.system.lastXpTime) {
+      return this.system.lastXpTime;
+    }
+    return 0;
   }
 }

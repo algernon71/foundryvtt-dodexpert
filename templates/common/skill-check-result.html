@@ -20,4 +20,14 @@
   <div class="skillcheck-result result-{{result}}">
     {{resultTitle}}
   </div>
+  {{#if xp}}
+  <div class="skillcheck-xp">
+    +{{xp.gained}} erfarenhet
+    {{#if xp.newFv}}
+    <br><br>
+    Höjt FV:{{xp.newFv}}
+    {{/if}}
+
+  </div>
+  {{/if}}
 </div>

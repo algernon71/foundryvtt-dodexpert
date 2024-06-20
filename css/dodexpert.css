@@ -13,6 +13,17 @@
   text-align: center;
 }
 
+.skillcheck-xp {
+  font-size: 32px;
+  border-radius: 5px;
+  border-width: 2px;
+    
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  border-color: black;
+}
+
 .skillcheck-chat-result {
   font-size: 32px;
   border-radius: 5px;

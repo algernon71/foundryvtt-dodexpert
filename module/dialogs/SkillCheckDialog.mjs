@@ -91,7 +91,7 @@ export class SkillCheckDialog extends FormApplication {
       mod: this.data.mod,
       cl: this.data.cl
     });
-    const content = await renderTemplate("systems/dodexpert/templates/dialog/skill-check-result.html", result);
+    const content = await renderTemplate("systems/dodexpert/templates/common/skill-check-result.html", result);
 
     this.resultElement.html(content);
 

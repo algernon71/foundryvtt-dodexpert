@@ -1,8 +1,3 @@
-2024/06/10-12:51:42.550 1f04 Recovering log #54
-2024/06/10-12:51:42.552 1f04 Delete type=0 #54
-2024/06/10-12:51:42.553 1f04 Delete type=3 #52
-2024/06/10-12:53:22.201 ce6c Level-0 table #60: started
-2024/06/10-12:53:22.202 ce6c Level-0 table #60: 0 bytes OK
-2024/06/10-12:53:22.202 ce6c Delete type=0 #58
-2024/06/10-12:53:22.202 ce6c Manual compaction at level-0 from '!items!FjllpansarXXXXXX' @ 72057594037927935 : 1 .. '!items!ppenhjlmXXXXXXXX' @ 0 : 0; will stop at (end)
-2024/06/10-12:53:22.202 ce6c Manual compaction at level-1 from '!items!FjllpansarXXXXXX' @ 72057594037927935 : 1 .. '!items!ppenhjlmXXXXXXXX' @ 0 : 0; will stop at (end)
+2024/06/14-11:50:22.958 11ef4 Recovering log #92
+2024/06/14-11:50:22.961 11ef4 Delete type=0 #92
+2024/06/14-11:50:22.961 11ef4 Delete type=3 #91
