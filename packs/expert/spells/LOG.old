@@ -1,9 +1,14 @@
-2024/07/28-15:38:07.452 796c Recovering log #111
-2024/07/28-15:38:07.452 796c Level-0 table #113: started
-2024/07/28-15:38:07.455 796c Level-0 table #113: 756 bytes OK
-2024/07/28-15:38:07.459 796c Delete type=0 #111
-2024/07/28-15:38:07.459 796c Delete type=3 #109
-2024/07/28-15:38:07.460 77c8 Compacting 4@0 + 0@1 files
-2024/07/28-15:38:07.469 77c8 Generated table #115@0: 1 keys, 723 bytes
-2024/07/28-15:38:07.469 77c8 Compacted 4@0 + 0@1 files => 723 bytes
-2024/07/28-15:38:07.470 77c8 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/07/28-18:22:55.756 6c50 Recovering log #124
+2024/07/28-18:22:55.756 6c50 Level-0 table #126: started
+2024/07/28-18:22:55.759 6c50 Level-0 table #126: 723 bytes OK
+2024/07/28-18:22:55.762 6c50 Delete type=0 #124
+2024/07/28-18:22:55.762 6c50 Delete type=3 #122
+2024/07/28-18:22:55.762 6fc4 Compacting 4@0 + 1@1 files
+2024/07/28-18:22:55.765 6fc4 Generated table #128@0: 1 keys, 723 bytes
+2024/07/28-18:22:55.765 6fc4 Compacted 4@0 + 1@1 files => 723 bytes
+2024/07/28-18:22:55.766 6fc4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/07/28-18:22:55.766 6fc4 Delete type=2 #115
+2024/07/28-18:22:55.766 6fc4 Delete type=2 #117
+2024/07/28-18:22:55.766 6fc4 Delete type=2 #120
+2024/07/28-18:22:55.767 6fc4 Delete type=2 #123
+2024/07/28-18:22:55.767 6fc4 Delete type=2 #126

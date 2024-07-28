@@ -37,13 +37,7 @@ export class DODExpertSkill extends Item {
       }
 
       if (this.skillDef) {
-        this.name = this.skillDef.name;
-        if (!this.system.defUpdate || 
-             this.system.defUpdate != this.skillDef._stats.modifiedTime ) {
-          this.updateFieldsFromDefinition(this.skillDef);
-        } else {
-
-        }
+        this.updateFieldsFromDefinition(this.skillDef);
         /*
         this.system.description = this.skillDef.system.description;
         this.system.cost = this.skillDef.system.cost;
@@ -66,15 +60,28 @@ export class DODExpertSkill extends Item {
       {
         "cost": skillDef.system.cost,
         "ability": skillDef.system.ability,
-        "shoolId": skillDef.system.schoolId,
+        "schoolId": skillDef.system.schoolId,
         "category": skillDef.system.category,
         "defUpdate": skillDef._stats.modifiedTime,
+        "defVersion": "2",
         "lastXpTime": game.time.worldTime,
         "type": skillDef.system.type
       }
     };
-    console.info('update skill from def, update:', update);
-    this.update(update, {});
+    this.system.cost = skillDef.system.cost;
+    this.system.category = skillDef.system.category;
+    this.system.schoolId = skillDef.system.schoolId;
+    this.system.type = skillDef.system.type;
+    this.name = skillDef.name;
+    if (!this.system.defUpdate || 
+      this.system.defUpdate != this.skillDef._stats.modifiedTime ) {
+    } else {
+
+    }
+
+
+    // console.info('update skill from def, update:', update);
+    //this.update(update, {});
 
   }
 

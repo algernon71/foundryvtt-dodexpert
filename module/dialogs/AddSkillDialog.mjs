@@ -104,7 +104,9 @@ export class AddSkillDialog extends FormApplication {
     });
 
     const skillsPack = game.packs.get(this.data.pack);
+    
     game.packs.forEach(async gamePack => {
+      console.info('Checking pack:',gamePack);
       const index = await gamePack.getIndex({ fields: this.getFields() });
       index.forEach((item, key) => {
         if (this.matchItem(item, searchString)) {
@@ -123,7 +125,8 @@ export class AddSkillDialog extends FormApplication {
     this.actor.items.forEach(item => {
       if (item.type == "skill" && item.system.category == "MAG") {
         console.info('school:', item);
-        this.data.magicSchools[item.system.schoolId] = item;
+        const schoolId = item.skillDef.system.schoolId;
+        this.data.magicSchools[schoolId] = item;
       }
     });
   }
