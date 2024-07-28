@@ -62,6 +62,7 @@ export class AddSkillDialog extends FormApplication {
     const t = this;
     this.inputElement = document.querySelector('#skill-search-input'); // html.find('#skill-search-input');
     document.querySelector('#add-skill-button').addEventListener("click", this.addSkill.bind(this));
+    document.querySelector('#new-skill-button').addEventListener("click", this.newSkill.bind(this));
     this.inputElement.addEventListener("input", this._onUpdateSearch.bind(this));
     this.inputElement.addEventListener("keydown", function (e) {
       if (e.keyCode == 40) {
@@ -390,6 +391,37 @@ export class AddSkillDialog extends FormApplication {
     this.updateMatchList('');
     // this.close();
   }
+
+  async newSkill(event) {
+    const skillDefData = {
+      name: "X",
+      type: this.data.deftype,
+      system: {
+        cost: 2
+
+      }
+    };
+
+    if (this.inputElement.value) {
+      skillDefData.name = this.inputElement.value;
+    }
+    const newSkillDef = await Item.create(skillDefData);
+    const itemData = {
+      name: newSkillDef.name,
+      type: this.data.type,
+      system: {
+        def_id: newSkillDef._id,
+        category: newSkillDef.system.category,
+        cost: newSkillDef.system.ability,
+        cost: newSkillDef.system.cost,
+        fv: 0,
+        erf: 0
+      }
+    };
+    const newSkill = await Item.create(itemData, { parent: this.actor });
+    newSkillDef.sheet.render(true);
+  }
+
   /**
    * @override
    */

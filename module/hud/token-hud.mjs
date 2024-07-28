@@ -62,7 +62,7 @@ export class DODExpertCharacterTokenHUD extends BasePlaceableHUD {
     getData(options={}) {
       let data = super.getData(options);
       const bar1 = this.document.getBarAttribute("bar1");
-      const bar2 = this.document.getBarAttribute("bar2");
+      const bar2 = this.document.getBarAttribute("bar2");tt
       data = foundry.utils.mergeObject(data, {
         canConfigure: game.user.can("TOKEN_CONFIGURE"),
         canToggleCombat: ui.combat !== null,

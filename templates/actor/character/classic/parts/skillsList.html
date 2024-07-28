@@ -16,16 +16,18 @@
         {{#includeListItem id ../skillsListStart ../skillsListSize}}
         <tr class="expert-classic-table-row item" data-item-id="{{skill._id}}">
             <td class="expert-classic-table-row-title rightch skill use-item" data-skill="{{skill._id}}" data-item-id="{{skill._id}}">
-                {{skill.name}}
+                {{skill.name}}                     
+
                 <div class="hover-show-item">
                     {{skill.system.ability}} ({{skill.system.cost}})
                 </div>
+                {{#ifeq skill.system.type "B"}}(B){{/ifeq}}
             </td>
             <td class="expert-classic-table-row-value leftch rightch skill-fv" data-skill="{{skill._id}}" >
-                
-                <input type="text"
+                    <input type="text"
                                 class="expert-classic-input-value inline-edit" name="skill.system.fv" 
                                 value="{{skill.system.fv}}" data-dtype="Number" data-field="system.fv" />
+            
             </td>
             <td class="expert-classic-table-row-value leftch skill-erf hover-show item" data-skill="{{skill._id}}">
                 {{skill.system.erf}}

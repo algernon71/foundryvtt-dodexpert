@@ -251,6 +251,7 @@ export class DODExpertActorSheet extends ActorSheet {
     context.magicSchools = magicSchools;
     context.isGM = game.user.isGM;
     context.carriedWeight = carriedWeight;
+    console.info('context:', context);
   }
 
   addToList(list, item) {
@@ -318,7 +319,9 @@ export class DODExpertActorSheet extends ActorSheet {
           const skillId = element.data("skill");
           const items = this.actor.items;
           const skill = this.actor.items.get(skillId);
-          skill.sheet.render(true);
+
+          console.info('Edit skill entry:', skill);
+          skill.skillDef.sheet.render(true);
         },
 
       },

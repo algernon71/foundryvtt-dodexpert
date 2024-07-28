@@ -1,4 +1,4 @@
-import { Check, DODExpertSkill} from "../documents/skill.mjs"
+import { DODExpertSkill} from "../documents/skill.mjs"
 
 export class AttackDialog extends FormApplication {
 
