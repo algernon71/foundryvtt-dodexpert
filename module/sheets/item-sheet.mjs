@@ -53,7 +53,7 @@ export class DODExpertItemSheet extends ItemSheet {
     return items;
   }
   /** @override */
-  getData() {
+  async getData() {
     // Retrieve base data structure.
     const context = super.getData();
     // Use a safe clone of the item data for further operations.
@@ -71,10 +71,31 @@ export class DODExpertItemSheet extends ItemSheet {
     context.flags = itemData.flags;
 
     context.abilityList = abilityList;
-    context.magicschools = magicschools;
-    console.info('Editing item:', context);
+    context.magicschools = [magicschools];
+    if (context.item.type  === 'spelldef') {
+
+      context.magicschools = await this.getMagicShools();
+    }
+    console.info('editing item:', context.item);
     return context;
   }
+
+  async getMagicShools() {
+    let schools = [];
+    const skillsPack = await game.packs.get('dodexpert.skills');
+
+    game.packs.forEach(async gamePack => {
+      const index = await gamePack.getIndex({ fields: ["system.schoolId", "system.category"] });
+      index.forEach((item, key) => {
+        if (item.system && item.system.category && item.system.category == 'MAG') {
+          console.info('item:', item);
+          schools.push(item);
+        }
+      });
+    });
+    return schools;
+  }
+
 
   /* -------------------------------------------- */
 

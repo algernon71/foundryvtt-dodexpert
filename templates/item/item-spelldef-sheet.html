@@ -13,13 +13,15 @@
   {{!-- Sheet Body --}}
   <section class="sheet-body">
 
+    Cat:{{item.system.category}}<br>
     <select  class="magiskola"  name="system.category"  data-type="String">
       {{#select system.category}}
           {{#each magicschools as |school id|}}
-          <option  value="{{school.id}}">{{school.name}}</option>
+          <option  value="{{school.system.schoolId}}"> ({{school.system.schoolId}}) {{school.name}}</option>
           {{/each}}
       {{/select}}
   </select>
+
       <label for="sv">Skolvärde</label>
     <input id="sv" type="number" name="system.level" value="{{item.system.level}}" />
     <br>

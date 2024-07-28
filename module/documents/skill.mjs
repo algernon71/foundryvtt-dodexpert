@@ -39,7 +39,6 @@ export class DODExpertSkill extends Item {
       if (this.skillDef) {
         this.name = this.skillDef.name;
         if (!this.system.defUpdate || 
-             !this.system.type || 
              this.system.defUpdate != this.skillDef._stats.modifiedTime ) {
           this.updateFieldsFromDefinition(this.skillDef);
         } else {
