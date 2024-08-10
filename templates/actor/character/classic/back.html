@@ -15,7 +15,7 @@
                 <tr class="expert-classic-table-row">
                     <td class="expert-classic-table-row-title rightch">{{part.name}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.health.value}} </td>
-                    <td class="expert-classic-table-row-armor leftch rightch">{{part.armor}}</td>
+                    <td class="expert-classic-table-row-armor leftch rightch editable-item" data-item-id="{{part.armor._id}}">{{part.armor.name}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.abs}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.weight}}</td>
                 </tr>
@@ -119,11 +119,13 @@
                 </tr>
                 {{#each weapons as |item id|}}
                 <tr class="expert-classic-table-row item" data-item-id="{{item._id}}">
-                    <td class="expert-classic-table-row-title rightch use-item" data-item-id="{{item._id}}">
-                        {{item.name}}
+                    <td class="expert-classic-table-row-title rightch editable-item use-item" data-item-id="{{item._id}}" >
+                        {{item.name}} {{#if item.system.mod}}({{item.system.mod}}){{/if}}
                     </td>
-                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.skill.system.fv}}</td>
-                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.damage}}</td>
+                    <td class="expert-classic-table-row-value leftch rightch">
+                        {{item.system.skill.system.fv}} {{#if item.system.mod}}{{item.system.mod}}{{/if}}
+                    </td>
+                    <td class="expert-classic-table-row-value leftch rightch">{{item.system.damage}} {{#if item.system.mod}}{{item.system.mod}}{{/if}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{item.system.bv}}</td>
                     <td class="expert-classic-table-row-value leftch rightch"></td>
                     <td class="expert-classic-table-row-value leftch rightch">{{item.system.range}}</td>

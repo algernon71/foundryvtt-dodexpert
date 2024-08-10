@@ -122,30 +122,6 @@ export class DODExpertActorSheet extends ActorSheet {
 
     const kpOffset = Math.floor((context.system.health.max - 5) / 3) - 1;
 
-    if (!context.system.body) {
-      context.system.body = {};
-    }
-    for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
-      let bodyPart = context.system.body[part];
-      // console.log('Building body part:' + part);
-      const partMaxHealth = v.baseKp + kpOffset;
-      if (!bodyPart) {
-        bodyPart = {
-          name: v.name,
-          health: {
-            max: partMaxHealth,
-            value: partMaxHealth
-          }
-        };
-        context.system.body[part] = bodyPart;
-      }
-      let armorList = context.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
-      armorList.forEach(armor => {
-        bodyPart.armor = armor.name;
-        bodyPart.abs = armor.system.abs;
-      });
-    }
-
   }
 
   /**
@@ -228,9 +204,11 @@ export class DODExpertActorSheet extends ActorSheet {
           break;
         case "weapon":
           weapons.push(i);
+          gear.push(i);
           break;
         case "shield":
           shields.push(i);
+          gear.push(i);
           break;
         }
     }
@@ -336,6 +314,31 @@ export class DODExpertActorSheet extends ActorSheet {
 
       }
     ]);
+    new ContextMenu(html, '.editable-item', [
+      {
+        name: game.i18n.localize('dodexpert.menus.edit'),
+        icon: '<i class="fas fa-edit"></i>',
+        condition: element => game.user.isGM,
+        callback: element => {
+          const itemId = element.data("item-id");
+          const items = this.actor.items;
+          const item = this.actor.items.get(itemId);
+
+          item.sheet.render(true);
+        },
+
+      },
+      {
+        name: game.i18n.localize('dodexpert.menus.delete'),
+        icon: '<i class="fas fa-trash"></i>',
+        callback: element => {
+          const itemId = element.data("item-id");
+          const item = this.actor.items.get(itemId);
+          item.delete();
+        },
+
+      }
+    ]);
     new ContextMenu(html, '.skill-erf', [
       {
         name: game.i18n.localize('dodexpert.menus.add-xp'),
@@ -372,6 +375,7 @@ export class DODExpertActorSheet extends ActorSheet {
     }
   }
   async _onItemInlineEdit(event) {
+    console.info('inline-edit:', event);
     event.preventDefault();
     const element = event.currentTarget;
     const itemElement = element.closest(".item");

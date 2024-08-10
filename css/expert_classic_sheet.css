@@ -109,6 +109,7 @@ input[type="text"] {
     outline: none;
     border: none !important;
     background-color: transparent !important;
+    width: 100%;
 }
 .expert-classic-number-field-input {
     font-size: 16px;
@@ -227,6 +228,19 @@ tr.expert-classic-table-row {
 
     /* fallback */
 }
+
+.expert-classic-table-row-text-value {
+    background: #ffffff;
+    border-color: black;
+    border-width: 1px;
+    font-family: sans serif;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+
+    /* fallback */
+}
+
 span.fv-input {
     background-color: #FFF;
     color: #888;

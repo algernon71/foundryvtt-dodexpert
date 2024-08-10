@@ -1,5 +1,6 @@
 
 import { abilityList } from "../constants.mjs";
+import { DODExpertSkill } from "../documents/skill.mjs";
 
 const magicschools = { 
   "E" : { "name": "Elementarmagi"},
@@ -16,7 +17,7 @@ export class DODExpertItemSheet extends ItemSheet {
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["dodexpert", "sheet", "item"],
-      width: 520,
+      width: 1000,
       height: 480,
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
@@ -49,7 +50,6 @@ export class DODExpertItemSheet extends ItemSheet {
       });
     });
 
-    console.info("hello");
     return items;
   }
   /** @override */
@@ -77,7 +77,12 @@ export class DODExpertItemSheet extends ItemSheet {
       context.magicschools = await this.getMagicShools();
     }
     console.info('editing item:', context.item);
+    if (context.item.type == 'weapon') {
+      context.skills = await DODExpertSkill.getSkills("STR");
+
+    }
     return context;
+
   }
 
   async getMagicShools() {

@@ -64,59 +64,66 @@ export class DODExpertActor extends Actor {
    * Prepare Character type specific data
    */
   _prepareCharacterData(actorData) {
-    if (actorData.type !== 'character') {
-      let itemsToRemove = [];
-      for (let i of this.items) {
-        switch (i.type) {
-          case "skilldef":
-            itemsToRemove.push(i);
-            break;
-        }
-      }
-  
-      for (let i of itemsToRemove) {
-        const skillId = i._id;
-        const skill = this.items.get(skillId);
-        skill.delete();
-        console.info('removed invalid skilldef from actor:', i);
-      }
+    if (actorData.type !== 'character') { 
+      return ;
+    };
 
-      const bodyShape = bodyShapes["humanoid"];
+    console.info('_prepareCharacterData ' + this._id + ' ' + this.name);
 
-      const health = this.system.health;
-      if (health) {
-        const kpOffset = Math.floor((this.system.health.max - 5) / 3) - 1;
-  
-        if (!this.system.body) {
-          this.system.body = {};
-        }
-        for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
-          let bodyPart = this.system.body[part];
-          // console.log('Building body part:' + part);
-          const partMaxHealth = v.baseKp + kpOffset;
-          if (!bodyPart) {
-            bodyPart = {
-              name: v.name,
-              health: {
-                max: partMaxHealth,
-                value: partMaxHealth
-              }
-            };
-            this.system.body[part] = bodyPart;
-          }
-          let armorList = this.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
-          if (armorList) {
-            armorList.forEach(armor => {
-              bodyPart.armor = armor.name;
-              bodyPart.abs = armor.system.abs;
-            });
-  
-          }
-        }
-    
-      };
-  
+    let itemsToRemove = [];
+    for (let i of this.items) {
+      switch (i.type) {
+        case "skilldef":
+          itemsToRemove.push(i);
+          break;
       }
+    }
+
+    for (let i of itemsToRemove) {
+      const skillId = i._id;
+      const skill = this.items.get(skillId);
+      skill.delete();
+      console.info('removed invalid skilldef from actor:', i);
+    }
+
+    const bodyShape = bodyShapes["humanoid"];
+
+    const health = this.system.health;
+    if (health) {
+      const kpOffset = Math.floor((this.system.health.max - 5) / 3) - 1;
+
+      if (!this.system.body) {
+        this.system.body = {};
+      }
+      for (let [part, v] of Object.entries(bodyShape.bodyParts)) {
+        let bodyPart = this.system.body[part];
+        // console.log('Building body part:' + part);
+        const partMaxHealth = v.baseKp + kpOffset;
+        if (!bodyPart) {
+          bodyPart = {
+            name: v.name,
+            health: {
+              max: partMaxHealth,
+              value: partMaxHealth
+            }
+          };
+          this.system.body[part] = bodyPart;
+        }
+        let armorList = this.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
+        if (armorList && armorList.length > 0) {
+//           console.info('Found armor for actor ('+ this.name + ') part( ' + bodyPart.name +  ') : ', armorList);
+          armorList.forEach(armor => {
+            bodyPart.armor = armor;
+            bodyPart.abs = armor.system.abs;
+          });
+          this.system.body[part] = bodyPart;
+
+        }
+      }
+      console.info('actor ('+ this.name + ') body parts ', this.system.body);
+
+    };
+
 
   }
 
@@ -178,13 +185,13 @@ export class DODExpertActor extends Actor {
   }
 
   async giveHeroPoints(gerf) {
-    
+
   }
 
   async applyDamage(amount, bodyPart) {
-    
+
     const hp = this.system.health;
-    if ( !hp ) return this; // Group actors don't have HP at the moment
+    if (!hp) return this; // Group actors don't have HP at the moment
 
     // Deduct damage from temp HP first
     const tmp = parseInt(hp.value) || 0;
@@ -209,10 +216,10 @@ export class DODExpertActor extends Actor {
       isBar: true
     }, updates);
     */
-    return this.update(updates, {dhp: -amount});
+    return this.update(updates, { dhp: -amount });
   }
   async modifyTokenAttribute(attribute, value, isDelta, isBar) {
-    if ( attribute === "attributes.hp" ) {
+    if (attribute === "attributes.hp") {
       const hp = this.system.attributes.hp;
       const delta = isDelta ? (-1 * value) : (hp.value + hp.temp) - value;
       return this.applyDamage(delta);
@@ -220,10 +227,10 @@ export class DODExpertActor extends Actor {
     return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
   }
   _displayScrollingDamage(dhp) {
-    if ( !dhp ) return;
+    if (!dhp) return;
     dhp = Number(dhp);
     const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
-    for ( const t of tokens ) {
+    for (const t of tokens) {
       const pct = Math.clamped(Math.abs(dhp) / this.system.health.max, 0, 1);
       canvas.interface.createScrollingText(t.center, dhp.signedString(), {
         anchor: CONST.TEXT_ANCHOR_POINTS.TOP,

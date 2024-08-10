@@ -1,4 +1,5 @@
 import { DODExpertSkill} from "../documents/skill.mjs"
+import { Check } from "../helpers/skillchecks.mjs";
 
 export class AttackDialog extends FormApplication {
 
@@ -11,6 +12,7 @@ export class AttackDialog extends FormApplication {
     this.data.skill = this.data.weapon.system.skill;
     this.check = new Check('Attack', 'FV', this.data.skill.system.fv);
 
+    this.check.updateModifier('weapon', this.data.weapon.name, this.data.weapon.system.mod);
   }
 
   /**
@@ -96,7 +98,7 @@ export class AttackDialog extends FormApplication {
 
   setAim(partId) {
     if (partId === 'any') {
-      this.check.updateModifier('aim', 'Varsomhelst', '0');
+      this.updateModifier('aim', 'Varsomhelst', '');
       return ;
     }
     const part = this.context.aimTargets.find(part => part.id === partId);
@@ -242,8 +244,6 @@ export class AttackDialog extends FormApplication {
    */
   async _updateObject(event, formData) {
     const expandedData = foundry.utils.expandObject(formData);
-
-
   }
 }
 

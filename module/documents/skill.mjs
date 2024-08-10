@@ -23,6 +23,31 @@ export class DODExpertSkill extends Item {
     super.prepareData();
   }
 
+  static async getSkills(category) {
+    console.info('getSkills:' + category);
+    let skills = [];
+    const skillsPack = await game.packs.get('dodexpert.skills');
+
+    await game.items.forEach((item, key) => {
+      if (item.type == 'skilldef' && item.system.category === category) {
+        skills.push(item);
+
+      }
+    });
+    await game.packs.forEach(async gamePack => {
+      const index = await gamePack.getIndex({ fields: ["system.schoolId", "system.category"] });
+      index.forEach((item, key) => {
+
+        if (item.type == 'skilldef' && item.system.category === category) {
+          skills.push(item);
+
+        }
+
+      });
+    });
+    return skills;
+  }
+
   async prepareDerivedData() {
     const skillId = this.system.def_id;
     const skillPack = this.system.def_pack;

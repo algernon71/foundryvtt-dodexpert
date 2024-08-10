@@ -80,20 +80,36 @@ export function calculateHitpoints(sto, fys) {
   return Math.ceil((sto + fys) / 2)
 }
 export function calculateDamageBonus(sty, sto) {
-  const val = Math.ceil((sty + sto) / 2);
+  const val = (sty + sto);
 
-  if (val <= 16) {
-    return null;
+  if (val <= 26) {
+    return "";
   }
-  if (val <= 20) {
+  if (val <= 27) {
+    return "1";
+  }
+
+  if (val <= 30) {
+    return "1d2";
+  }
+  if (val <= 33) {
     return "1d4";
   }
-  if (val <= 25) {
+  if (val <= 41) {
     return "1d6";
   }
-  if (val <= 30) {
+  if (val <= 51) {
     return "1d10";
   }
-  const nd6 = Math.ceil((val - 30) / 10) + 1;
-  return nd6 + "d6";
+  if (val <= 61) {
+    return "2d6";
+  }
+  if (val <= 81) {
+    return "3d6";
+  }
+  if (val <= 101) {
+    return "4d6";
+  }
+  return "4d6";
+
 }
