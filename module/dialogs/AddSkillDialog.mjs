@@ -169,7 +169,8 @@ export class AddSkillDialog extends FormApplication {
 
     }
     for (const existingItem of this.actor.items.values()) {
-      if (existingItem.name === item.name) {
+      if (existingItem.name === item.name && existingItem.type == item.type) {
+        console.info('Existing item:', existingItem)
         return false;
       }
     }

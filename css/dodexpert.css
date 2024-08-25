@@ -252,7 +252,6 @@
 .skill-add-buttons {
 
   margin-top: 10 px;
-  height: 40px;
 }
 
 .autocomplete-list {
@@ -290,6 +289,44 @@
   background-color: white;
   display: flex;
   flex-direction: row;
+}
+
+
+.item-match-list {
+  border: solid black 1px;
+  width: 100%;
+  flex-grow: 1;
+  overflow: scroll;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+.match-entry:hover {
+  background-color: lightgray;
+}
+.selected-entry {
+  background-color: rgb(146, 115, 115);
+    font-size: 28px;
+    border: 3px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.match-entry {
+  display: flex;
+  flex-direction: row;
+}
+
+.add-selected-item {
+  display: none;
+  border: solid gray 2px;
+  background-color: lightgray;
+  flex-grow: 1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 5px;
+  max-height: 50%;
+  overflow: scroll;
 }
 
 .skill-match-name {
@@ -589,11 +626,18 @@
   justify-content: flex-start;
   margin-bottom: 10px;
 }
+
+.front-portrait-img {
+  max-height: 250px;
+}
+.public-img {
+  max-height: 300px;
+}
 .dodexpert .sheet-header .profile-img {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 100px;
   flex: 0 0 100px;
-  height: 100px;
+  height: 50px;
   margin-right: 10px;
 }
 .dodexpert .sheet-header .header-fields {

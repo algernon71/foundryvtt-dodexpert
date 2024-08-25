@@ -1,7 +1,10 @@
 import { AddSkillDialog } from "../dialogs/AddSkillDialog.mjs"
+import { AddItemDialog } from "../dialogs/AddItemDialog.mjs"
+
 import { AddMagicSchoolDialog } from "../dialogs/AddMagicSchoolDialog.mjs"
 import { AttackDialog } from "../dialogs/AttackDialog.mjs"
 import { CastSpellDialog } from "../dialogs/CastSpellDialog.mjs"
+
 
 
 import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
@@ -102,6 +105,7 @@ export class DODExpertActorSheet extends ActorSheet {
     context.sheetStyles = sheetStyles;
     context.sheet = sheetStyles[0];
     context.tabs = [];
+    console.info('getData() sheet:', this);
     return context;
   }
 
@@ -318,7 +322,7 @@ export class DODExpertActorSheet extends ActorSheet {
       {
         name: game.i18n.localize('dodexpert.menus.edit'),
         icon: '<i class="fas fa-edit"></i>',
-        condition: element => game.user.isGM,
+        condition: element => element.data("item-id"),
         callback: element => {
           const itemId = element.data("item-id");
           const items = this.actor.items;
@@ -331,13 +335,25 @@ export class DODExpertActorSheet extends ActorSheet {
       {
         name: game.i18n.localize('dodexpert.menus.delete'),
         icon: '<i class="fas fa-trash"></i>',
+        condition: element => element.data("item-id"),
         callback: element => {
           const itemId = element.data("item-id");
           const item = this.actor.items.get(itemId);
           item.delete();
         },
 
-      }
+      },
+      {
+        name: game.i18n.localize('dodexpert.menus.add'),
+        icon: '<i class="fas fa-edit"></i>',
+        condition: element => !element.data("item-id"),
+        callback: element => {
+          const itemType = element.data("item-type");
+
+          this.selectItem(itemType);
+        },
+
+      },
     ]);
     new ContextMenu(html, '.skill-erf', [
       {
@@ -557,6 +573,16 @@ export class DODExpertActorSheet extends ActorSheet {
       renderData: {}
     });
   }
+
+  async selectItem(type) {
+
+    this.dialog = new AddItemDialog(this.actor, {
+      type: type });
+    this.dialog.render(true, {
+      renderData: {}
+    });
+  }
+
 
   async _onAddItem(event) {
     const itemData = { type: "item", name: "?"};

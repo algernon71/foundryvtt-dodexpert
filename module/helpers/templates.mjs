@@ -17,6 +17,7 @@
     "systems/dodexpert/templates/actor/parts/actor-weapons.html",
     "systems/dodexpert/templates/actor/character/classic/front.html",
     "systems/dodexpert/templates/actor/character/classic/back.html",
+    "systems/dodexpert/templates/actor/character/classic/notes.html",
     "systems/dodexpert/templates/actor/character/classic/bio.html",
     "systems/dodexpert/templates/actor/character/classic/parts/skillsList.html",
     "systems/dodexpert/templates/actor/character/classic/parts/gearList.html",

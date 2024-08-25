@@ -50,8 +50,19 @@
         "new": "Ny...",
         "button": "Lägg till"
       }
+    },
+    "dialogs": {
+      "selectitem": {
+        "weapon": {
+          "title" : "Välj vapen"
+        },
+        "placeholder": "Skriv för att söka",
+        "select": "Lägg till",
+        "new": "Skapa ny"
+      }
     }
   
+    
+  
   }
-
 }

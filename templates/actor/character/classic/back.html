@@ -15,7 +15,7 @@
                 <tr class="expert-classic-table-row">
                     <td class="expert-classic-table-row-title rightch">{{part.name}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.health.value}} </td>
-                    <td class="expert-classic-table-row-armor leftch rightch editable-item" data-item-id="{{part.armor._id}}">{{part.armor.name}}</td>
+                    <td class="expert-classic-table-row-armor leftch rightch editable-item" data-item-id="{{part.armor._id}}" data-item-type="armor">{{part.armor.name}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.abs}}</td>
                     <td class="expert-classic-table-row-value leftch rightch">{{part.weight}}</td>
                 </tr>
@@ -119,7 +119,7 @@
                 </tr>
                 {{#each weapons as |item id|}}
                 <tr class="expert-classic-table-row item" data-item-id="{{item._id}}">
-                    <td class="expert-classic-table-row-title rightch editable-item use-item" data-item-id="{{item._id}}" >
+                    <td class="expert-classic-table-row-title rightch editable-item use-item" data-item-id="{{item._id}}" data-item-type="weapon">
                         {{item.name}} {{#if item.system.mod}}({{item.system.mod}}){{/if}}
                     </td>
                     <td class="expert-classic-table-row-value leftch rightch">
@@ -135,8 +135,8 @@
                 {{/each}}
                 {{#padlist weapons 8}}
                 <tr class="expert-classic-table-row">
-                    <td class="expert-classic-table-row-title rightch"></td>
-                    <td class="expert-classic-table-row-value leftch rightch"></td>
+                    <td class="expert-classic-table-row-title rightch editable-item" data-item-type="weapon"></td>
+                    <td class="expert-classic-table-row-value leftch rightch editable-item"></td>
                     <td class="expert-classic-table-row-value leftch rightch"></td>
                     <td class="expert-classic-table-row-value leftch rightch"></td>
                     <td class="expert-classic-table-row-value leftch rightch"></td>

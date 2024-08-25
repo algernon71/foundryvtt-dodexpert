@@ -9,6 +9,7 @@
       <a class="item" data-tab="back">Baksida</a>
       <a class="item" data-tab="bio">Biografi</a>
     <a class="item" data-tab="public">Info</a>
+    <a class="item" data-tab="notes">Anteckningar</a>
   </nav>
 
   <section class="sheet-body">
@@ -25,6 +26,9 @@
     </div>
     <div class="tab bio" data-group="primary" data-tab="bio">
       {{> "systems/dodexpert/templates/actor/character/classic/bio.html"}}
+    </div>
+    <div class="tab bio" data-group="primary" data-tab="notes">
+      {{> "systems/dodexpert/templates/actor/character/classic/notes.html"}}
     </div>
     {{else}}
     {{> "systems/dodexpert/templates/actor/public/info.html"}}
