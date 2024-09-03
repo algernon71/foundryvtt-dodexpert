@@ -137,6 +137,9 @@ export class SkillCheckDialog extends FormApplication {
 
   calculate() {
     this.data.cl = Number(this.data.skill.getFV()) + Number(this.data.mod);
+    if (this.data.cl < 1) {
+      this.data.cl = 1;
+    }
   }
 
   async _onSelectDifficulty(event) {

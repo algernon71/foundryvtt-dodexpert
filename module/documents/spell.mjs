@@ -20,9 +20,40 @@ export class DODExpertSpell extends DODExpertSkill {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     this.img = "systems/dodexpert/media/skill.svg";
+
     super.prepareData();
   }
 
+  buildNameAttributes() {
+    let attr = [];
+    if (this.skillDef.system.quick) {
+      attr.push('K');
+    }
+
+    if (this.skillDef.system.physical) {
+      attr.push('F');
+    }
+
+    if (this.skillDef.system.ritual) {
+      attr.push('R');
+    }
+    if (attr.length > 0) {
+      return '(' + attr.join(',') + ')';
+    }
+    return '';
+  }
+
+  calculateRange() {
+    let rangeExpr = this.skillDef.system.range;
+    rangeExpr = rangeExpr.replace('rutor', '').replace('x', '*');
+    console.info('range:', rangeExpr);
+    if (this.skillDef.system.range) {
+      let S = this.system.fv;
+      return eval(rangeExpr);
+    }
+
+    return '';
+  }
   /**
    * Prepare a data object which is passed to any Roll formulas which are created related to this Item
    * @private

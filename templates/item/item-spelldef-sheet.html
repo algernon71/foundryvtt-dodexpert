@@ -1,52 +1,66 @@
 <form class="{{cssClass}}" autocomplete="off">
   <header class="sheet-header">
     <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+      <h1 class="charname"><input id="defname" name="name" type="text" value="{{item.name}}" placeholder="Färdighet" />
+      </h1>
     </div>
   </header>
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
-  </nav>
-
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+    <table>
+      <tr>
+        <td></td>
+        <td> 
+          <label for="fysisk">Fysisk</label>
+          <input id="fysisk" type="checkbox" name="system.physical" {{checked system.physical}}>
+          <label for="kvick">Kvick</label>
+          <input id="kvick" type="checkbox" name="system.quick" {{checked system.quick}}>
+          <label for="ritual">Ritual</label>
+          <input id="ritual" type="checkbox" name="system.ritual" {{checked system.ritual}}>
+        </td>
+      </tr>
+      <tr>
 
-    <select  class="magiskola"  name="system.category"  data-type="String">
-      {{#select system.category}}
-          {{#each magicschools as |school id|}}
-          <option  value="{{school.system.schoolId}}"> ({{school.system.schoolId}}) {{school.name}}</option>
-          {{/each}}
-      {{/select}}
-  </select>
+        <td>Magiskola</td>
+        <td>
+          <select class="magiskola" name="system.category" data-type="String">
+            {{#select system.category}}
+            {{#each magicschools as |school id|}}
+            <option value="{{school.system.schoolId}}"> ({{school.system.schoolId}}) {{school.name}}</option>
+            {{/each}}
+            {{/select}}
+          </select>
 
-      <label for="sv">Skolvärde</label>
-    <input id="sv" type="number" name="system.level" value="{{item.system.level}}" />
-    <br>
-    <label for="fysisk">Fysisk</label>
-    <input id="fysisk" type="checkbox" name="system.physical" {{checked system.physical}}>
-    <label for="kvick">Kvick</label>
-    <input id="kvick" type="checkbox" name="system.quick" {{checked system.quick}}>
-    <label for="ritual">Ritual</label>
-    <input id="ritual" type="checkbox" name="system.ritual" {{checked system.ritual}}>
-    <br>
-    <label for="rackvidd">Räckvidd</label>
-    <input id="rackvidd" type="text" name="system.range" value="{{system.range}}"">
-    <br>
-    <label for="varaktighet">Varaktighet</label>
-    <input id="varaktighet" type="text" name="system.duration" value="{{system.duration}}"">
-
-    <label for="skada">Skada</label>
-    <input id="skada" type="text" name="system.damage" value="{{system.damage}}"">
-
+        </td>
+      </tr>
    
-    {{!-- Description Tab --}}
-    <div class="tab" data-group="primary" data-tab="description">
-      {{editor system.description target="system.description" rollData=rollData button=true owner=owner
-      editable=editable}}
-    </div>
-
-    {{!-- Attributes Tab --}}
+      <tr>
+        <td>Skolvärde</td>
+        <td> 
+          <input id="level" type="text" name="system.level" value="{{item.system.level}}" />
+        </td>
+      </tr>
+      <tr>
+        <td>Räckvidd</td>
+        <td> 
+          <input id="range" type="text" name="system.range" value="{{item.system.range}}" />
+        </td>
+      </tr>
+      <tr>
+        <td>Varaktighet</td>
+        <td> 
+          <input id="duration" type="text" name="system.duration" value="{{item.system.duration}}" />
+        </td>
+      </tr>
+      <tr>
+        <td>Skada</td>
+        <td> 
+          <input id="damage" type="text" name="system.damage" value="{{item.system.damage}}" />
+        </td>
+      </tr>
+    </table>
+    {{editor system.description target="system.description" rollData=rollData button=true owner=owner
+    editable=editable}}
   </section>
 </form>

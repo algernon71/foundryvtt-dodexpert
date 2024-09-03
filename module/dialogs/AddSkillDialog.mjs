@@ -135,7 +135,7 @@ export class AddSkillDialog extends FormApplication {
       case "skilldef":
         return ["system.category", "system.cost", "system.ability", "system.type", "system.sortorder"];
       case "spelldef":
-        return ["system.school", "system.level", "system.quick", "system.ritual", "system.physical", "system.sortorder"];
+        return ["system.category","system.school", "system.level", "system.quick", "system.ritual", "system.physical", "system.sortorder"];
 
       default:
         return [];
@@ -176,7 +176,8 @@ export class AddSkillDialog extends FormApplication {
     }
 
     if (item.type == "spelldef") {
-      const schoolSkill = this.data.magicSchools[item.system.school];
+
+      const schoolSkill = this.getMagicSchoolSkill(item.system.category);
       if (!schoolSkill) {
         return false;
       }
@@ -187,6 +188,24 @@ export class AddSkillDialog extends FormApplication {
 
     return true;
   }
+
+
+  getMagicSchoolSkill(school) {
+    if (school != 'ALL') {
+      return this.data.magicSchools[school];
+    }
+    
+    let highestSchool = undefined;
+    for (const [schoolId, schoolSkill] of Object.entries(this.data.magicSchools)) {
+
+      if (!highestSchool || highestSchool.system.fv < schoolSkill.system.fv) {
+        highestSchool = schoolSkill;  
+      }
+    };
+
+    return highestSchool;
+  }
+
   async updateMatchList(searchString) {
     await this.filterMatches(searchString);
 
@@ -254,7 +273,7 @@ export class AddSkillDialog extends FormApplication {
     return `
     <div class="skill-match-entry" id="skill-match-entry-${index}">
       <div class="skill-match-name">${skill.name}</div>
-      <div class="skill-match-ability">${skill.system.school}</div>
+      <div class="skill-match-ability">${skill.system.category}</div>
       <div class="skill-match-cost">${skill.system.level}</div>
     </div>
     `;

@@ -89,6 +89,16 @@ export class DODExpertItemSheet extends ItemSheet {
     let schools = [];
     const skillsPack = await game.packs.get('dodexpert.skills');
 
+    schools.push(
+      {
+        name: 'Allmän',
+        system: {
+          category: 'MAG',
+          schoolId: 'ALL'
+        }
+
+      }
+    );
     await game.packs.forEach(async gamePack => {
       const index = await gamePack.getIndex({ fields: ["system.schoolId", "system.category"] });
       index.forEach((item, key) => {
@@ -97,6 +107,7 @@ export class DODExpertItemSheet extends ItemSheet {
         }
       });
     });
+    console.info('shools:', schools);
     return schools;
   }
 

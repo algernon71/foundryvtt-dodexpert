@@ -94,6 +94,7 @@ export class CastSpellDialog extends FormApplication {
     context.skill = this.data.skill;
     context.check = this.data;
     context.actor = this.data.actor;
+    // context.range = this.data.skill.calculateRange();
 
 
     context.spellPowers = [];

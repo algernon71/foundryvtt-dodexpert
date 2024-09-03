@@ -48,10 +48,27 @@ export class DODExpertSkill extends Item {
     return skills;
   }
 
+  buildNameAttributes() {
+    let attr = [];
+    if (this.skillDef.system.type == 'B') {
+      attr.push('B');
+    }
+
+    if (this.skillDef.system.ability) {
+      attr.push(this.skillDef.system.ability);
+    }
+
+    if (attr.length > 0) {
+      return '(' + attr.join(',') + ')';
+    }
+    return '';
+  }
+
   async prepareDerivedData() {
     const skillId = this.system.def_id;
     const skillPack = this.system.def_pack;
 
+    
     if (skillId) {
 
       if (skillPack) {
@@ -98,6 +115,7 @@ export class DODExpertSkill extends Item {
     this.system.schoolId = skillDef.system.schoolId;
     this.system.type = skillDef.system.type;
     this.name = skillDef.name;
+    this.system.name_attributes = this.buildNameAttributes();
     if (!this.system.defUpdate || 
       this.system.defUpdate != this.skillDef._stats.modifiedTime ) {
     } else {
