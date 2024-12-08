@@ -109,6 +109,7 @@ export class CastSpellDialog extends FormApplication {
     return context;
   }
   async _onSelectSpellPower(event) {
+    console.info('Select power', event);
     const a = event.currentTarget;
     const data = a.dataset;
     

@@ -121,17 +121,17 @@
   width: 80px;
   background-color: lightcoral;
 }
-.skill-power-section {
+.spell-power-section {
   display: flex;
   flex-direction: column;
   font-size: 24px;
 }
 
-.select-skill-power {
+.select-spell-power {
   display: flex;
   flex-direction: row;
 }
-.skill-power {
+.spell-power {
   border: solid 2px black;
   color: black;
   border-radius: 5px;
@@ -143,12 +143,12 @@
   font-size: 32px;
 
 }
-.skill-power:hover {
+.spell-power:hover {
   background-color: darkgreen;
 
 }
 
-.select-skill-power .selected {
+.select-spell-power .selected {
   background-color: black;
   color: white;
 

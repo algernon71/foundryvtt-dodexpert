@@ -29,11 +29,11 @@
 
 
       <input id="skill-name" class="skill-name" type="text" />
-      <div class="skill-power-section">
+      <div class="spell-power-section">
         <h2>Effektgrad</h2>
-        <div class="select-skill-power">
+        <div class="select-spell-power">
           {{#each spellPowers as |power id|}}
-          <div class="skill-power" data-power="{{power.power}}">
+          <div class="spell-power" data-power="{{power.power}}">
             {{power.name}}
           </div>
           {{/each}}
