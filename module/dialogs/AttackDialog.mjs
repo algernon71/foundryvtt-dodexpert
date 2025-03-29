@@ -60,6 +60,17 @@ export class AttackDialog extends FormApplication {
 
 
     const damageResult = await this.data.weapon.rollDamage(result.result);
+    if (!this.aimPart) {
+      console.info('Weapon:', this.data.weapon);
+      if (this.data.weapon.system.category == 'range') {
+
+      }
+      const roll = new Roll('d' + this.context.aimTargets.length) ;
+      let aimResult = await roll.evaluate();
+      this.aimPart = this.context.aimTargets[aimResult.total - 1];
+    } 
+    damageResult.aimPart = this.aimPart;
+    damageResult.targetName = this.context.targetActor.name;
     const damageContent = await renderTemplate("systems/dodexpert/templates/common/damage-result.html", damageResult);
     this.damageResultElement.html(damageContent);
 
@@ -89,21 +100,23 @@ export class AttackDialog extends FormApplication {
 
   _onAimChange(event) {
     const partId = event.currentTarget.value;
-    this.setAim(partId);
+    this.setAim(partId, true);
   }
   _onTargetMovementChange(event) {
     const movementTypeId = event.currentTarget.value;
     this.setTargetMovement(movementTypeId);
   }
 
-  setAim(partId) {
+  setAim(partId, addModifier) {
     if (partId === 'any') {
       this.updateModifier('aim', 'Varsomhelst', '');
       return ;
     }
-    const part = this.context.aimTargets.find(part => part.id === partId);
-    const modName = part.name;
-    this.updateModifier('aim', modName, part.mod);
+    this.aimPart = this.context.aimTargets.find(part => part.id === partId);
+    
+    if (addModifier) {
+      this.updateModifier('aim', this.aimPart.name, this.aimPart.mod);
+    }
   }
 
   setTargetMovement(movementTypeId) {
@@ -119,8 +132,10 @@ export class AttackDialog extends FormApplication {
   async updateCalculation() {
     const calculation = await this.check.render();
 
-    console.info('Calculation:' + calculation);
-    this.calcElement.html(calculation);
+//     console.info('Calculation:' + calculation);
+    if (this.calcElement) {
+      this.calcElement.html(calculation);
+    }
   }
   /**
    * @override
@@ -149,6 +164,7 @@ export class AttackDialog extends FormApplication {
       context.aimable = true;
       context.target = context.targets[0];
       context.aimTargets = [];
+      context.aimRoll = 'd10';
       const actorToken = context.actor.prototypeToken;
       const targetToken = context.target;
       const actorTransform = actorToken.transform;
@@ -166,6 +182,7 @@ export class AttackDialog extends FormApplication {
             const aimTarget = {
               id: key,
               name: part.name,
+              targetName: part.targetName,
               mod: '-5',
               part: part
             };
@@ -234,8 +251,9 @@ export class AttackDialog extends FormApplication {
     }
 
     if (context.aimable) {
-      this.setAim('any');
+      this.setAim('any', true);
     }
+    console.info('Attach context:', this.context);
     return context;
   }
 

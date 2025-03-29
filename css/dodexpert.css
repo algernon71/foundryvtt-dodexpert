@@ -13,6 +13,26 @@
   text-align: center;
 }
 
+.damage-result {
+  display: flex;
+  flex-direction: column;
+
+  border-radius: 20px;
+  padding: 10px;
+  margin: 10px;
+  background-color: beige;
+}
+
+.damage-result-title {
+  font-size: 32px;
+  border-radius: 5px;
+  border-width: 2px;
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  background-color: green;
+}
+
 .skillcheck-xp {
   font-size: 32px;
   border-radius: 5px;

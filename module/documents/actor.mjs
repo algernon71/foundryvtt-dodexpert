@@ -86,6 +86,23 @@ export class DODExpertActor extends Actor {
       console.info('removed invalid skilldef from actor:', i);
     }
 
+
+    this.prepareBodyData(actorData);
+
+  }
+
+  /**
+   * Prepare NPC type specific data.
+   */
+  _prepareNpcData(actorData) {
+    if (actorData.type !== 'npc') return;
+
+    // Make modifications to data here. For example:
+    const systemData = actorData.system;
+    this.prepareBodyData(actorData);
+  }
+
+  prepareBodyData(actorData) {
     const bodyShape = bodyShapes["humanoid"];
 
     const health = this.system.health;
@@ -102,6 +119,7 @@ export class DODExpertActor extends Actor {
         if (!bodyPart) {
           bodyPart = {
             name: v.name,
+            targetName: v.targetName,
             health: {
               max: partMaxHealth,
               value: partMaxHealth
@@ -109,6 +127,7 @@ export class DODExpertActor extends Actor {
           };
           this.system.body[part] = bodyPart;
         }
+
         let armorList = this.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
         if (armorList && armorList.length > 0) {
 //           console.info('Found armor for actor ('+ this.name + ') part( ' + bodyPart.name +  ') : ', armorList);
@@ -120,24 +139,10 @@ export class DODExpertActor extends Actor {
 
         }
       }
-      console.info('actor ('+ this.name + ') body parts ', this.system.body);
+      // console.info('actor ('+ this.name + ') body parts ', this.system.body);
 
     };
-
-
   }
-
-  /**
-   * Prepare NPC type specific data.
-   */
-  _prepareNpcData(actorData) {
-    if (actorData.type !== 'npc') return;
-
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
-    // systemData.xp = (systemData.cr * systemData.cr) * 100;
-  }
-
   /**
    * Override getRollData() that's supplied to rolls.
    */

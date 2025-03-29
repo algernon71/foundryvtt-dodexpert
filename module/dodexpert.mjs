@@ -48,7 +48,7 @@ Hooks.once('init', async function() {
   CONFIG.Actor.documentClass = DODExpertActor;
   CONFIG.Item.documentClass = DODExpertItemProxy;
 
-  CONFIG.Token.hudClass = DODExpertCharacterTokenHUD;
+  // CONFIG.Token.hudClass = DODExpertCharacterTokenHUD;
   
   CONFIG.compatibility.includePatterns.push(/systems\dodexpert/);
 

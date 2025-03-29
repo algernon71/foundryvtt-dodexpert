@@ -44,30 +44,37 @@ export const bodyShapes = {
         "bodyParts": {
             "huvud": {
                 "name": "Huvud",
+                "targetName": "Huvudet",
                 "baseKp": 3
             },
             "harm": {
                 "name": "Höger arm",
+                "targetName": "Höger arm",
                 "baseKp": 2
             },
             "varm": {
                 "name": "Vänster arm",
+                "targetName": "Vänster arm",
                 "baseKp": 2
             },
             "bkorg": {
                 "name": "Bröstkorg",
+                "targetName": "Bröstkorgen",
                 "baseKp": 4
             },
             "mage": {
                 "name": "Mage",
+                "targetName": "Magen",
                 "baseKp": 3
             },
             "vben": {
                 "name": "Vänster ben",
+                "targetName": "Vänster ben",
                 "baseKp": 3
             },
             "hben": {
                 "name": "Höger ben",
+                "targetName": "Höger ben",
                 "baseKp": 3
             }
         }

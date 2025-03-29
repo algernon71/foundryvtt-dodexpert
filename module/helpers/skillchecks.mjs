@@ -107,7 +107,6 @@ export class CheckModifier {
         }
       }
       descr += ' = CL: ' + cl;
-      console.info(descr);
     }
   
     async render() {
