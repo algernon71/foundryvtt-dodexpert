@@ -36,7 +36,7 @@
                     {{#each system.body as |part id|}}
                     <tr data-item-id="{{part._id}}" class="npc-body-part">
                         <td class="npc-body-part-name">{{part.name}}</td>
-                        <td class="npc-body-part-armor">{{part.armor}}</td>
+                        <td class="npc-body-part-armor">{{part.armor.name}}</td>
                         <td class="npc-body-part-abs">{{part.abs}}</td>
                         <td class="npc-body-part-kp">{{part.health.value}} </td>
                         <td class="npc-body-part-actions"><i class="fa-solid fa-square-ellipsis"></i></td>

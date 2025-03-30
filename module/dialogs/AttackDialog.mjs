@@ -58,8 +58,6 @@ export class AttackDialog extends FormApplication {
 
     this.resultElement.html(content);
 
-
-    const damageResult = await this.data.weapon.rollDamage(result.result);
     if (!this.aimPart) {
       console.info('Weapon:', this.data.weapon);
       if (this.data.weapon.system.category == 'range') {
@@ -69,8 +67,9 @@ export class AttackDialog extends FormApplication {
       let aimResult = await roll.evaluate();
       this.aimPart = this.context.aimTargets[aimResult.total - 1];
     } 
-    damageResult.aimPart = this.aimPart;
-    damageResult.targetName = this.context.targetActor.name;
+
+    const damageResult = await this.data.weapon.rollDamage(result.result, this.aimPart, this.context.targetActor);
+
     const damageContent = await renderTemplate("systems/dodexpert/templates/common/damage-result.html", damageResult);
     this.damageResultElement.html(damageContent);
 

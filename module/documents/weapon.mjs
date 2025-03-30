@@ -112,7 +112,7 @@ export class DODExpertWeapon extends Item {
     }
   }
 
-  async rollDamage(skillCheckResult) {
+  async rollDamage(skillCheckResult, aimPart, targetActor) {
 
     const formula = this.calcDamageFormula();
     const roll = new Roll(formula) ;
@@ -128,10 +128,12 @@ export class DODExpertWeapon extends Item {
     }
     let result = await roll.evaluate({maximize: maximize});
 
-
     const damageResult = {
       title: this.name, 
       damage: roll.total,
+      aimPart: aimPart,
+      targetName: targetActor.name,
+      target: targetActor,
       roll: roll
     };
 
@@ -150,6 +152,9 @@ export class DODExpertWeapon extends Item {
       flavor: "Skada från " + this.name
     });
 
+
+    console.info('Aim part:', aimPart);
+    console.info('Target:', targetActor);
 
     return damageResult;
   }

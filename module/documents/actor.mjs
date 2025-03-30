@@ -129,10 +129,11 @@ export class DODExpertActor extends Actor {
         }
 
         let armorList = this.items.filter(i => i.type == "armor" && i.system.bodyparts[part]);
-        if (armorList && armorList.length > 0) {
-//           console.info('Found armor for actor ('+ this.name + ') part( ' + bodyPart.name +  ') : ', armorList);
+        if (armorList && armorList.length > 0) {  
+          // console.info('Found armor for actor ('+ this.name + ') part( ' + bodyPart.name +  ') : ', armorList);
           armorList.forEach(armor => {
             bodyPart.armor = armor;
+            bodyPart.armorName = armor.system.name;
             bodyPart.abs = armor.system.abs;
           });
           this.system.body[part] = bodyPart;
